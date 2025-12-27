@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/presentation/common/core/images.dart';
 import 'package:servicenear/presentation/features/widgets/dots_widget.dart';
 import 'package:servicenear/presentation/features/widgets/get_started_button.dart';
 import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
@@ -19,17 +20,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     OnboardingItem(
       title: "Find Services",
       subtitle: "Find nearby service providers easily.",
-      icon: Icons.handyman,
+      image: Assets.plumber,
     ),
     OnboardingItem(
       title: "Chat Instantly",
       subtitle: "Chat with workers in real-time.",
-      icon: Icons.chat_bubble_outline,
+      image: Assets.garage,
     ),
     OnboardingItem(
       title: "Track Location",
       subtitle: "See providers on the map live.",
-      icon: Icons.location_on_outlined,
+      image: Assets.supermarket,
     ),
   ];
 

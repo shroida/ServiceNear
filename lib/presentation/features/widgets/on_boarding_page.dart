@@ -13,69 +13,80 @@ class OnboardingPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFFDFF5EA), Color(0xFFBFF0D3)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // 🔹 Animated Icon
-              AnimatedScale(
-                scale: isActive ? 1 : 0.8,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeOutBack,
-                child: Icon(
-                  item.icon,
-                  size: 130,
-                  color: Colors.green.shade700,
-                ),
+    return Stack(
+      children: [
+        // 🔹 Background Image
+        Positioned.fill(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 400),
+              opacity: isActive ? 1 : 0.6,
+              child: Image.asset(
+                item.image,
+                fit: BoxFit.cover,
               ),
-
-              const SizedBox(height: 32),
-
-              // 🔹 Title
-              AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 400),
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color:
-                      isActive ? Colors.green.shade900 : Colors.grey.shade700,
-                ),
-                child: Text(
-                  item.title,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // 🔹 Subtitle
-              AnimatedOpacity(
-                opacity: isActive ? 1 : 0.5,
-                duration: const Duration(milliseconds: 400),
-                child: Text(
-                  item.subtitle,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade800,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+
+        // 🔹 Gradient Overlay
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.3),
+                  Colors.transparent,
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
+            ),
+          ),
+        ),
+
+        // 🔹 Content
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // Title
+                AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 400),
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  child: Text(
+                    item.title,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Subtitle
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 400),
+                  opacity: isActive ? 1 : 0.6,
+                  child: Text(
+                    item.subtitle,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white70,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
