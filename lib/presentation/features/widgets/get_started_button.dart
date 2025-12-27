@@ -16,14 +16,16 @@ class GetStartedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLast = _currentPage == items.length - 1;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: SizedBox(
         width: double.infinity,
-        height: 52,
+        height: 56,
         child: ElevatedButton(
           onPressed: () {
-            if (_currentPage == items.length - 1) {
+            if (isLast) {
               Navigator.pushReplacementNamed(context, '/login');
             } else {
               _controller.nextPage(
@@ -32,8 +34,21 @@ class GetStartedButton extends StatelessWidget {
               );
             }
           },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF58F2A5), // 🟩 light green
+            foregroundColor: const Color(0xFF126547), // text color
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8), // 👌 little radius
+            ),
+          ),
           child: Text(
-            _currentPage == items.length - 1 ? "Get Started" : "Next",
+            isLast ? "Get Started" : "Next",
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.4,
+            ),
           ),
         ),
       ),
