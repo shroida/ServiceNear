@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/presentation/features/widgets/dots_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -11,18 +12,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final PageController _controller = PageController();
   int _currentPage = 0;
 
-  final List<_OnboardingItem> items = [
-    _OnboardingItem(
+  final List<OnboardingItem> items = [
+    OnboardingItem(
       title: "Find Services",
       subtitle: "Find nearby service providers easily.",
       icon: Icons.handyman,
     ),
-    _OnboardingItem(
+    OnboardingItem(
       title: "Chat Instantly",
       subtitle: "Chat with workers in real-time.",
       icon: Icons.chat_bubble_outline,
     ),
-    _OnboardingItem(
+    OnboardingItem(
       title: "Track Location",
       subtitle: "See providers on the map live.",
       icon: Icons.location_on_outlined,
@@ -50,13 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
 
             // 🔹 Dots
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                items.length,
-                (index) => _Dot(isActive: index == _currentPage),
-              ),
-            ),
+            DotsWidget(items: items, currentPage: _currentPage),
 
             const SizedBox(height: 24),
 
@@ -93,7 +88,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 }
 
 class _OnboardingContent extends StatelessWidget {
-  final _OnboardingItem item;
+  final OnboardingItem item;
 
   const _OnboardingContent({required this.item});
 
@@ -137,32 +132,13 @@ class _OnboardingContent extends StatelessWidget {
   }
 }
 
-class _Dot extends StatelessWidget {
-  final bool isActive;
 
-  const _Dot({required this.isActive});
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      height: 8,
-      width: isActive ? 24 : 8,
-      decoration: BoxDecoration(
-        color: isActive ? Theme.of(context).primaryColor : Colors.grey.shade400,
-        borderRadius: BorderRadius.circular(20),
-      ),
-    );
-  }
-}
-
-class _OnboardingItem {
+class OnboardingItem {
   final String title;
   final String subtitle;
   final IconData icon;
 
-  _OnboardingItem({
+  OnboardingItem({
     required this.title,
     required this.subtitle,
     required this.icon,
