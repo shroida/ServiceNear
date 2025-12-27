@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/presentation/features/widgets/dots_widget.dart';
+import 'package:servicenear/presentation/features/widgets/get_started_button.dart';
 import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
 import 'package:servicenear/presentation/features/widgets/on_boarding_page.dart';
 
@@ -38,7 +39,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // 🔹 Pages
             Expanded(
               child: PageView.builder(
                 controller: _controller,
@@ -47,40 +47,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   setState(() => _currentPage = index);
                 },
                 itemBuilder: (context, index) {
-                  return OnboardingPage(item: items[index]);
+                  return OnboardingPageView(item: items[index]);
                 },
               ),
             ),
-
-            // 🔹 Dots
             DotsWidget(items: items, currentPage: _currentPage),
-
             const SizedBox(height: 24),
-
-            // 🔹 Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_currentPage == items.length - 1) {
-                      Navigator.pushReplacementNamed(context, '/login');
-                    } else {
-                      _controller.nextPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  child: Text(
-                    _currentPage == items.length - 1 ? "Get Started" : "Next",
-                  ),
-                ),
-              ),
-            ),
-
+            GetStartedButton(
+                currentPage: _currentPage,
+                items: items,
+                controller: _controller),
             const SizedBox(height: 24),
           ],
         ),
