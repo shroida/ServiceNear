@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/presentation/features/onboarding/onboarding_screen.dart';
+import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
 
 class DotsWidget extends StatelessWidget {
   const DotsWidget({
