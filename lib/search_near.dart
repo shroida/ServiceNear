@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/presentation/features/onboarding/onboarding_screen.dart';
 
 class SearchNear extends StatelessWidget {
   const SearchNear({super.key});
@@ -11,8 +12,8 @@ class SearchNear extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        body: Center(child: Text('Shroida')),
+      home: const Scaffold(
+        body: OnBoardingScreen(),
       ),
     );
   }

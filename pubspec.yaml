@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_screenutil: ^5.9.3
   introduction_screen: ^4.0.0
 
 dev_dependencies:
