@@ -36,7 +36,7 @@ class Dot extends StatelessWidget {
       height: 8,
       width: isActive ? 24 : 8,
       decoration: BoxDecoration(
-        color: isActive ? Theme.of(context).primaryColor : Colors.grey.shade400,
+        color: isActive ? Colors.green : Colors.grey.shade400,
         borderRadius: BorderRadius.circular(20),
       ),
     );
