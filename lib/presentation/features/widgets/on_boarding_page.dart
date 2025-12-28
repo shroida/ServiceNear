@@ -15,52 +15,29 @@ class OnboardingPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // 🔹 Background Image
-        Positioned.fill(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 400),
-              opacity: isActive ? 1 : 0.6,
-              child: Image.asset(
-                item.image,
-                fit: BoxFit.cover,
-              ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 400),
+            opacity: isActive ? 1 : 0.6,
+            child: Image.asset(
+              item.image,
+              fit: BoxFit.cover,
             ),
           ),
         ),
-
-        // 🔹 Gradient Overlay
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.black.withOpacity(0.3),
-                  Colors.transparent,
-                ],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-              ),
-            ),
-          ),
-        ),
-
-        // 🔹 Content
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // Title
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 400),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                   child: Text(
                     item.title,
@@ -68,7 +45,6 @@ class OnboardingPageView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                // Subtitle
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 400),
                   opacity: isActive ? 1 : 0.6,
