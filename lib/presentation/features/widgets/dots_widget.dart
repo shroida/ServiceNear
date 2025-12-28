@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/presentation/common/core/app_colors.dart';
 import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
 
 class DotsWidget extends StatelessWidget {
@@ -36,7 +37,7 @@ class Dot extends StatelessWidget {
       height: 8,
       width: isActive ? 24 : 8,
       decoration: BoxDecoration(
-        color: isActive ? Colors.green : Colors.grey.shade400,
+        color: isActive ? AppColors.primary : Colors.grey.shade400,
         borderRadius: BorderRadius.circular(20),
       ),
     );
