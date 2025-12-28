@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
+import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_item.dart';
 
 class OnboardingPageView extends StatelessWidget {
   final OnboardingItem item;

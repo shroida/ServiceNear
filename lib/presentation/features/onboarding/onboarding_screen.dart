@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/presentation/common/core/images.dart';
-import 'package:servicenear/presentation/features/widgets/dots_widget.dart';
-import 'package:servicenear/presentation/features/widgets/get_started_button.dart';
-import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
-import 'package:servicenear/presentation/features/widgets/on_boarding_page.dart';
+import 'package:servicenear/presentation/features/onboarding/widgets/dots_widget.dart';
+import 'package:servicenear/presentation/features/onboarding/widgets/get_started_button.dart';
+import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
