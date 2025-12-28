@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/presentation/common/core/app_colors.dart';
 import 'package:servicenear/presentation/features/widgets/on_boarding_item.dart';
 
 class GetStartedButton extends StatelessWidget {
@@ -35,11 +36,11 @@ class GetStartedButton extends StatelessWidget {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF58F2A5), // 🟩 light green
-            foregroundColor: const Color(0xFF126547), // text color
+            backgroundColor: AppColors.primary,
+            foregroundColor: AppColors.textOnPrimary,
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8), // 👌 little radius
+              borderRadius: BorderRadius.circular(8), 
             ),
           ),
           child: Text(
