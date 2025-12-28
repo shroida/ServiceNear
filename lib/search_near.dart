@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/presentation/features/onboarding/onboarding_screen.dart';
+import 'package:servicenear/presentation/features/onboarding/pages/onboarding_screen.dart';
 
 class SearchNear extends StatelessWidget {
   const SearchNear({super.key});
