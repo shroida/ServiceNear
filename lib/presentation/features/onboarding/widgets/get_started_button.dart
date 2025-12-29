@@ -29,7 +29,7 @@ class GetStartedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             if (isLast) {
-              context.go(RoutePath.login);
+              context.go(RoutePath.register);
             } else {
               _controller.nextPage(
                 duration: const Duration(milliseconds: 400),
