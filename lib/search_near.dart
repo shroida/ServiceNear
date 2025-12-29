@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:servicenear/presentation/common/core/app_colors.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 
 class SearchNear extends StatelessWidget {
   const SearchNear({

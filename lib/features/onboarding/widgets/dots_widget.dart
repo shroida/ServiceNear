@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/presentation/common/core/app_colors.dart';
-import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
 
 class DotsWidget extends StatelessWidget {
   const DotsWidget({

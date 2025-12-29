@@ -1,10 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:servicenear/presentation/common/core/routes_path.dart';
-import 'package:servicenear/presentation/features/auth/pages/login_screen.dart';
-import 'package:servicenear/presentation/features/auth/pages/register_screen.dart';
-import 'package:servicenear/presentation/features/onboarding/pages/onboarding_screen.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 
-
+import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
+import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
+import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 
 class AppRouter {
   late final GoRouter router = GoRouter(

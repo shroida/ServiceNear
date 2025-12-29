@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:servicenear/presentation/common/core/app_colors.dart';
-import 'package:servicenear/presentation/common/core/routes_path.dart';
-import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
 
 class GetStartedButton extends StatelessWidget {
   const GetStartedButton({
