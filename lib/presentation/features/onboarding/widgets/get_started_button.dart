@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/presentation/common/core/app_colors.dart';
+import 'package:servicenear/presentation/common/core/routes_path.dart';
 import 'package:servicenear/presentation/features/onboarding/widgets/on_boarding_item.dart';
 
 class GetStartedButton extends StatelessWidget {
@@ -27,7 +29,7 @@ class GetStartedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             if (isLast) {
-              Navigator.pushReplacementNamed(context, '/login');
+              context.go(RoutePath.login);
             } else {
               _controller.nextPage(
                 duration: const Duration(milliseconds: 400),
@@ -40,7 +42,7 @@ class GetStartedButton extends StatelessWidget {
             foregroundColor: AppColors.textOnPrimary,
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8), 
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: Text(
