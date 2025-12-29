@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/presentation/common/core/app_colors.dart';
-import 'package:servicenear/presentation/common/core/app_router.dart';
 
 class SearchNear extends StatelessWidget {
-  const SearchNear({super.key});
-
+  const SearchNear({super.key, required this.appRouter});
+  final GoRouter appRouter;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -20,6 +20,9 @@ class SearchNear extends StatelessWidget {
             primaryColor: AppColors.primary,
             scaffoldBackgroundColor: Colors.white,
           ),
+          routerDelegate: appRouter.routerDelegate,
+          routeInformationParser: appRouter.routeInformationParser,
+          routeInformationProvider: appRouter.routeInformationProvider,
           debugShowCheckedModeBanner: false,
         );
       },
