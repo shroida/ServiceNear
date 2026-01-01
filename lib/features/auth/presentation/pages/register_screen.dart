@@ -1,34 +1,168 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
-class RegisterScreen extends StatelessWidget {
+enum UserType { customer, worker }
+
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController specialtyController = TextEditingController();
+
+  UserType selectedUserType = UserType.customer;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10.h,
+              SizedBox(height: 20.h),
+              const WelcomeText(),
+              SizedBox(height: 30.h),
+
+              // User Type Selector
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _userTypeButton(UserType.customer, 'Customer'),
+                  SizedBox(width: 20.w),
+                  _userTypeButton(UserType.worker, 'Worker'),
+                ],
               ),
-              Text(
-                'Welcomess Back',
-                style: AppStyles.font24BlueBold,
-              ),
-              Text(
-                'Please enter your details',
-                style: AppStyles.font24BlueBold,
+              SizedBox(height: 30.h),
+
+              // Form
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    AppTextFormField(
+                      hintText: 'Full Name',
+                      controller: nameController,
+                      validator: (v) =>
+                          v == null || v.isEmpty ? 'Enter your name' : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    AppTextFormField(
+                      hintText: 'Email',
+                      controller: emailController,
+                      validator: (v) => v == null || !v.contains('@')
+                          ? 'Enter valid email'
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    AppTextFormField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                      isObscureText: true,
+                      validator: (v) =>
+                          v != null && v.length < 6 ? 'Min 6 chars' : null,
+                    ),
+                    SizedBox(height: 16.h),
+
+                    // Conditional fields for Worker
+                    if (selectedUserType == UserType.worker) ...[
+                      AppTextFormField(
+                        hintText: 'Phone Number',
+                        controller: phoneController,
+                        validator: (v) =>
+                            v == null || v.isEmpty ? 'Enter phone' : null,
+                      ),
+                      SizedBox(height: 16.h),
+                      AppTextFormField(
+                        hintText: 'Specialty',
+                        controller: specialtyController,
+                        validator: (v) => v == null || v.isEmpty
+                            ? 'Enter your specialty'
+                            : null,
+                      ),
+                    ],
+
+                    SizedBox(height: 30.h),
+
+                    // Register Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50.h,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                        ),
+                        onPressed: _register,
+                        child: Text(
+                          'Register',
+                          style: AppStyles.font16WhiteSemiBold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  // Toggle Button Widget
+  Widget _userTypeButton(UserType type, String text) {
+    final bool selected = selectedUserType == type;
+    return GestureDetector(
+      onTap: () => setState(() => selectedUserType = type),
+      child: Container(
+        width: 140.w,
+        padding: EdgeInsets.symmetric(vertical: 12.h),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary : AppColors.background,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.textHint,
+            width: 1.3,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: selected
+              ? AppStyles.font16WhiteSemiBold
+              : AppStyles.font16WhiteSemiBold
+                  .copyWith(color: AppColors.textSecondary),
+        ),
+      ),
+    );
+  }
+
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      // TODO: Call Supabase Auth & save user in users table
+      if (selectedUserType == UserType.customer) {
+        print('Registering Customer: ${nameController.text}');
+      } else {
+        print('Registering Worker: ${nameController.text}');
+      }
+    }
   }
 }
