@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
 import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
-import 'package:servicenear/features/auth/presentation/widgets/models/worker_specialties.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -109,12 +109,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             v == null || v.isEmpty ? 'Enter phone' : null,
                       ),
                       SizedBox(height: 16.h),
-                      _specialtyDropdown()
+                      DropDownSpecialties(
+                        selectedSpecialty: selectedSpecialty,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedSpecialty = value;
+                          });
+                        },
+                      ),
                     ],
 
                     SizedBox(height: 30.h),
 
-                    // Register Button
                     SizedBox(
                       width: double.infinity,
                       height: 50.h,
@@ -151,9 +157,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         print('Registering Worker: ${firstNameController.text}');
       }
     }
-  }
-
-  Widget _specialtyDropdown() {
-    return 
   }
 }
