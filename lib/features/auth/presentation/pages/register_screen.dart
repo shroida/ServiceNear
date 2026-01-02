@@ -55,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     AppTextFormField(
                       hintText: 'Full Name',
+                      hintStyle: AppStyles.font13GrayRegular,
                       controller: nameController,
                       validator: (v) =>
                           v == null || v.isEmpty ? 'Enter your name' : null,
@@ -62,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 16.h),
                     AppTextFormField(
                       hintText: 'Email',
+                      hintStyle: AppStyles.font13GrayRegular,
                       controller: emailController,
                       validator: (v) => v == null || !v.contains('@')
                           ? 'Enter valid email'
@@ -70,6 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 16.h),
                     AppTextFormField(
                       hintText: 'Password',
+                      hintStyle: AppStyles.font13GrayRegular,
                       controller: passwordController,
                       isObscureText: true,
                       validator: (v) =>
@@ -81,6 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (selectedUserType == UserType.worker) ...[
                       AppTextFormField(
                         hintText: 'Phone Number',
+                        hintStyle: AppStyles.font13GrayRegular,
                         controller: phoneController,
                         validator: (v) =>
                             v == null || v.isEmpty ? 'Enter phone' : null,
@@ -88,6 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 16.h),
                       AppTextFormField(
                         hintText: 'Specialty',
+                        hintStyle: AppStyles.font13GrayRegular,
                         controller: specialtyController,
                         validator: (v) => v == null || v.isEmpty
                             ? 'Enter your specialty'

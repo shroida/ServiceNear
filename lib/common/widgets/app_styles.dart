@@ -91,7 +91,7 @@ class AppStyles {
   static TextStyle font14LightGrayRegular = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeightHelper.regular,
-    color: AppColors.textOnPrimary,
+    color: const Color.fromARGB(255, 136, 8, 8),
   );
 
   static TextStyle font14DarkBlueMedium = TextStyle(
