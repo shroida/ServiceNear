@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
 import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
@@ -16,19 +18,9 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController specialtyController = TextEditingController();
-  UserType selectedUserType = UserType.customer;
-  String? selectedSpecialty;
-
   @override
   Widget build(BuildContext context) {
+    final authCubit = context.read<AuthCubit>();
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -41,16 +33,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const WelcomeText(),
               SizedBox(height: 30.h),
               TypeSelector(
-                selectedType: selectedUserType,
+                selectedType: authCubit.selectedUserType,
                 onTypeChanged: (type) {
                   setState(() {
-                    selectedUserType = type;
+                    authCubit.selectedUserType = type;
                   });
                 },
               ),
               SizedBox(height: 30.h),
               Form(
-                key: _formKey,
+                key: authCubit.formKey,
                 child: Column(
                   children: [
                     Row(
@@ -59,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: AppTextFormField(
                             hintText: 'First Name',
                             hintStyle: AppStyles.font13GrayRegular,
-                            controller: firstNameController,
+                            controller: authCubit.firstNameController,
                             validator: (v) => v == null || v.isEmpty
                                 ? 'Enter your last name'
                                 : null,
@@ -70,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: AppTextFormField(
                             hintText: 'Last Name',
                             hintStyle: AppStyles.font13GrayRegular,
-                            controller: lastNameController,
+                            controller: authCubit.lastNameController,
                             validator: (v) => v == null || v.isEmpty
                                 ? 'Enter your first name'
                                 : null,
@@ -83,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     AppTextFormField(
                       hintText: 'Email',
                       hintStyle: AppStyles.font13GrayRegular,
-                      controller: emailController,
+                      controller: authCubit.emailController,
                       validator: (v) => v == null || !v.contains('@')
                           ? 'Enter valid email'
                           : null,
@@ -92,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     AppTextFormField(
                       hintText: 'Password',
                       hintStyle: AppStyles.font13GrayRegular,
-                      controller: passwordController,
+                      controller: authCubit.passwordController,
                       isObscureText: true,
                       validator: (v) =>
                           v != null && v.length < 6 ? 'Min 6 chars' : null,
@@ -100,20 +92,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 16.h),
 
                     // Conditional fields for Worker
-                    if (selectedUserType == UserType.worker) ...[
+                    if (authCubit.selectedUserType == UserType.worker) ...[
                       AppTextFormField(
                         hintText: 'Phone Number',
                         hintStyle: AppStyles.font13GrayRegular,
-                        controller: phoneController,
+                        controller: authCubit.phoneController,
                         validator: (v) =>
                             v == null || v.isEmpty ? 'Enter phone' : null,
                       ),
                       SizedBox(height: 16.h),
                       DropDownSpecialties(
-                        selectedSpecialty: selectedSpecialty,
+                        selectedSpecialty: authCubit.selectedSpecialty,
                         onChanged: (value) {
                           setState(() {
-                            selectedSpecialty = value;
+                            authCubit.selectedSpecialty = value;
                           });
                         },
                       ),
@@ -149,13 +141,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _register() {
-    if (_formKey.currentState!.validate()) {
-      // TODO: Call Supabase Auth & save user in users table
-      if (selectedUserType == UserType.customer) {
-        print('Registering Customer: ${firstNameController.text}');
-      } else {
-        print('Registering Worker: ${firstNameController.text}');
-      }
-    }
+    print('ok');
   }
 }
