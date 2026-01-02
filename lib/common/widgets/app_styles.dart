@@ -141,4 +141,9 @@ class AppStyles {
     fontWeight: FontWeightHelper.medium,
     color: Colors.white,
   );
+  static TextStyle font14DarkRegular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w800,
+    color: AppColors.textPrimary,
+  );
 }
