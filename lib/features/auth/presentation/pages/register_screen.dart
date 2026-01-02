@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
+import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
-
-enum UserType { customer, worker }
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +22,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController specialtyController = TextEditingController();
-
   UserType selectedUserType = UserType.customer;
 
   @override
@@ -38,16 +37,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 20.h),
               const WelcomeText(),
               SizedBox(height: 30.h),
-
-              // User Type Selector
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _userTypeButton(UserType.customer, 'Customer'),
-                  SizedBox(width: 20.w),
-                  _userTypeButton(UserType.worker, 'Worker'),
-                ],
+              TypeSelector(
+                selectedType: selectedUserType,
+                onTypeChanged: (type) {
+                  setState(() {
+                    selectedUserType = type;
+                  });
+                },
               ),
+
               SizedBox(height: 30.h),
 
               // Form
@@ -122,34 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  // Toggle Button Widget
-  Widget _userTypeButton(UserType type, String text) {
-    final bool selected = selectedUserType == type;
-    return GestureDetector(
-      onTap: () => setState(() => selectedUserType = type),
-      child: Container(
-        width: 140.w,
-        padding: EdgeInsets.symmetric(vertical: 12.h),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary : AppColors.background,
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(
-            color: selected ? AppColors.primary : AppColors.textHint,
-            width: 1.3,
-          ),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: selected
-              ? AppStyles.font16WhiteSemiBold
-              : AppStyles.font16WhiteSemiBold
-                  .copyWith(color: AppColors.textSecondary),
         ),
       ),
     );
