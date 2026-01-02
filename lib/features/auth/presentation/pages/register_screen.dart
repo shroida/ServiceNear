@@ -4,6 +4,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
+import 'package:servicenear/features/auth/presentation/widgets/models/worker_specialties.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -17,12 +18,14 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController specialtyController = TextEditingController();
   UserType selectedUserType = UserType.customer;
+  String? selectedSpecialty;
 
   @override
   Widget build(BuildContext context) {
@@ -45,20 +48,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   });
                 },
               ),
-
               SizedBox(height: 30.h),
-
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    AppTextFormField(
-                      hintText: 'Full Name',
-                      hintStyle: AppStyles.font13GrayRegular,
-                      controller: nameController,
-                      validator: (v) =>
-                          v == null || v.isEmpty ? 'Enter your name' : null,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AppTextFormField(
+                            hintText: 'First Name',
+                            hintStyle: AppStyles.font13GrayRegular,
+                            controller: firstNameController,
+                            validator: (v) => v == null || v.isEmpty
+                                ? 'Enter your last name'
+                                : null,
+                          ),
+                        ),
+                        SizedBox(width: 16.w),
+                        Expanded(
+                          child: AppTextFormField(
+                            hintText: 'Last Name',
+                            hintStyle: AppStyles.font13GrayRegular,
+                            controller: lastNameController,
+                            validator: (v) => v == null || v.isEmpty
+                                ? 'Enter your first name'
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
+
                     SizedBox(height: 16.h),
                     AppTextFormField(
                       hintText: 'Email',
@@ -89,14 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             v == null || v.isEmpty ? 'Enter phone' : null,
                       ),
                       SizedBox(height: 16.h),
-                      AppTextFormField(
-                        hintText: 'Specialty',
-                        hintStyle: AppStyles.font13GrayRegular,
-                        controller: specialtyController,
-                        validator: (v) => v == null || v.isEmpty
-                            ? 'Enter your specialty'
-                            : null,
-                      ),
+                      _specialtyDropdown()
                     ],
 
                     SizedBox(height: 30.h),
@@ -133,10 +146,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       // TODO: Call Supabase Auth & save user in users table
       if (selectedUserType == UserType.customer) {
-        print('Registering Customer: ${nameController.text}');
+        print('Registering Customer: ${firstNameController.text}');
       } else {
-        print('Registering Worker: ${nameController.text}');
+        print('Registering Worker: ${firstNameController.text}');
       }
     }
+  }
+
+  Widget _specialtyDropdown() {
+    return 
   }
 }
