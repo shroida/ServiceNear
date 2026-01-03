@@ -1,14 +1,15 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../domain/entities/app_user.dart';
-import '../../domain/entities/user_type.dart';
-import '../../domain/entities/user_location.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../models/app_user_model.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
+import 'package:servicenear/features/auth/domain/entities/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
+import '../datasources/auth_remote_datasource.dart';
 
-class AuthRepoImpl implements AuthRepository {
-  final SupabaseClient client;
+class AuthRepositoryImpl implements AuthRepository {
+  final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepoImpl(this.client);
+  AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
   Future<AppUser> register({
@@ -21,36 +22,37 @@ class AuthRepoImpl implements AuthRepository {
     required double longitude,
     String? specialty,
   }) async {
-    // Register in Supabase Auth
-    final res = await client.auth.signUp(email: email, password: password);
-    final userId = res.user?.id;
-    if (userId == null) {
-      throw Exception('Failed to create auth user');
-    }
-
-    // Insert into table
-    final tableName = userType == 'worker' ? 'workers' : 'customers';
-
-    final userModel = AppUserModel(
-      id: userId,
+    final response = await remoteDataSource.signUp(
+      email: email,
+      password: password,
       firstName: firstName,
       lastName: lastName,
-      email: email,
-      userType: userType == 'worker' ? UserType.worker : UserType.customer,
-      location: UserLocation(latitude: latitude, longitude: longitude),
-      createdAt: DateTime.now(),
+      userType: userType.nameStr,
+      latitude: latitude,
+      longitude: longitude,
       specialty: specialty,
     );
 
-    final insertRes = await client.from(tableName).insert(userModel.toJson());
-
-    if (insertRes.error != null) {
-      // Delete Supabase Auth user if insert failed
-      await client.auth.admin.deleteUser(userId);
-      throw Exception(
-          'Failed to insert user data: ${insertRes.error!.message}');
+    // Map the response JSON to Domain entity
+    if (userType == UserType.customer) {
+      return CustomerUser(
+        id: response['id'],
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        location: UserLocation(latitude: latitude, longitude: longitude),
+        createdAt: DateTime.parse(response['created_at']),
+      );
+    } else {
+      return WorkerUser(
+        id: response['id'],
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        location: UserLocation(latitude: latitude, longitude: longitude),
+        createdAt: DateTime.parse(response['created_at']),
+        specialty: specialty!,
+      );
     }
-
-    return userModel;
   }
 }

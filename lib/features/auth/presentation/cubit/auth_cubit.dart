@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
-import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
+import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepository) : super(AuthInitial());
@@ -34,7 +34,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> register() async {
-    print('clicjkes');
     if (!formKey.currentState!.validate()) return;
 
     emit(AuthLoading());
@@ -49,6 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
         latitude: latitude,
         longitude: longitude,
         specialty: selectedSpecialty,
+        // phone: phoneController.text.trim(),
       );
 
       emit(AuthSuccess());
