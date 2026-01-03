@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
@@ -14,14 +15,14 @@ class AppRouter {
       GoRoute(
         path: RoutePath.login,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
+          create: (context) => AuthCubit(context.read<AuthRepository>()),
           child: const LoginScreen(),
         ),
       ),
       GoRoute(
         path: RoutePath.register,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(),
+          create: (context) => AuthCubit(context.read<AuthRepository>()),
           child: const RegisterScreen(),
         ),
       ),

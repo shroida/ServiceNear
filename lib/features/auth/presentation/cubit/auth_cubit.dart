@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthCubit extends Cubit<void> {
-  AuthCubit() : super(null);
+  AuthCubit(this.authRepository) : super(null);
+  final AuthRepository authRepository;
+
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -26,7 +29,7 @@ class AuthCubit extends Cubit<void> {
   }
 
   void register(GlobalKey<FormState> formKey) {
-    debugPrint('Selected User : $selectedUserType');
+    authRepository.register(email: email, password: password, firstName: firstName, lastName: lastName, userType: userType, latitude: latitude, longitude: longitude)
   }
 
   @override
