@@ -1,10 +1,9 @@
-// app_user_model.dart
 import '../../domain/entities/app_user.dart';
 import '../../domain/entities/user_type.dart';
 import '../../domain/entities/user_location.dart';
 
-class AppUserModel extends AppUser {
-  AppUserModel({
+class WorkerUserModel extends AppUser {
+  WorkerUserModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -14,8 +13,8 @@ class AppUserModel extends AppUser {
     required super.createdAt,
   });
 
-  factory AppUserModel.fromJson(Map<String, dynamic> json) {
-    return AppUserModel(
+  factory WorkerUserModel.fromJson(Map<String, dynamic> json) {
+    return WorkerUserModel(
       id: json['id'],
       firstName: json['first_name'],
       lastName: json['last_name'],
