@@ -1,14 +1,12 @@
 import 'package:servicenear/features/auth/data/models/user_location.dart';
-
-
-enum UserRole { customer, worker }
+import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
 
 class AppUser {
   final String id;
   final String firstName;
   final String lastName;
   final String email;
-  final UserRole role;
+  final UserType role;
   final UserLocation location;
   final DateTime createdAt;
 
@@ -28,9 +26,7 @@ class AppUser {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      role: json['role'] == 'worker'
-          ? UserRole.worker
-          : UserRole.customer,
+      role: json['role'] == 'worker' ? UserType.worker : UserType.customer,
       location: UserLocation.fromJson(json),
       createdAt: DateTime.parse(json['created_at']),
     );
