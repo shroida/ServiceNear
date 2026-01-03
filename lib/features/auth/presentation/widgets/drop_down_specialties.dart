@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/features/auth/presentation/widgets/models/worker_specialties.dart';
+import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
 
 class DropDownSpecialties extends StatelessWidget {
   const DropDownSpecialties({
