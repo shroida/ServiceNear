@@ -1,4 +1,5 @@
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 
 abstract class AuthRepository {
   Future<AppUser> register({
@@ -6,7 +7,7 @@ abstract class AuthRepository {
     required String password,
     required String firstName,
     required String lastName,
-    required String userType,
+    required UserType userType,
     required double latitude,
     required double longitude,
     String? specialty,

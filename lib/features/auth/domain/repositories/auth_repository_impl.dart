@@ -1,5 +1,6 @@
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -20,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
       required String password,
       required String firstName,
       required String lastName,
-      required String userType,
+      required UserType userType,
       required double latitude,
       required double longitude,
       String? specialty}) {

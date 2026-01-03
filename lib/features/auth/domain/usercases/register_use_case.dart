@@ -1,3 +1,5 @@
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+
 import '../entities/app_user.dart';
 import '../repositories/auth_repository.dart';
 
@@ -11,7 +13,7 @@ class RegisterUseCase {
     required String password,
     required String firstName,
     required String lastName,
-    required String userType,
+    required UserType userType,
     required double latitude,
     required double longitude,
     String? specialty,
