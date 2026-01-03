@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_router.dart';
+import 'package:servicenear/common/core/supabase_client.dart';
 import 'package:servicenear/search_near.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await SupabaseManager.init();
   final appRouter = AppRouter();
 
   runApp(
