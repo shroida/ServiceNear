@@ -16,7 +16,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required double latitude,
     required double longitude,
     String? specialty,
-    String? phone, // لو worker
+    String? phone, 
   }) async {
     final authResponse = await supabase.auth.signUp(
       email: email,
@@ -45,9 +45,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .select()
           .single();
 
-      if (response == null) {
-        throw Exception('Adding customer data failed');
-      }
+
 
       userData = Map<String, dynamic>.from(response);
     } else {
@@ -68,14 +66,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .select()
           .single();
 
-      if (response == null) {
-        throw Exception('Adding worker data failed');
-      }
+     
 
       userData = Map<String, dynamic>.from(response);
     }
 
-    return userData; // هيرجع JSON من الجدول المناسب
+    return userData; 
   }
 
   @override
