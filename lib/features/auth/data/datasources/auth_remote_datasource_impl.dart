@@ -18,7 +18,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String? specialty,
     String? phone, // لو worker
   }) async {
-    // 1️⃣ إنشاء المستخدم في auth.users (Supabase auth)
     final authResponse = await supabase.auth.signUp(
       email: email,
       password: password,
@@ -29,14 +28,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('Signup failed');
     }
 
-    // 2️⃣ بعد ما التسجيل نجح، أضف بياناته في الجدول المناسب
     Map<String, dynamic> userData;
 
     if (userType == 'customer') {
       final response = await supabase
           .from('customers')
           .insert({
-            'id': user.id, // id من auth.users
+            'id': user.id,
             'first_name': firstName,
             'last_name': lastName,
             'email': email,
