@@ -1,8 +1,9 @@
-import '../../domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/data/models/app_user_model.dart';
+
 import '../../domain/entities/user_type.dart';
 import '../../domain/entities/user_location.dart';
 
-class WorkerUserModel extends AppUser {
+class WorkerUserModel extends AppUserModel {
   WorkerUserModel({
     required super.id,
     required super.firstName,
