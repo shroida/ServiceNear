@@ -35,6 +35,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   go_router: ^15.1.2
   introduction_screen: ^4.0.0
+  supabase_flutter: ^2.12.0
 
 dev_dependencies:
   flutter_lints: ^4.0.0
