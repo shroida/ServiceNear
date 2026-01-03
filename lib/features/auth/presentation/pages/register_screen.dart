@@ -6,7 +6,7 @@ import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
-import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 

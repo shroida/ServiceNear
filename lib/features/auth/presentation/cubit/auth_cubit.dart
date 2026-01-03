@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 
 class AuthCubit extends Cubit<void> {
   AuthCubit() : super(null);

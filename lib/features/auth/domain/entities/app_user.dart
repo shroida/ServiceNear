@@ -1,12 +1,12 @@
 import 'package:servicenear/features/auth/data/models/user_location.dart';
-import 'package:servicenear/features/auth/presentation/widgets/models/user_type.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 
 class AppUser {
   final String id;
   final String firstName;
   final String lastName;
   final String email;
-  final UserType role;
+  final UserType userType;
   final UserLocation location;
   final DateTime createdAt;
 
@@ -15,7 +15,7 @@ class AppUser {
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.role,
+    required this.userType,
     required this.location,
     required this.createdAt,
   });
@@ -26,7 +26,7 @@ class AppUser {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      role: json['role'] == 'worker' ? UserType.worker : UserType.customer,
+      userType: json['user_type'] == 'worker' ? UserType.worker : UserType.customer,
       location: UserLocation.fromJson(json),
       createdAt: DateTime.parse(json['created_at']),
     );
@@ -38,7 +38,7 @@ class AppUser {
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'role': role.name,
+      'user_type': userType.name,
       ...location.toJson(), // 🔥 merge location fields
       'created_at': createdAt.toIso8601String(),
     };
