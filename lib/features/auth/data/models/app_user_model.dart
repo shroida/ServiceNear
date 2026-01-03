@@ -1,8 +1,11 @@
 import '../../domain/entities/app_user.dart';
 import '../../domain/entities/user_type.dart';
+import '../../domain/entities/user_location.dart';
 
 class AppUserModel extends AppUser {
-  const AppUserModel({
+  final String? specialty; 
+
+  AppUserModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -10,6 +13,7 @@ class AppUserModel extends AppUser {
     required super.userType,
     required super.location,
     required super.createdAt,
+    this.specialty,
   });
 
   factory AppUserModel.fromJson(Map<String, dynamic> json) {
@@ -18,20 +22,23 @@ class AppUserModel extends AppUser {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      userType:
-          json['user_type'] == 'worker' ? UserType.worker : UserType.customer,
-      location: json['location'],
+      userType: UserTypeExtension.fromString(json['user_type']),
+      location: UserLocation.fromJson(json),
       createdAt: DateTime.parse(json['created_at']),
+      specialty: json['specialty'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'user_type': userType.name,
-      'location': location,
+      'user_type': userType.nameStr,
+      ...location.toJson(),
+      if (specialty != null) 'specialty': specialty,
+      'created_at': createdAt.toIso8601String(),
     };
   }
 }
