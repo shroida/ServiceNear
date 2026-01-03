@@ -6,7 +6,7 @@ import 'package:servicenear/features/auth/domain/repositories/auth_repository.da
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepositoryImpl(this.remoteDataSource);
+  AuthRepositoryImpl({required this.remoteDataSource});
 
   Future<void> login(String email, String password) {
     return remoteDataSource.signIn(

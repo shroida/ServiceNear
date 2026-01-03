@@ -34,6 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> register() async {
+    print('clicjkes');
     if (!formKey.currentState!.validate()) return;
 
     emit(AuthLoading());

@@ -123,7 +123,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                         ),
-                        onPressed: () => authCubit.register(),
+                        onPressed: () {
+                          context.read<AuthCubit>().register();
+                        },
                         child: Text(
                           'Register',
                           style: AppStyles.font16WhiteSemiBold,
