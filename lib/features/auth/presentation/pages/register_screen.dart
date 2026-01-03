@@ -24,7 +24,6 @@ class RegisterScreen extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
-              print(state.message.toString());
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );

@@ -8,19 +8,23 @@ class WelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'Welcome!',
-          style: AppStyles.font32BlueBold,
-        ),
-        SizedBox(height: 10.h),
-        Text(
-          'Please enter your details',
-          style: AppStyles.font16WhiteSemiBold
-              .copyWith(color: AppColors.textSecondary),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome!',
+            style: AppStyles.font32BlueBold,
+          ),
+          SizedBox(height: 10.h),
+          Text(
+            'Please enter your details',
+            style: AppStyles.font16WhiteSemiBold
+                .copyWith(color: AppColors.textSecondary),
+          ),
+        ],
+      ),
     );
   }
 }
