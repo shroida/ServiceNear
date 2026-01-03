@@ -3,7 +3,7 @@ import '../../domain/entities/user_type.dart';
 import '../../domain/entities/user_location.dart';
 
 class AppUserModel extends AppUser {
-  final String? specialty; 
+  final String? specialty;
 
   AppUserModel({
     required super.id,
