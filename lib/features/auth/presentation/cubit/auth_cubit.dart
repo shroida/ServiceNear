@@ -17,7 +17,7 @@ class AuthCubit extends Cubit<void> {
 
   void changeUserType(UserType type) {
     selectedUserType = type;
-    emit(null); // notify UI
+    emit(null);
   }
 
   void changeSpecialty(String? specialty) {
@@ -26,14 +26,7 @@ class AuthCubit extends Cubit<void> {
   }
 
   void register(GlobalKey<FormState> formKey) {
-    if (!formKey.currentState!.validate()) return;
-
-    if (selectedUserType == UserType.customer) {
-      debugPrint('Register Customer: ${firstNameController.text}');
-    } else {
-      debugPrint(
-          'Register Worker: ${firstNameController.text}, Specialty: $selectedSpecialty');
-    }
+    debugPrint('Selected User : $selectedUserType');
   }
 
   @override
