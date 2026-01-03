@@ -1,4 +1,4 @@
-import 'package:servicenear/features/auth/data/models/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/user_location.dart';
 import 'user_type.dart';
 
 abstract class AppUser {

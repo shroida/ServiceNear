@@ -1,6 +1,6 @@
 import 'package:servicenear/features/auth/data/models/app_user_model.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
-import 'package:servicenear/features/auth/data/models/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/user_location.dart';
 
 class WorkerUserModel extends AppUserModel {
   final String specialty;
