@@ -1,4 +1,5 @@
-import '../user_location.dart';
+import 'package:servicenear/features/auth/data/models/user_location.dart';
+
 
 enum UserRole { customer, worker }
 
