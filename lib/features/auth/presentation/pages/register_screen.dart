@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
@@ -24,12 +25,16 @@ class RegisterScreen extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
+              AppSnackBar.show(
+                context,
+                message: 'Registration failed, ${state.message.toString()}',
+                type: AppSnackBarType.error,
               );
             } else if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Registered successfully')),
+              AppSnackBar.show(
+                context,
+                message: 'Registered successfully 🎉',
+                type: AppSnackBarType.success,
               );
             }
           },
