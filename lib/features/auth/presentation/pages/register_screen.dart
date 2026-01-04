@@ -9,6 +9,7 @@ import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/presentation/widgets/email_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/first_and_last_name.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
@@ -125,27 +126,6 @@ class RegisterScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class EmailField extends StatelessWidget {
-  const EmailField({
-    super.key,
-    required this.authCubit,
-  });
-
-  final AuthCubit authCubit;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppTextFormField(
-      hintText: 'Email',
-      hintStyle: AppStyles.font13GrayRegular,
-      controller: authCubit.emailController,
-      validator: (v) => v == null || !v.contains('@')
-          ? 'Enter valid email'
-          : null,
     );
   }
 }
