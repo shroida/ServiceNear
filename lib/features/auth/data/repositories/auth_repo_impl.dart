@@ -1,8 +1,8 @@
+import 'package:servicenear/features/auth/data/models/customer_user_model.dart';
+import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
-import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
 import 'package:servicenear/features/auth/domain/entities/user_location.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
-import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 
@@ -24,21 +24,20 @@ class AuthRepositoryImpl implements AuthRepository {
     String? phone,
   }) async {
     final response = await remoteDataSource.signUp(
-      email: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      userType: userType.nameStr,
-      latitude: latitude,
-      longitude: longitude,
-      specialty: specialty,
-      phone:phone
-    );
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType.nameStr,
+        latitude: latitude,
+        longitude: longitude,
+        specialty: specialty,
+        phone: phone);
 
-    // Map the response JSON to Domain entity
     if (userType == UserType.customer) {
-      return CustomerUser(
+      return CustomerUserModel(
         id: response['id'],
+        userType: userType,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -46,9 +45,10 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: DateTime.parse(response['created_at']),
       );
     } else {
-      return WorkerUser(
+      return WorkerUserModel(
         id: response['id'],
         firstName: firstName,
+        userType: userType,
         lastName: lastName,
         email: email,
         location: UserLocation(latitude: latitude, longitude: longitude),

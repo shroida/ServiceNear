@@ -1,11 +1,11 @@
 import '../../domain/entities/app_user.dart';
-import '../../domain/entities/user_type.dart';
 import '../../domain/entities/user_location.dart';
+import '../../domain/entities/user_type.dart';
 
 class AppUserModel extends AppUser {
   final String? specialty;
 
-  AppUserModel({
+  const AppUserModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -23,7 +23,10 @@ class AppUserModel extends AppUser {
       lastName: json['last_name'],
       email: json['email'],
       userType: UserTypeExtension.fromString(json['user_type']),
-      location: UserLocation.fromJson(json),
+      location: UserLocation(
+        latitude: (json['latitude'] as num).toDouble(),
+        longitude: (json['longitude'] as num).toDouble(),
+      ),
       createdAt: DateTime.parse(json['created_at']),
       specialty: json['specialty'],
     );
@@ -36,7 +39,8 @@ class AppUserModel extends AppUser {
       'last_name': lastName,
       'email': email,
       'user_type': userType.nameStr,
-      ...location.toJson(),
+      'latitude': location.latitude,
+      'longitude': location.longitude,
       if (specialty != null) 'specialty': specialty,
       'created_at': createdAt.toIso8601String(),
     };

@@ -12,6 +12,7 @@ class WorkerUserModel extends AppUserModel {
     required super.userType,
     required super.location,
     required super.createdAt,
+    super.specialty,
   });
 
   factory WorkerUserModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +21,7 @@ class WorkerUserModel extends AppUserModel {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
+      specialty: json['specialty'],
       userType: UserTypeExtension.fromString(json['user_type']),
       location: UserLocation.fromJson(json),
       createdAt: DateTime.parse(json['created_at']),
