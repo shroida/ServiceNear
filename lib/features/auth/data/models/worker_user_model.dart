@@ -27,7 +27,7 @@ class WorkerUserModel extends AppUserModel {
       createdAt: DateTime.parse(json['created_at']),
     );
   }
-
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,

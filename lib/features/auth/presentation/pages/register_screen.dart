@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
@@ -81,6 +84,8 @@ class RegisterScreen extends StatelessWidget {
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
                             : RegisterButton(authCubit: authCubit),
+                        SizedBox(height: 20.h),
+                        NavigateToLoginScreen()
                       ],
                     ),
                   ),
@@ -93,3 +98,4 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 }
+
