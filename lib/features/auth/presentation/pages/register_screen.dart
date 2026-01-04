@@ -11,6 +11,7 @@ import 'package:servicenear/features/auth/presentation/widgets/drop_down_special
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/presentation/widgets/email_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/first_and_last_name.dart';
+import 'package:servicenear/features/auth/presentation/widgets/password_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -64,22 +65,7 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
                         EmailField(authCubit: authCubit),
                         SizedBox(height: 16.h),
-                        AppTextFormField(
-                          hintText: 'Password',
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              authCubit.isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                            onPressed: authCubit.togglePasswordVisibility,
-                          ),
-                          hintStyle: AppStyles.font13GrayRegular,
-                          controller: authCubit.passwordController,
-                          isObscureText: authCubit.isPasswordVisible,
-                          validator: (v) =>
-                              v != null && v.length < 6 ? 'Min 6 chars' : null,
-                        ),
+                        PasswordField(authCubit: authCubit),
                         SizedBox(height: 16.h),
                         if (authCubit.selectedUserType == UserType.worker) ...[
                           AppTextFormField(
