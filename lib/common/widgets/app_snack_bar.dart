@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 
 enum AppSnackBarType {
   success,
@@ -49,11 +50,11 @@ class AppSnackBar {
   static Color _backgroundColor(AppSnackBarType type) {
     switch (type) {
       case AppSnackBarType.success:
-        return const Color(0xFF2ECC71); // Green
+        return AppColors.primaryDark; // Green
       case AppSnackBarType.error:
-        return const Color(0xFFE74C3C); // Red
+        return AppColors.error; // Red
       case AppSnackBarType.warning:
-        return const Color(0xFFF39C12); // Orange
+        return AppColors.warning; // Orange
     }
   }
 
