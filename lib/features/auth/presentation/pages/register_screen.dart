@@ -9,6 +9,7 @@ import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/presentation/widgets/first_and_last_name.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -58,40 +59,9 @@ class RegisterScreen extends StatelessWidget {
                     key: authCubit.formKey,
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: AppTextFormField(
-                                hintText: 'First Name',
-                                hintStyle: AppStyles.font13GrayRegular,
-                                controller: authCubit.firstNameController,
-                                validator: (v) => v == null || v.isEmpty
-                                    ? 'Enter your first name'
-                                    : null,
-                              ),
-                            ),
-                            SizedBox(width: 16.w),
-                            Expanded(
-                              child: AppTextFormField(
-                                hintText: 'Last Name',
-                                hintStyle: AppStyles.font13GrayRegular,
-                                controller: authCubit.lastNameController,
-                                validator: (v) => v == null || v.isEmpty
-                                    ? 'Enter your last name'
-                                    : null,
-                              ),
-                            ),
-                          ],
-                        ),
+                        FirstAndLastNameField(authCubit: authCubit),
                         SizedBox(height: 16.h),
-                        AppTextFormField(
-                          hintText: 'Email',
-                          hintStyle: AppStyles.font13GrayRegular,
-                          controller: authCubit.emailController,
-                          validator: (v) => v == null || !v.contains('@')
-                              ? 'Enter valid email'
-                              : null,
-                        ),
+                        EmailField(authCubit: authCubit),
                         SizedBox(height: 16.h),
                         AppTextFormField(
                           hintText: 'Password',
@@ -155,6 +125,27 @@ class RegisterScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class EmailField extends StatelessWidget {
+  const EmailField({
+    super.key,
+    required this.authCubit,
+  });
+
+  final AuthCubit authCubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTextFormField(
+      hintText: 'Email',
+      hintStyle: AppStyles.font13GrayRegular,
+      controller: authCubit.emailController,
+      validator: (v) => v == null || !v.contains('@')
+          ? 'Enter valid email'
+          : null,
     );
   }
 }
