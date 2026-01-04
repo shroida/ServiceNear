@@ -23,7 +23,7 @@ class AppRouter {
       GoRoute(
         path: RoutePath.login,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(context.read<AuthRepository>()),
+          create: (_) => AuthCubit(_authRepository),
           child: const LoginScreen(),
         ),
       ),
