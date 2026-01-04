@@ -16,7 +16,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required double latitude,
     required double longitude,
     String? specialty,
-    String? phone, 
+    String? phone,
   }) async {
     final authResponse = await supabase.auth.signUp(
       email: email,
@@ -45,8 +45,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .select()
           .single();
 
-
-
       userData = Map<String, dynamic>.from(response);
     } else {
       final response = await supabase
@@ -65,12 +63,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           .select()
           .single();
 
-     
-
       userData = Map<String, dynamic>.from(response);
     }
 
-    return userData; 
+    return userData;
   }
 
   @override
@@ -78,13 +74,41 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    final response = await supabase.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      final response = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
-    if (response.session == null) {
-      throw Exception('Login failed');
+      if (response.session == null) {
+        // Invalid credentials
+        throw Exception('Invalid email or password');
+      }
+
+      // Save session or navigate to home
+    } on AuthApiException catch (e) {
+      // This will catch Supabase errors
+      print('Auth Error: ${e.message}');
+    } catch (e) {
+      print('Unexpected Error: $e');
+    }
+    try {
+      final response = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      print('Logged in success');
+      if (response.session == null) {
+        // Invalid credentials
+        throw Exception('Invalid email or password');
+      }
+
+      // Save session or navigate to home
+    } on AuthApiException catch (e) {
+      print('Auth Error: ${e.message}');
+    } catch (e) {
+      print('Unexpected Error: $e');
     }
   }
 

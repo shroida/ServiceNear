@@ -27,14 +27,14 @@ class LoginScreen extends StatelessWidget {
             if (state is AuthError) {
               AppSnackBar.show(
                 context,
-                message: 'Registration failed, ${state.message.toString()}',
-                type: AppSnackBarType.error,
+                message: state.message,
+                type: AppSnackBarType.error, // red color
               );
             } else if (state is AuthSuccess) {
               AppSnackBar.show(
                 context,
-                message: 'Registered successfully',
-                type: AppSnackBarType.success,
+                message: state.message,
+                type: AppSnackBarType.success, // green color
               );
             }
           },
@@ -65,17 +65,14 @@ class LoginScreen extends StatelessWidget {
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
                             : RegisterLoginButton(
-                                authCubit: authCubit,
-                                text: "Login",
                                 register: false,
-                              ),
+                                authCubit: authCubit,
+                                text: "Login"),
                         SizedBox(height: 20.h),
-                        const NavigateToLoginRegister(
-                          toLogin: false,
-                        )
+                        const NavigateToLoginRegister(toLogin: false),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             );

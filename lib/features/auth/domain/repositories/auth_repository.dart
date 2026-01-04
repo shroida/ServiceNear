@@ -13,7 +13,7 @@ abstract class AuthRepository {
     String? specialty,
     String? phone,
   });
-  Future<AppUser> login({
+  Future<void> login({
     required String email,
     required String password,
   });

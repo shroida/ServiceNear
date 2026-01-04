@@ -56,14 +56,30 @@ class AuthCubit extends Cubit<AuthState> {
         phone: phoneController.text.trim(),
       );
 
-      emit(AuthSuccess());
+      emit(AuthSuccess('Registered successfully'));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
   Future<void> login() async {
-    emit(AuthSuccess());
+    if (!formKey.currentState!.validate()) return;
+
+    emit(AuthLoading());
+
+    try {
+      // Await the login call
+      await authRepository.login(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      // If login succeeds, emit success
+      emit(AuthSuccess('Logged in successfully'));
+    } on Exception catch (e) {
+      // Catch any error from Supabase or repository
+      emit(AuthError( e.toString()));
+    }
   }
 
   @override
