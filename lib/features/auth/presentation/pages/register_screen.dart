@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
-import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
@@ -12,6 +11,7 @@ import 'package:servicenear/features/auth/presentation/widgets/email_field.dart'
 import 'package:servicenear/features/auth/presentation/widgets/first_and_last_name.dart';
 import 'package:servicenear/features/auth/presentation/widgets/password_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/phone_field.dart';
+import 'package:servicenear/features/auth/presentation/widgets/regisgter_button.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -80,23 +80,7 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 30.h),
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
-                            : SizedBox(
-                                width: double.infinity,
-                                height: 50.h,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    ),
-                                  ),
-                                  onPressed: () => authCubit.register(),
-                                  child: Text(
-                                    'Register',
-                                    style: AppStyles.font16WhiteSemiBold,
-                                  ),
-                                ),
-                              ),
+                            : RegisterButton(authCubit: authCubit),
                       ],
                     ),
                   ),
