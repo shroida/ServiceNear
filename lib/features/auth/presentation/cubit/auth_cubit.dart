@@ -16,7 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
   final phoneController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-
+  bool isPasswordVisible = false;
   UserType selectedUserType = UserType.customer;
   String? selectedSpecialty;
 
@@ -25,6 +25,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   void changeUserType(UserType type) {
     selectedUserType = type;
+    emit(AuthInitial());
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
     emit(AuthInitial());
   }
 

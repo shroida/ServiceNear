@@ -95,9 +95,17 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
                         AppTextFormField(
                           hintText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              authCubit.isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: authCubit.togglePasswordVisibility,
+                          ),
                           hintStyle: AppStyles.font13GrayRegular,
                           controller: authCubit.passwordController,
-                          isObscureText: true,
+                          isObscureText: authCubit.isPasswordVisible,
                           validator: (v) =>
                               v != null && v.length < 6 ? 'Min 6 chars' : null,
                         ),
