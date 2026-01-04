@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
@@ -12,6 +11,7 @@ import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/presentation/widgets/email_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/first_and_last_name.dart';
 import 'package:servicenear/features/auth/presentation/widgets/password_field.dart';
+import 'package:servicenear/features/auth/presentation/widgets/phone_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/type_selector.dart';
 import 'package:servicenear/features/auth/presentation/widgets/welcome_text.dart';
 
@@ -68,13 +68,7 @@ class RegisterScreen extends StatelessWidget {
                         PasswordField(authCubit: authCubit),
                         SizedBox(height: 16.h),
                         if (authCubit.selectedUserType == UserType.worker) ...[
-                          AppTextFormField(
-                            hintText: 'Phone Number',
-                            hintStyle: AppStyles.font13GrayRegular,
-                            controller: authCubit.phoneController,
-                            validator: (v) =>
-                                v == null || v.isEmpty ? 'Enter phone' : null,
-                          ),
+                          PhoneField(authCubit: authCubit),
                           SizedBox(height: 16.h),
                           DropDownSpecialties(
                             selectedSpecialty: authCubit.selectedSpecialty,
