@@ -62,6 +62,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> login() async {
+    emit(AuthSuccess());
+  }
+
   @override
   Future<void> close() {
     firstNameController.dispose();

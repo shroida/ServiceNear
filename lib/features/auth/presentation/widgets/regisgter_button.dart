@@ -4,12 +4,15 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
-class RegisterButton extends StatelessWidget {
-  const RegisterButton({
+class RegisterLoginButton extends StatelessWidget {
+  const RegisterLoginButton({
     super.key,
     required this.authCubit,
+    required this.text,
+    required this.register,
   });
-
+  final bool register;
+  final String text;
   final AuthCubit authCubit;
 
   @override
@@ -24,9 +27,9 @@ class RegisterButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        onPressed: () => authCubit.register(),
+        onPressed: () => register ? authCubit.register() : authCubit.login(),
         child: Text(
-          'Register',
+          text,
           style: AppStyles.font16WhiteSemiBold,
         ),
       ),

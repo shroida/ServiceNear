@@ -81,7 +81,11 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 30.h),
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
-                            : RegisterButton(authCubit: authCubit),
+                            : RegisterLoginButton(
+                                authCubit: authCubit,
+                                text: "Register",
+                                register: true,
+                              ),
                         SizedBox(height: 20.h),
                         const NavigateToLoginRegister(
                           toLogin: true,

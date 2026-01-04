@@ -64,7 +64,11 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: 30.h),
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
-                            : RegisterButton(authCubit: authCubit),
+                            : RegisterLoginButton(
+                                authCubit: authCubit,
+                                text: "Login",
+                                register: false,
+                              ),
                         SizedBox(height: 20.h),
                         const NavigateToLoginRegister(
                           toLogin: false,
