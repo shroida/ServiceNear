@@ -13,4 +13,8 @@ abstract class AuthRepository {
     String? specialty,
     String? phone,
   });
+  Future<AppUser> login({
+    required String email,
+    required String password,
+  });
 }
