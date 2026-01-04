@@ -21,6 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required double latitude,
     required double longitude,
     String? specialty,
+    String? phone,
   }) async {
     final response = await remoteDataSource.signUp(
       email: email,
@@ -31,6 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
       latitude: latitude,
       longitude: longitude,
       specialty: specialty,
+      phone:phone
     );
 
     // Map the response JSON to Domain entity

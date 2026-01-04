@@ -8,6 +8,7 @@ abstract class AuthRemoteDataSource {
     required double latitude,
     required double longitude,
     String? specialty,
+    String? phone,
   });
 
   Future<void> signIn({

@@ -48,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
         latitude: latitude,
         longitude: longitude,
         specialty: selectedSpecialty,
-        // phone: phoneController.text.trim(),
+        phone: phoneController.text.trim(),
       );
 
       emit(AuthSuccess());

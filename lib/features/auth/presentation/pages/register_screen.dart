@@ -33,7 +33,7 @@ class RegisterScreen extends StatelessWidget {
             } else if (state is AuthSuccess) {
               AppSnackBar.show(
                 context,
-                message: 'Registered successfully 🎉',
+                message: 'Registered successfully',
                 type: AppSnackBarType.success,
               );
             }

@@ -49,7 +49,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       userData = Map<String, dynamic>.from(response);
     } else {
-      // worker
       final response = await supabase
           .from('workers')
           .insert({

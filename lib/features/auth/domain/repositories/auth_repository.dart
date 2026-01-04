@@ -11,5 +11,6 @@ abstract class AuthRepository {
     required double latitude,
     required double longitude,
     String? specialty,
+    String? phone,
   });
 }
