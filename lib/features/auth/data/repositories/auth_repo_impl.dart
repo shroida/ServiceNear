@@ -57,4 +57,9 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     }
   }
+
+  @override
+  Future<void> login({required String email, required String password}) async {
+    remoteDataSource.signIn(email: email, password: password);
+  }
 }
