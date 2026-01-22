@@ -1,4 +1,4 @@
-import 'package:servicenearnew/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -70,10 +70,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signIn({required String email, required String password}) async {
     try {
       final response = await supabase.auth.signInWithPassword(
         email: email,

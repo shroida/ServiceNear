@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:servicenearnew/common/core/images.dart';
-import 'package:servicenearnew/features/onboarding/widgets/dots_widget.dart';
-import 'package:servicenearnew/features/onboarding/widgets/get_started_button.dart';
-import 'package:servicenearnew/features/onboarding/widgets/on_boarding_item.dart';
-import 'package:servicenearnew/features/onboarding/widgets/on_boarding_page.dart';
+import 'package:servicenear/common/core/images.dart';
+import 'package:servicenear/features/onboarding/widgets/dots_widget.dart';
+import 'package:servicenear/features/onboarding/widgets/get_started_button.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -55,9 +55,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             DotsWidget(items: items, currentPage: _currentPage),
             const SizedBox(height: 24),
             GetStartedButton(
-                currentPage: _currentPage,
-                items: items,
-                controller: _controller),
+              currentPage: _currentPage,
+              items: items,
+              controller: _controller,
+            ),
             const SizedBox(height: 24),
           ],
         ),

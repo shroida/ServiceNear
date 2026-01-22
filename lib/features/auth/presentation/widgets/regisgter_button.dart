@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenearnew/common/core/app_colors.dart';
-import 'package:servicenearnew/common/widgets/app_styles.dart';
-import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 class RegisterLoginButton extends StatelessWidget {
   const RegisterLoginButton({
@@ -28,10 +28,7 @@ class RegisterLoginButton extends StatelessWidget {
           ),
         ),
         onPressed: () => register ? authCubit.register() : authCubit.login(),
-        child: Text(
-          text,
-          style: AppStyles.font16WhiteSemiBold,
-        ),
+        child: Text(text, style: AppStyles.font16WhiteSemiBold),
       ),
     );
   }

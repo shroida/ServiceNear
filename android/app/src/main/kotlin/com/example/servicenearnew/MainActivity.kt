@@ -1,4 +1,4 @@
-package com.example.servicenearnew
+package com.example.servicenear
 
 import io.flutter.embedding.android.FlutterActivity
 

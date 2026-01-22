@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenearnew/common/core/app_router.dart';
-import 'package:servicenearnew/common/core/supabase_client.dart';
-import 'package:servicenearnew/search_near.dart';
+import 'package:servicenear/common/core/app_router.dart';
+import 'package:servicenear/common/core/supabase_client.dart';
+import 'package:servicenear/search_near.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:servicenearnew/common/core/app_colors.dart';
-import 'package:servicenearnew/common/core/routes_path.dart';
-import 'package:servicenearnew/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
 
 class GetStartedButton extends StatelessWidget {
   const GetStartedButton({
@@ -10,8 +10,8 @@ class GetStartedButton extends StatelessWidget {
     required int currentPage,
     required this.items,
     required PageController controller,
-  })  : _currentPage = currentPage,
-        _controller = controller;
+  }) : _currentPage = currentPage,
+       _controller = controller;
 
   final int _currentPage;
   final List<OnboardingItem> items;

@@ -1,9 +1,9 @@
-import 'package:servicenearnew/features/auth/data/models/customer_user_model.dart';
-import 'package:servicenearnew/features/auth/data/models/worker_user_model.dart';
-import 'package:servicenearnew/features/auth/domain/entities/app_user.dart';
-import 'package:servicenearnew/features/auth/domain/entities/user_location.dart';
-import 'package:servicenearnew/features/auth/domain/entities/user_type.dart';
-import 'package:servicenearnew/features/auth/domain/repositories/auth_repository.dart';
+import 'package:servicenear/features/auth/data/models/customer_user_model.dart';
+import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -24,15 +24,16 @@ class AuthRepositoryImpl implements AuthRepository {
     String? phone,
   }) async {
     final response = await remoteDataSource.signUp(
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        userType: userType.nameStr,
-        latitude: latitude,
-        longitude: longitude,
-        specialty: specialty,
-        phone: phone);
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      userType: userType.nameStr,
+      latitude: latitude,
+      longitude: longitude,
+      specialty: specialty,
+      phone: phone,
+    );
 
     if (userType == UserType.customer) {
       return CustomerUserModel(

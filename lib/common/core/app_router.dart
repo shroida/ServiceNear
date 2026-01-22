@@ -1,21 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:servicenearnew/common/core/routes_path.dart';
-import 'package:servicenearnew/features/auth/data/datasources/auth_remote_datasource_impl.dart';
-import 'package:servicenearnew/features/auth/data/repositories/auth_repo_impl.dart';
-import 'package:servicenearnew/features/auth/domain/repositories/auth_repository.dart';
-import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource_impl.dart';
+import 'package:servicenear/features/auth/data/repositories/auth_repo_impl.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
-import 'package:servicenearnew/features/auth/presentation/pages/login_screen.dart';
-import 'package:servicenearnew/features/auth/presentation/pages/register_screen.dart';
-import 'package:servicenearnew/features/onboarding/pages/onboarding_screen.dart';
+import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
+import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
+import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppRouter {
   final AuthRepository _authRepository = AuthRepositoryImpl(
-    remoteDataSource: AuthRemoteDataSourceImpl(
-      Supabase.instance.client,
-    ),
+    remoteDataSource: AuthRemoteDataSourceImpl(Supabase.instance.client),
   );
   late final GoRouter router = GoRouter(
     initialLocation: RoutePath.onBoarding,

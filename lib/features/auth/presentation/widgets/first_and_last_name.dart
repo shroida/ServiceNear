@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenearnew/common/widgets/app_styles.dart';
-import 'package:servicenearnew/common/widgets/app_text_form_field.dart';
-import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 class FirstAndLastNameField extends StatelessWidget {
-  const FirstAndLastNameField({
-    super.key,
-    required this.authCubit,
-  });
+  const FirstAndLastNameField({super.key, required this.authCubit});
 
   final AuthCubit authCubit;
 

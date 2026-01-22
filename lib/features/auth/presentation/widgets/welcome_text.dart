@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenearnew/common/core/app_colors.dart';
-import 'package:servicenearnew/common/widgets/app_styles.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
 
 class WelcomeText extends StatelessWidget {
   const WelcomeText({super.key});
@@ -13,15 +13,13 @@ class WelcomeText extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome!',
-            style: AppStyles.font32BlueBold,
-          ),
+          Text('Welcome!', style: AppStyles.font32BlueBold),
           SizedBox(height: 10.h),
           Text(
             'Please enter your details',
-            style: AppStyles.font16WhiteSemiBold
-                .copyWith(color: AppColors.textSecondary),
+            style: AppStyles.font16WhiteSemiBold.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),

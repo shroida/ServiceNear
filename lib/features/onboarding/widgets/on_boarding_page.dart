@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servicenearnew/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
 
 class OnboardingPageView extends StatelessWidget {
   final OnboardingItem item;
@@ -20,10 +20,7 @@ class OnboardingPageView extends StatelessWidget {
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 400),
             opacity: isActive ? 1 : 0.6,
-            child: Image.asset(
-              item.image,
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset(item.image, fit: BoxFit.cover),
           ),
         ),
         Center(
@@ -39,10 +36,7 @@ class OnboardingPageView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 0, 0, 0),
                   ),
-                  child: Text(
-                    item.title,
-                    textAlign: TextAlign.center,
-                  ),
+                  child: Text(item.title, textAlign: TextAlign.center),
                 ),
                 const SizedBox(height: 12),
                 AnimatedOpacity(

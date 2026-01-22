@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:servicenearnew/common/widgets/app_styles.dart';
-import 'package:servicenearnew/common/widgets/app_text_form_field.dart';
-import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 class PhoneField extends StatelessWidget {
-  const PhoneField({
-    super.key,
-    required this.authCubit,
-  });
+  const PhoneField({super.key, required this.authCubit});
 
   final AuthCubit authCubit;
 

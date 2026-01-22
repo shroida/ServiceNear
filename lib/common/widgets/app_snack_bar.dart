@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:servicenearnew/common/core/app_colors.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 
-enum AppSnackBarType {
-  success,
-  error,
-  warning,
-}
+enum AppSnackBarType { success, error, warning }
 
 class AppSnackBar {
   static void show(
@@ -17,16 +13,11 @@ class AppSnackBar {
       behavior: SnackBarBehavior.floating,
       backgroundColor: _backgroundColor(type),
       margin: const EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       duration: const Duration(seconds: 3),
       content: Row(
         children: [
-          Icon(
-            _icon(type),
-            color: Colors.white,
-          ),
+          Icon(_icon(type), color: Colors.white),
           const SizedBox(width: 12),
           Expanded(
             child: Text(

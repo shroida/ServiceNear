@@ -1,6 +1,6 @@
 {
-    "name": "servicenearnew",
-    "short_name": "servicenearnew",
+    "name": "servicenear",
+    "short_name": "servicenear",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

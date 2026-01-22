@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servicenearnew/features/auth/domain/entities/user_type.dart';
-import 'package:servicenearnew/features/auth/domain/repositories/auth_repository.dart';
+import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -78,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess('Logged in successfully'));
     } on Exception catch (e) {
       // Catch any error from Supabase or repository
-      emit(AuthError( e.toString()));
+      emit(AuthError(e.toString()));
     }
   }
 
