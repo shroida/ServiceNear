@@ -87,7 +87,9 @@ class RegisterScreen extends StatelessWidget {
                                 register: true,
                               ),
                         SizedBox(height: 20.h),
-                        const NavigateToLoginRegister(toLogin: true),
+                        const NavigateToLoginRegister(
+                          toLogin: true,
+                        )
                       ],
                     ),
                   ),

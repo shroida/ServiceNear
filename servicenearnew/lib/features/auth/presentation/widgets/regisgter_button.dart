@@ -28,7 +28,10 @@ class RegisterLoginButton extends StatelessWidget {
           ),
         ),
         onPressed: () => register ? authCubit.register() : authCubit.login(),
-        child: Text(text, style: AppStyles.font16WhiteSemiBold),
+        child: Text(
+          text,
+          style: AppStyles.font16WhiteSemiBold,
+        ),
       ),
     );
   }

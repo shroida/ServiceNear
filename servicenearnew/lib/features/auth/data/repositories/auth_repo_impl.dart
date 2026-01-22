@@ -24,16 +24,15 @@ class AuthRepositoryImpl implements AuthRepository {
     String? phone,
   }) async {
     final response = await remoteDataSource.signUp(
-      email: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      userType: userType.nameStr,
-      latitude: latitude,
-      longitude: longitude,
-      specialty: specialty,
-      phone: phone,
-    );
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType.nameStr,
+        latitude: latitude,
+        longitude: longitude,
+        specialty: specialty,
+        phone: phone);
 
     if (userType == UserType.customer) {
       return CustomerUserModel(

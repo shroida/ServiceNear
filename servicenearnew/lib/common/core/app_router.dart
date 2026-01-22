@@ -13,7 +13,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppRouter {
   final AuthRepository _authRepository = AuthRepositoryImpl(
-    remoteDataSource: AuthRemoteDataSourceImpl(Supabase.instance.client),
+    remoteDataSource: AuthRemoteDataSourceImpl(
+      Supabase.instance.client,
+    ),
   );
   late final GoRouter router = GoRouter(
     initialLocation: RoutePath.onBoarding,

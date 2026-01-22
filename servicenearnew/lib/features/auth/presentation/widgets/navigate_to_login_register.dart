@@ -7,14 +7,20 @@ import 'package:servicenearnew/common/core/routes_path.dart';
 import 'package:servicenearnew/common/widgets/app_styles.dart';
 
 class NavigateToLoginRegister extends StatelessWidget {
-  const NavigateToLoginRegister({super.key, required this.toLogin});
+  const NavigateToLoginRegister({
+    super.key,
+    required this.toLogin,
+  });
 
   final bool toLogin;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('I have an account,', style: AppStyles.font14DarkRegular),
+        Text(
+          'I have an account,',
+          style: AppStyles.font14DarkRegular,
+        ),
         SizedBox(width: 5.w),
         GestureDetector(
           onTap: () {
@@ -22,7 +28,10 @@ class NavigateToLoginRegister extends StatelessWidget {
                 ? context.go(RoutePath.login)
                 : context.go(RoutePath.register);
           },
-          child: Text('login', style: AppStyles.font14BlueSemiBold),
+          child: Text(
+            'login',
+            style: AppStyles.font14BlueSemiBold,
+          ),
         ),
       ],
     );

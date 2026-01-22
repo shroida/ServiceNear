@@ -10,8 +10,8 @@ class GetStartedButton extends StatelessWidget {
     required int currentPage,
     required this.items,
     required PageController controller,
-  }) : _currentPage = currentPage,
-       _controller = controller;
+  })  : _currentPage = currentPage,
+        _controller = controller;
 
   final int _currentPage;
   final List<OnboardingItem> items;

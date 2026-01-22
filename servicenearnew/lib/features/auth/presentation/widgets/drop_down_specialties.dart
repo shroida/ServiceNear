@@ -18,7 +18,10 @@ class DropDownSpecialties extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: selectedSpecialty,
-      hint: Text('Select Specialty', style: AppStyles.font13GrayRegular),
+      hint: Text(
+        'Select Specialty',
+        style: AppStyles.font13GrayRegular,
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.textOnPrimary,
@@ -32,14 +35,20 @@ class DropDownSpecialties extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.3),
+          borderSide: const BorderSide(
+            color: AppColors.primary,
+            width: 1.3,
+          ),
         ),
       ),
       items: workerSpecialties
           .map(
             (specialty) => DropdownMenuItem(
               value: specialty,
-              child: Text(specialty, style: AppStyles.font14DarkBlueMedium),
+              child: Text(
+                specialty,
+                style: AppStyles.font14DarkBlueMedium,
+              ),
             ),
           )
           .toList(),

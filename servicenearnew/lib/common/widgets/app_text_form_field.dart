@@ -38,11 +38,9 @@ class AppTextFormField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         isDense: true,
-        contentPadding:
-            contentPadding ??
+        contentPadding: contentPadding ??
             EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
-        focusedBorder:
-            focusedBorder ??
+        focusedBorder: focusedBorder ??
             OutlineInputBorder(
               borderSide: const BorderSide(
                 color: AppColors.primary,
@@ -50,8 +48,7 @@ class AppTextFormField extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(16.0),
             ),
-        enabledBorder:
-            enabledBorder ??
+        enabledBorder: enabledBorder ??
             OutlineInputBorder(
               borderSide: const BorderSide(
                 color: AppColors.textOnPrimary,
@@ -60,11 +57,17 @@ class AppTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
             ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.error, width: 1.3),
+          borderSide: const BorderSide(
+            color: AppColors.error,
+            width: 1.3,
+          ),
           borderRadius: BorderRadius.circular(16.0),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.error, width: 1.3),
+          borderSide: const BorderSide(
+            color: AppColors.error,
+            width: 1.3,
+          ),
           borderRadius: BorderRadius.circular(16.0),
         ),
         hintStyle: hintStyle ?? AppStyles.font14LightGrayRegular,

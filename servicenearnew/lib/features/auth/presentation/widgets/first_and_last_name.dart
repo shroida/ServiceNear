@@ -5,7 +5,10 @@ import 'package:servicenearnew/common/widgets/app_text_form_field.dart';
 import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
 
 class FirstAndLastNameField extends StatelessWidget {
-  const FirstAndLastNameField({super.key, required this.authCubit});
+  const FirstAndLastNameField({
+    super.key,
+    required this.authCubit,
+  });
 
   final AuthCubit authCubit;
 

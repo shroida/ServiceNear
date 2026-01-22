@@ -4,7 +4,10 @@ import 'package:servicenearnew/common/widgets/app_text_form_field.dart';
 import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
 
 class PasswordField extends StatelessWidget {
-  const PasswordField({super.key, required this.authCubit});
+  const PasswordField({
+    super.key,
+    required this.authCubit,
+  });
 
   final AuthCubit authCubit;
 

@@ -67,13 +67,12 @@ class LoginScreen extends StatelessWidget {
                             : RegisterLoginButton(
                                 register: false,
                                 authCubit: authCubit,
-                                text: "Login",
-                              ),
+                                text: "Login"),
                         SizedBox(height: 20.h),
                         const NavigateToLoginRegister(toLogin: false),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             );

@@ -78,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess('Logged in successfully'));
     } on Exception catch (e) {
       // Catch any error from Supabase or repository
-      emit(AuthError(e.toString()));
+      emit(AuthError( e.toString()));
     }
   }
 

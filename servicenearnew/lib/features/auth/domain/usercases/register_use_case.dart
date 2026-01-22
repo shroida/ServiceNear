@@ -29,4 +29,5 @@ class RegisterUseCase {
       specialty: specialty,
     );
   }
+  
 }

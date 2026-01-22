@@ -3,8 +3,11 @@ import 'package:servicenearnew/common/core/app_colors.dart';
 import 'package:servicenearnew/features/onboarding/widgets/on_boarding_item.dart';
 
 class DotsWidget extends StatelessWidget {
-  const DotsWidget({super.key, required this.items, required int currentPage})
-    : _currentPage = currentPage;
+  const DotsWidget({
+    super.key,
+    required this.items,
+    required int currentPage,
+  }) : _currentPage = currentPage;
 
   final List<OnboardingItem> items;
   final int _currentPage;

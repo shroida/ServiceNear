@@ -55,10 +55,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             DotsWidget(items: items, currentPage: _currentPage),
             const SizedBox(height: 24),
             GetStartedButton(
-              currentPage: _currentPage,
-              items: items,
-              controller: _controller,
-            ),
+                currentPage: _currentPage,
+                items: items,
+                controller: _controller),
             const SizedBox(height: 24),
           ],
         ),

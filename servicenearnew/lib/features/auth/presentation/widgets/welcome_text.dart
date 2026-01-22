@@ -13,13 +13,15 @@ class WelcomeText extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Welcome!', style: AppStyles.font32BlueBold),
+          Text(
+            'Welcome!',
+            style: AppStyles.font32BlueBold,
+          ),
           SizedBox(height: 10.h),
           Text(
             'Please enter your details',
-            style: AppStyles.font16WhiteSemiBold.copyWith(
-              color: AppColors.textSecondary,
-            ),
+            style: AppStyles.font16WhiteSemiBold
+                .copyWith(color: AppColors.textSecondary),
           ),
         ],
       ),

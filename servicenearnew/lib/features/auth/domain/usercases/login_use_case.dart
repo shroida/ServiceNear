@@ -2,8 +2,13 @@ import 'package:servicenearnew/features/auth/domain/repositories/auth_repository
 
 class LoginUseCase {
   final AuthRepository authRepository;
-  LoginUseCase(this.authRepository);
-  Future<void> call(String email, String password) async {
+  LoginUseCase(
+    this.authRepository,
+  );
+  Future<void> call(
+    String email,
+    String password,
+  ) async {
     authRepository.login(email: email, password: password);
   }
 }
