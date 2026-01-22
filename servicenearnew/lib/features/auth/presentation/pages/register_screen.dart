@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:servicenearnew/common/core/app_colors.dart';
+import 'package:servicenearnew/common/widgets/app_snack_bar.dart';
+import 'package:servicenearnew/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenearnew/features/auth/presentation/cubit/auth_state.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/drop_down_specialties.dart';
+import 'package:servicenearnew/features/auth/domain/entities/user_type.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/email_field.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/first_and_last_name.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/navigate_to_login_register.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/password_field.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/phone_field.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/regisgter_button.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/type_selector.dart';
+import 'package:servicenearnew/features/auth/presentation/widgets/welcome_text.dart';
+
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authCubit = context.read<AuthCubit>();
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthError) {
+              AppSnackBar.show(
+                context,
+                message: 'Registration failed, ${state.message.toString()}',
+                type: AppSnackBarType.error,
+              );
+            } else if (state is AuthSuccess) {
+              AppSnackBar.show(
+                context,
+                message: 'Registered successfully',
+                type: AppSnackBarType.success,
+              );
+            }
+          },
+          builder: (context, state) {
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+                  const WelcomeText(),
+                  SizedBox(height: 30.h),
+                  TypeSelector(
+                    selectedType: authCubit.selectedUserType,
+                    onTypeChanged: (type) {
+                      authCubit.changeUserType(type);
+                    },
+                  ),
+                  SizedBox(height: 30.h),
+                  Form(
+                    key: authCubit.formKey,
+                    child: Column(
+                      children: [
+                        FirstAndLastNameField(authCubit: authCubit),
+                        SizedBox(height: 16.h),
+                        EmailField(authCubit: authCubit),
+                        SizedBox(height: 16.h),
+                        PasswordField(authCubit: authCubit),
+                        SizedBox(height: 16.h),
+                        if (authCubit.selectedUserType == UserType.worker) ...[
+                          PhoneField(authCubit: authCubit),
+                          SizedBox(height: 16.h),
+                          DropDownSpecialties(
+                            selectedSpecialty: authCubit.selectedSpecialty,
+                            onChanged: (value) {
+                              authCubit.changeSpecialty(value);
+                            },
+                          ),
+                        ],
+                        SizedBox(height: 30.h),
+                        state is AuthLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : RegisterLoginButton(
+                                authCubit: authCubit,
+                                text: "Register",
+                                register: true,
+                              ),
+                        SizedBox(height: 20.h),
+                        const NavigateToLoginRegister(
+                          toLogin: true,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
