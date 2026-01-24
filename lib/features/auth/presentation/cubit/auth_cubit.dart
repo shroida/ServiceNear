@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepository) : super(AuthInitial());
+  AppUser? currentUser;
 
   final AuthRepository authRepository;
 
@@ -71,10 +73,11 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     try {
-      await authRepository.login(
+      final user = await authRepository.login(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      currentUser = user;
       emit(AuthSuccess('Logged in successfully'));
     } on Exception catch (e) {
       String message = 'Something went wrong. Please try again.';

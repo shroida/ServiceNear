@@ -74,7 +74,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    // Authenticate with Supabase
     final response = await supabase.auth.signInWithPassword(
       email: email,
       password: password,
@@ -96,7 +95,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return Map<String, dynamic>.from(customer)..['user_type'] = 'customer';
     }
 
-    // If not found, try 'workers' table
     final worker = await supabase
         .from('workers')
         .select()
