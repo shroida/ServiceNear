@@ -36,6 +36,10 @@ class AppRouter {
         path: RoutePath.onBoarding,
         builder: (context, state) => const OnBoardingScreen(),
       ),
+      GoRoute(
+        path: RoutePath.home,
+        builder: (context, state) => const HomeScreen(),
+      ),
     ],
   );
 }
