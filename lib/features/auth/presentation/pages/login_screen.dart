@@ -28,13 +28,13 @@ class LoginScreen extends StatelessWidget {
               AppSnackBar.show(
                 context,
                 message: state.message,
-                type: AppSnackBarType.error, // red color
+                type: AppSnackBarType.error,
               );
             } else if (state is AuthSuccess) {
               AppSnackBar.show(
                 context,
                 message: state.message,
-                type: AppSnackBarType.success, // green color
+                type: AppSnackBarType.success,
               );
             }
           },

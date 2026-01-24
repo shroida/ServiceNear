@@ -68,16 +68,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     try {
-      // Await the login call
-      await authRepository.login(
+      final response = await authRepository.login(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-
-      // If login succeeds, emit success
+      if (response.user == null) {
+        emit(AuthError('Invalid login credentials'));
+        return;
+      }
       emit(AuthSuccess('Logged in successfully'));
     } on Exception catch (e) {
-      // Catch any error from Supabase or repository
       emit(AuthError(e.toString()));
     }
   }
