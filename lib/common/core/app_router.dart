@@ -8,6 +8,7 @@ import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
 import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
+import 'package:servicenear/features/home/presentation/home_screen.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
