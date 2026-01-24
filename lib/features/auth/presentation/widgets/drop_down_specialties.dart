@@ -17,7 +17,7 @@ class DropDownSpecialties extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: selectedSpecialty,
+      initialValue: selectedSpecialty,
       hint: Text('Select Specialty', style: AppStyles.font13GrayRegular),
       decoration: InputDecoration(
         filled: true,
