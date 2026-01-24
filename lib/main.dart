@@ -15,7 +15,7 @@ void main() async {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (_, __) => SearchNear(appRouter: appRouter.router),
+      builder: (context, child) => SearchNear(appRouter: appRouter.router),
     ),
   );
 }
