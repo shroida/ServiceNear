@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Map<String, dynamic>? userData;
+  AppUser? userData;
   final userRepository = UserRepository(Supabase.instance.client);
 
   @override
@@ -33,9 +34,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Welcome ${userData!['first_name']}')),
+      appBar: AppBar(
+        title: Text(
+          'Welcome ${'${userData!.firstName} ${userData!.lastName}'}',
+        ),
+      ),
       body: Center(
-        child: Text('You are logged in as ${userData!['user_type']}'),
+        child: Column(
+          children: [
+            Text('Type ${userData!.userType}'),
+            Text('ID:   ${userData!.id}'),
+            Text('ID:   ${userData!.createdAt}'),
+            Text('ID:   ${userData!.email}'),
+          ],
+        ),
       ),
     );
   }

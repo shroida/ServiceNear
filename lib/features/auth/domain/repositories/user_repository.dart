@@ -1,3 +1,7 @@
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
+import 'package:servicenear/features/auth/domain/entities/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserRepository {
@@ -10,7 +14,7 @@ class UserRepository {
     return session?.user.id;
   }
 
-  Future<Map<String, dynamic>?> getCurrentUserData() async {
+  Future<AppUser?> getCurrentUserData() async {
     final userId = getCurrentUserId();
     if (userId == null) return null;
 
@@ -21,7 +25,17 @@ class UserRepository {
         .maybeSingle();
 
     if (customer != null) {
-      return Map<String, dynamic>.from(customer)..['user_type'] = 'customer';
+      return CustomerUser(
+        id: customer['id'],
+        firstName: customer['first_name'],
+        lastName: customer['last_name'],
+        email: customer['email'],
+        location: UserLocation(
+          latitude: (customer['latitude'] as num).toDouble(),
+          longitude: (customer['longitude'] as num).toDouble(),
+        ),
+        createdAt: DateTime.parse(customer['created_at'] as String),
+      );
     }
 
     final worker = await supabase
@@ -31,7 +45,18 @@ class UserRepository {
         .maybeSingle();
 
     if (worker != null) {
-      return Map<String, dynamic>.from(worker)..['user_type'] = 'worker';
+      return WorkerUser(
+        id: worker['id'],
+        firstName: worker['first_name'],
+        lastName: worker['last_name'],
+        email: worker['email'],
+        location: UserLocation(
+          latitude: worker['latitude'],
+          longitude: worker['longitude'],
+        ),
+        createdAt: worker['created_at'],
+        specialty: worker['specialty'],
+      );
     }
 
     return null;
