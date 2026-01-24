@@ -15,5 +15,4 @@ extension UserTypeExtension on UserType {
   }
 }
 
-// Usage:
 final type = UserTypeExtension.fromString('worker');

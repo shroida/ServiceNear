@@ -5,18 +5,15 @@ class UserRepository {
 
   UserRepository(this.supabase);
 
-  /// Get current logged-in user ID from session
   String? getCurrentUserId() {
     final session = supabase.auth.currentSession;
     return session?.user.id;
   }
 
-  /// Fetch full user data (customer or worker)
   Future<Map<String, dynamic>?> getCurrentUserData() async {
     final userId = getCurrentUserId();
     if (userId == null) return null;
 
-    // Try to get customer first
     final customer = await supabase
         .from('customers')
         .select()
@@ -27,7 +24,6 @@ class UserRepository {
       return Map<String, dynamic>.from(customer)..['user_type'] = 'customer';
     }
 
-    // Try to get worker
     final worker = await supabase
         .from('workers')
         .select()
