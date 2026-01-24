@@ -60,7 +60,44 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> login({required String email, required String password}) async {
-    remoteDataSource.signIn(email: email, password: password);
+  Future<AppUser> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await remoteDataSource.signIn(
+      email: email,
+      password: password,
+    );
+
+    final userType = UserTypeExtension.fromString(response['user_type']);
+
+    if (userType == UserType.customer) {
+      return CustomerUserModel(
+        id: response['id'],
+        userType: userType,
+        firstName: response['first_name'],
+        lastName: response['last_name'],
+        email: response['email'],
+        location: UserLocation(
+          latitude: response['latitude'],
+          longitude: response['longitude'],
+        ),
+        createdAt: DateTime.parse(response['created_at']),
+      );
+    } else {
+      return WorkerUserModel(
+        id: response['id'],
+        userType: userType,
+        firstName: response['first_name'],
+        lastName: response['last_name'],
+        email: response['email'],
+        location: UserLocation(
+          latitude: response['latitude'],
+          longitude: response['longitude'],
+        ),
+        createdAt: DateTime.parse(response['created_at']),
+        specialty: response['specialty'],
+      );
+    }
   }
 }

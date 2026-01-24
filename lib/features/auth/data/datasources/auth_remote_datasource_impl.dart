@@ -70,43 +70,44 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> signIn({required String email, required String password}) async {
-    try {
-      final response = await supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+  Future<Map<String, dynamic>> signIn({
+    required String email,
+    required String password,
+  }) async {
+    // Authenticate with Supabase
+    final response = await supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
 
-      if (response.session == null) {
-        // Invalid credentials
-        throw Exception('Invalid email or password');
-      }
-
-      // Save session or navigate to home
-    } on AuthApiException catch (e) {
-      // This will catch Supabase errors
-      print('Auth Error: ${e.message}');
-    } catch (e) {
-      print('Unexpected Error: $e');
+    if (response.user == null) {
+      throw Exception('Invalid login credentials');
     }
-    try {
-      final response = await supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
 
-      print('Logged in success');
-      if (response.session == null) {
-        // Invalid credentials
-        throw Exception('Invalid email or password');
-      }
+    final userId = response.user!.id;
 
-      // Save session or navigate to home
-    } on AuthApiException catch (e) {
-      print('Auth Error: ${e.message}');
-    } catch (e) {
-      print('Unexpected Error: $e');
+    final customer = await supabase
+        .from('customers')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (customer != null) {
+      return Map<String, dynamic>.from(customer)..['user_type'] = 'customer';
     }
+
+    // If not found, try 'workers' table
+    final worker = await supabase
+        .from('workers')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (worker != null) {
+      return Map<String, dynamic>.from(worker)..['user_type'] = 'worker';
+    }
+
+    throw Exception('User not found');
   }
 
   @override

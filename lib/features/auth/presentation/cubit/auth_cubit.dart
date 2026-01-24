@@ -63,22 +63,27 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> login() async {
-    if (!formKey.currentState!.validate()) return;
+    if (!formKey.currentState!.validate()) {
+      emit(AuthError('Please fill all required fields'));
+      return;
+    }
 
     emit(AuthLoading());
 
     try {
-      final response = await authRepository.login(
+      await authRepository.login(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      if (response.user == null) {
-        emit(AuthError('Invalid login credentials'));
-        return;
-      }
       emit(AuthSuccess('Logged in successfully'));
     } on Exception catch (e) {
-      emit(AuthError(e.toString()));
+      String message = 'Something went wrong. Please try again.';
+
+      if (e.toString().contains('Invalid login credentials')) {
+        message = 'Email or password is incorrect';
+      }
+
+      emit(AuthError(message));
     }
   }
 
