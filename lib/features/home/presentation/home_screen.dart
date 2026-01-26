@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 
@@ -37,10 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Welcome ${'${userData!.firstName} ${userData!.lastName}'}',
-        ),
+      drawer: const Drawer(),
+      appBar: AwesomeAppBar(
+        user: userData!,
+        onMenuTap: () => Scaffold.of(context).openDrawer(),
+        onNotificationTap: () {},
       ),
       body: Center(
         child: Column(
