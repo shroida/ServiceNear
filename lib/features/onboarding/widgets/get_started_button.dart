@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class GetStartedButton extends StatelessWidget {
+class GetStartedButton extends StatefulWidget {
   const GetStartedButton({
     super.key,
     required int currentPage,
@@ -18,8 +21,29 @@ class GetStartedButton extends StatelessWidget {
   final PageController _controller;
 
   @override
+  State<GetStartedButton> createState() => _GetStartedButtonState();
+}
+
+class _GetStartedButtonState extends State<GetStartedButton> {
+  AppUser? userData;
+  final userRepository = UserRepository(Supabase.instance.client);
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    final data = await userRepository.getCurrentUserData();
+    setState(() {
+      userData = data;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final bool isLast = _currentPage == items.length - 1;
+    final bool isLast = widget._currentPage == widget.items.length - 1;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -29,9 +53,13 @@ class GetStartedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             if (isLast) {
-              context.go(RoutePath.register);
+              if (userData != null) {
+                context.go(RoutePath.home);
+              } else {
+                context.go(RoutePath.register);
+              }
             } else {
-              _controller.nextPage(
+              widget._controller.nextPage(
                 duration: const Duration(milliseconds: 400),
                 curve: Curves.easeInOut,
               );
