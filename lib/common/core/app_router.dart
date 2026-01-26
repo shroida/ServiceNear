@@ -18,6 +18,23 @@ class AppRouter {
   );
   late final GoRouter router = GoRouter(
     initialLocation: RoutePath.onBoarding,
+    redirect: (context, state) {
+      final session = Supabase.instance.client.auth.currentSession;
+      final isLoggedIn = session != null;
+      final isOnboarding = state.matchedLocation == RoutePath.onBoarding;
+      final isRegister = state.matchedLocation == RoutePath.register;
+      final isHome = state.matchedLocation == RoutePath.home;
+
+      if (isLoggedIn && (isOnboarding || isRegister)) {
+        return RoutePath.home;
+      }
+
+      if (!isLoggedIn && isHome) {
+        return RoutePath.onBoarding;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: RoutePath.login,
