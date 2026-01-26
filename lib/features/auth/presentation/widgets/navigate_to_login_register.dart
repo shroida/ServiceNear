@@ -14,7 +14,10 @@ class NavigateToLoginRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('I have an account,', style: AppStyles.font14DarkRegular),
+        Text(
+          toLogin ? 'I have an account,' : 'Create an account,',
+          style: AppStyles.font14DarkRegular,
+        ),
         SizedBox(width: 5.w),
         GestureDetector(
           onTap: () {
@@ -22,7 +25,10 @@ class NavigateToLoginRegister extends StatelessWidget {
                 ? context.go(RoutePath.login)
                 : context.go(RoutePath.register);
           },
-          child: Text('login', style: AppStyles.font14BlueSemiBold),
+          child: Text(
+            toLogin ? 'login' : 'register',
+            style: AppStyles.font14BlueSemiBold,
+          ),
         ),
       ],
     );
