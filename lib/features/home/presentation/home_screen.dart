@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> loadUser() async {
     final data = await userRepository.getCurrentUserData();
+    if (!mounted) return;
     setState(() {
       userData = data;
     });
@@ -46,6 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Text('ID:   ${userData!.id}'),
             Text('ID:   ${userData!.createdAt}'),
             Text('ID:   ${userData!.email}'),
+            ElevatedButton(
+              onPressed: () async {
+                await userRepository.logout();
+                if (!context.mounted) return;
+                context.go(RoutePath.login);
+              },
+              child: Text('Logout'),
+            ),
           ],
         ),
       ),

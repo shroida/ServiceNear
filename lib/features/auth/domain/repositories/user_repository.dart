@@ -14,6 +14,10 @@ class UserRepository {
     return session?.user.id;
   }
 
+  Future<void> logout() async {
+    await supabase.auth.signOut();
+  }
+
   Future<AppUser?> getCurrentUserData() async {
     final userId = getCurrentUserId();
     if (userId == null) return null;
@@ -31,8 +35,8 @@ class UserRepository {
         lastName: customer['last_name'],
         email: customer['email'],
         location: UserLocation(
-          latitude: (customer['latitude'] as num).toDouble(),
-          longitude: (customer['longitude'] as num).toDouble(),
+          latitude: (customer['latitude'] as num?)?.toDouble() ?? 0.0,
+          longitude: (customer['longitude'] as num?)?.toDouble() ?? 0.0,
         ),
         createdAt: DateTime.parse(customer['created_at'] as String),
       );
@@ -51,10 +55,11 @@ class UserRepository {
         lastName: worker['last_name'],
         email: worker['email'],
         location: UserLocation(
-          latitude: worker['latitude'],
-          longitude: worker['longitude'],
+          latitude: (worker['latitude'] as num?)?.toDouble() ?? 0.0,
+          longitude: (worker['longitude'] as num?)?.toDouble() ?? 0.0,
         ),
-        createdAt: worker['created_at'],
+
+        createdAt: DateTime.parse(worker['created_at'] as String),
         specialty: worker['specialty'],
       );
     }
