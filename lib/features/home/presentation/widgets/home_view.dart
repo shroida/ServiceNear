@@ -13,15 +13,16 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppTextFormField(
               hintText: 'Search for services or workers',
               validator: (_) => null,
               hintStyle: AppStyles.font14GrayRegular,
               prefixIcon: const Icon(Icons.search, color: AppColors.textHint),
-              backgroundColor: AppColors.border,
+              backgroundColor: AppColors.divider,
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 16.w,
                 vertical: 20.h,
@@ -35,6 +36,9 @@ class HomeView extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
+            SizedBox(height: 10),
+            Text('Categories', style: AppStyles.font18DarkMedium),
+            SizedBox(height: 10),
           ],
         ),
       ),
