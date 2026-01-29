@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/home/presentation/widgets/drawer_item.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -43,7 +44,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Profile',
               onTap: () {
                 Navigator.pop(context);
-                // context.go(RoutePath.profile); // later
+                // context.go(RoutePath.profile);
               },
             ),
 
@@ -52,7 +53,7 @@ class AppDrawer extends StatelessWidget {
               title: 'Settings',
               onTap: () {
                 Navigator.pop(context);
-                // context.go(RoutePath.settings); // later
+                // context.go(RoutePath.settings);
               },
             ),
 
@@ -60,7 +61,6 @@ class AppDrawer extends StatelessWidget {
 
             const Divider(),
 
-            // ================= LOGOUT =================
             DrawerItem(
               icon: Icons.logout,
               title: 'Logout',
