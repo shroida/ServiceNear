@@ -40,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: const AppDrawer(),
+      endDrawer: const AppDrawer(),
       appBar: AwesomeAppBar(
         user: userData!,
         onMenuTap: () {
-          scaffoldKey.currentState?.openDrawer();
+          scaffoldKey.currentState?.openEndDrawer();
         },
         onNotificationTap: () {},
       ),
