@@ -21,12 +21,12 @@ class AwesomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
-      leading: IconButton(
-        icon: const Icon(Icons.menu, color: Colors.black),
-        onPressed: onMenuTap,
-      ),
+      automaticallyImplyLeading: false,
+
       title: Row(
         children: [
+          const SizedBox(width: 8),
+
           CircleAvatar(
             radius: 18,
             backgroundColor: isCustomer ? AppColors.primary : Colors.orange,
@@ -39,13 +39,14 @@ class AwesomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
                 'Welcome',
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
               Text(
-                user.firstName,
+                "${user.firstName} ${user.lastName}",
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -56,16 +57,18 @@ class AwesomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+
       actions: [
         Stack(
+          alignment: Alignment.center,
           children: [
             IconButton(
               icon: const Icon(Icons.notifications_none, color: Colors.black),
               onPressed: onNotificationTap,
             ),
             Positioned(
-              right: 10,
-              top: 10,
+              right: 12,
+              top: 12,
               child: Container(
                 width: 8,
                 height: 8,
@@ -76,6 +79,11 @@ class AwesomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ],
+        ),
+
+        IconButton(
+          icon: const Icon(Icons.menu, color: Colors.black),
+          onPressed: onMenuTap,
         ),
         const SizedBox(width: 8),
       ],
