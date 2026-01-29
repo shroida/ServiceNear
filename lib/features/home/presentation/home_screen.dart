@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 import 'package:servicenear/features/home/presentation/widgets/app_drawer.dart';
 import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
+import 'package:servicenear/features/home/presentation/widgets/home_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,44 +14,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final scaffoldKey = GlobalKey<ScaffoldState>(); // <- key
-  AppUser? userData;
-  final userRepository = UserRepository(Supabase.instance.client);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final UserRepository userRepository = UserRepository(
+    Supabase.instance.client,
+  );
+
+  AppUser? currentUser;
 
   @override
   void initState() {
     super.initState();
-    loadUser();
+    _loadUser();
   }
 
-  Future<void> loadUser() async {
-    final data = await userRepository.getCurrentUserData();
+  Future<void> _loadUser() async {
+    final user = await userRepository.getCurrentUserData();
     if (!mounted) return;
+
     setState(() {
-      userData = data;
+      currentUser = user;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (userData == null) {
+    if (currentUser == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       endDrawer: const AppDrawer(),
       appBar: AwesomeAppBar(
-        user: userData!,
-        onMenuTap: () {
-          scaffoldKey.currentState?.openEndDrawer();
-        },
-        onNotificationTap: () {},
+        user: currentUser!,
+        onMenuTap: _openEndDrawer,
+        onNotificationTap: _onNotificationsPressed,
       ),
-      body: Center(child: Column(children: [
-            
-          ],
-        )),
+      body: HomeView(user: currentUser!),
     );
   }
+
+  void _openEndDrawer() {
+    _scaffoldKey.currentState?.openEndDrawer();
+  }
+
+  void _onNotificationsPressed() {}
 }
