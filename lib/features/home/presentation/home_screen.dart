@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:servicenear/common/core/routes_path.dart';
+
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/home/presentation/widgets/app_drawer.dart';
 import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final scaffoldKey = GlobalKey<ScaffoldState>(); // <- key
   AppUser? userData;
   final userRepository = UserRepository(Supabase.instance.client);
 
@@ -38,30 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      drawer: const Drawer(),
+      key: scaffoldKey,
+      drawer: const AppDrawer(),
       appBar: AwesomeAppBar(
         user: userData!,
-        onMenuTap: () => Scaffold.of(context).openDrawer(),
+        onMenuTap: () {
+          scaffoldKey.currentState?.openDrawer();
+        },
         onNotificationTap: () {},
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text('Type ${userData!.userType}'),
-            Text('ID:   ${userData!.id}'),
-            Text('ID:   ${userData!.createdAt}'),
-            Text('ID:   ${userData!.email}'),
-            ElevatedButton(
-              onPressed: () async {
-                await userRepository.logout();
-                if (!context.mounted) return;
-                context.go(RoutePath.login);
-              },
-              child: Text('Logout'),
-            ),
+      body: Center(child: Column(children: [
+            
           ],
-        ),
-      ),
+        )),
     );
   }
 }
