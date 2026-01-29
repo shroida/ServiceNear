@@ -39,6 +39,15 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 10),
             Text('Categories', style: AppStyles.font18DarkMedium),
             SizedBox(height: 10),
+            Column(
+              children: [
+                ClipRRect(
+                  child: Container(color: AppColors.accent),
+                  borderRadius: BorderRadiusGeometry.circular(25),
+                ),
+                Text('data'),
+              ],
+            ),
           ],
         ),
       ),
