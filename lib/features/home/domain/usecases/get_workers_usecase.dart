@@ -7,7 +7,7 @@ class GetWorkersUseCase {
 
   GetWorkersUseCase(this.repository);
 
-  Future<List<WorkerUserModel>> call() {
+  Future<List<WorkerUserHomeModel>> call() {
     return repository.getWorkers();
   }
 }

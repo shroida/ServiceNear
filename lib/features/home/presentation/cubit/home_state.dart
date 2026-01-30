@@ -7,7 +7,7 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final List<WorkerUserModel> workers;
+  final List<WorkerUserHomeModel> workers;
   HomeLoaded(this.workers);
 }
 

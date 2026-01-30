@@ -37,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     if (userType == UserType.customer) {
-      return CustomerUserModel(
+      return CustomerUserAuthModel(
         id: response['id'],
         userType: userType,
         firstName: firstName,
@@ -47,7 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: DateTime.parse(response['created_at']),
       );
     } else {
-      return WorkerUserModel(
+      return WorkerUserAuthModel(
         id: response['id'],
         userType: userType,
         firstName: firstName,
@@ -73,7 +73,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final userType = UserTypeExtension.fromString(response['user_type']);
 
     if (userType == UserType.customer) {
-      return CustomerUserModel(
+      return CustomerUserAuthModel(
         id: response['id'],
         userType: userType,
         firstName: response['first_name'],
@@ -86,7 +86,7 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: DateTime.parse(response['created_at']),
       );
     } else {
-      return WorkerUserModel(
+      return WorkerUserAuthModel(
         id: response['id'],
         userType: userType,
         firstName: response['first_name'],

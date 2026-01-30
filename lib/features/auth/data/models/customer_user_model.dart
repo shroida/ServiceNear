@@ -1,7 +1,7 @@
 import '../../../../common/models/app_user_model.dart';
 
-class CustomerUserModel extends AppUserModel {
-  CustomerUserModel({
+class CustomerUserAuthModel extends AppUserModel {
+  CustomerUserAuthModel({
     required super.id,
     required super.firstName,
     required super.lastName,

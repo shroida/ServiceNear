@@ -2,8 +2,8 @@ import '../../../../common/entities/user_location.dart';
 import '../../../../common/entities/user_type.dart';
 import '../../../../common/models/app_user_model.dart';
 
-class WorkerUserModel extends AppUserModel {
-  WorkerUserModel({
+class WorkerUserAuthModel extends AppUserModel {
+  WorkerUserAuthModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -14,8 +14,8 @@ class WorkerUserModel extends AppUserModel {
     super.specialty,
   });
 
-  factory WorkerUserModel.fromJson(Map<String, dynamic> json) {
-    return WorkerUserModel(
+  factory WorkerUserAuthModel.fromJson(Map<String, dynamic> json) {
+    return WorkerUserAuthModel(
       id: json['id'],
       firstName: json['first_name'],
       lastName: json['last_name'],
