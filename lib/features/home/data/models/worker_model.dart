@@ -25,7 +25,7 @@ class WorkerModel extends WorkerUserHomeModel {
       createdAt: map['created_at'] != null
           ? DateTime.parse(map['created_at'])
           : DateTime.now(),
-      specialty: map['specialty'], // can stay null
+      specialty: map['specialty'],
     );
   }
 }
