@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
@@ -45,13 +46,19 @@ class HomeView extends StatelessWidget {
               height: 100.h,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: 12,
-                separatorBuilder: (_, _) => SizedBox(width: 70.w),
+                itemCount: workerCategories.length,
+                separatorBuilder: (_, _) => SizedBox(width: 20.w),
                 itemBuilder: (context, index) {
-                  return CategoryCard(title: 'Plumber', icon: Icons.plumbing);
+                  final category = workerCategories[index];
+
+                  return CategoryCard(
+                    title: category.title,
+                    icon: category.icon,
+                  );
                 },
               ),
             ),
+
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

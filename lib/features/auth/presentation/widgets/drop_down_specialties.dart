@@ -35,14 +35,18 @@ class DropDownSpecialties extends StatelessWidget {
           borderSide: const BorderSide(color: AppColors.primary, width: 1.3),
         ),
       ),
-      items: workerSpecialties
+      items: workerCategories
           .map(
             (specialty) => DropdownMenuItem(
-              value: specialty,
-              child: Text(specialty, style: AppStyles.font14DarkBlueMedium),
+              value: specialty.title,
+              child: Text(
+                specialty.title,
+                style: AppStyles.font14DarkBlueMedium,
+              ),
             ),
           )
           .toList(),
+
       onChanged: onChanged,
       validator: (value) =>
           value == null ? 'Please select your specialty' : null,
