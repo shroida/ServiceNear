@@ -1,5 +1,5 @@
 import 'package:servicenear/common/entities/user_location.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user_auth.dart';
 
 import '../../../../common/entities/user_type.dart';
 

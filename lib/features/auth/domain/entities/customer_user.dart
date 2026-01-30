@@ -1,4 +1,4 @@
-import 'app_user.dart';
+import 'app_user_auth.dart';
 
 class CustomerUser extends AppUserAuth {
   CustomerUser({

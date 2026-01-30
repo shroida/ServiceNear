@@ -1,6 +1,6 @@
 import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user_auth.dart';
 import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
 import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
