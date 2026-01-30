@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/home/presentation/views/main_screen.dart';
 import 'package:servicenear/features/home/presentation/widgets/app_drawer.dart';
 import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
-import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onMenuTap: _openEndDrawer,
         onNotificationTap: _onNotificationsPressed,
       ),
-      body: HomeView(user: currentUser!),
+      body: MainScreen(user: currentUser!),
     );
   }
 
