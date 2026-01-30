@@ -4,6 +4,8 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
+import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
 
 class HomeView extends StatelessWidget {
   final AppUser user;
@@ -39,14 +41,47 @@ class HomeView extends StatelessWidget {
             SizedBox(height: 10),
             Text('Categories', style: AppStyles.font18DarkMedium),
             SizedBox(height: 10),
-            Column(
+            SizedBox(
+              height: 100.h,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: 12,
+                separatorBuilder: (_, _) => SizedBox(width: 70.w),
+                itemBuilder: (context, index) {
+                  return CategoryCard(title: 'Plumber', icon: Icons.plumbing);
+                },
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ClipRRect(
-                  child: Container(color: AppColors.accent),
-                  borderRadius: BorderRadiusGeometry.circular(25),
+                Text('Workers', style: AppStyles.font18DarkMedium),
+                Text(
+                  'View all',
+                  style: AppStyles.font18DarkBlueSemiBold.copyWith(
+                    color: AppColors.primary,
+                    fontSize: 16,
+                  ),
                 ),
-                Text('data'),
               ],
+            ),
+            SizedBox(height: 10),
+
+            SizedBox(
+              height: 300.h,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: 12,
+                separatorBuilder: (_, _) => SizedBox(width: 20.w),
+                itemBuilder: (context, index) {
+                  return WorkerCard(
+                    imageUrl: 'https://i.pravatar.cc/150?img=1',
+                    name: 'Muhammad Walied',
+                    specialist: 'Plumber',
+                  );
+                },
+              ),
             ),
           ],
         ),

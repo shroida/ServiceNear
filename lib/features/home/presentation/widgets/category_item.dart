@@ -12,31 +12,23 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(20.r),
       onTap: () {},
-      child: Container(
-        width: 90.w,
-        padding: EdgeInsets.symmetric(vertical: 14.h),
-        decoration: BoxDecoration(
-          color: AppColors.accent,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 22.r,
-              backgroundColor: AppColors.primary,
-              child: Icon(icon, color: Colors.white, size: 22),
-            ),
-            SizedBox(height: 10.h),
-            Text(
-              title,
-              style: AppStyles.font14DarkRegular,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 30.r,
+            backgroundColor: AppColors.primary,
+            child: Icon(icon, color: Colors.white, size: 30),
+          ),
+
+          SizedBox(height: 10.h),
+          Text(
+            title,
+            style: AppStyles.font14DarkRegular,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
