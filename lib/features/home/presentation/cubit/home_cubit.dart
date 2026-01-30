@@ -9,10 +9,8 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeLoading());
     try {
       final workers = await homeRepository.getWorkers();
-      print('Fetched workers: ${workers.length}'); // debug
       emit(HomeLoaded(workers));
     } catch (e) {
-      print('Error fetching workers: $e'); // debug
       emit(HomeError(e.toString()));
     }
   }
