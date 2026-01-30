@@ -1,9 +1,8 @@
-import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
+import 'package:servicenear/common/entities/user_location.dart';
+import 'package:servicenear/common/entities/user_type.dart';
+import '../../domain/entities/worker_user_home_model.dart';
 
-import '../../../../common/entities/user_location.dart';
-import '../../../../common/entities/user_type.dart';
-
-class WorkerModel extends WorkerUserModel {
+class WorkerModel extends WorkerUserHomeModel {
   WorkerModel({
     required super.id,
     required super.firstName,
@@ -21,10 +20,10 @@ class WorkerModel extends WorkerUserModel {
       firstName: map['first_name'],
       lastName: map['last_name'],
       email: map['email'],
-      specialty: map['specialty'],
       userType: UserTypeExtension.fromString(map['user_type']),
       location: UserLocation.fromJson(map),
       createdAt: DateTime.parse(map['created_at']),
+      specialty: map['specialty'],
     );
   }
 }

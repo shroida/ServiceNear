@@ -1,8 +1,8 @@
-import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../models/worker_model.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<List<WorkerUserModel>> getWorkers();
+  Future<List<WorkerModel>> getWorkers();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -11,9 +11,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   HomeRemoteDataSourceImpl(this.supabase);
 
   @override
-  Future<List<WorkerUserModel>> getWorkers() async {
+  Future<List<WorkerModel>> getWorkers() async {
     final data = await supabase.from('worker').select();
 
-    return (data as List).map((e) => WorkerUserModel.fromJson(e)).toList();
+    return (data as List).map((e) => WorkerModel.fromMap(e)).toList();
   }
 }
