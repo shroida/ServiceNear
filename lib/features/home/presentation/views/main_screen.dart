@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+
+import '../../../../common/entities/app_user.dart';
 
 class MainScreen extends StatefulWidget {
   final AppUser user;

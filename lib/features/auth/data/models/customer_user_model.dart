@@ -1,4 +1,4 @@
-import 'package:servicenear/features/auth/data/models/app_user_model.dart';
+import '../../../../common/models/app_user_model.dart';
 
 class CustomerUserModel extends AppUserModel {
   CustomerUserModel({

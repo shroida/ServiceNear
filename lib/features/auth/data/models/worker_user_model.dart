@@ -1,7 +1,6 @@
-import 'package:servicenear/features/auth/data/models/app_user_model.dart';
-
-import '../../domain/entities/user_type.dart';
-import '../../domain/entities/user_location.dart';
+import '../../../../common/entities/user_location.dart';
+import '../../../../common/entities/user_type.dart';
+import '../../../../common/models/app_user_model.dart';
 
 class WorkerUserModel extends AppUserModel {
   WorkerUserModel({

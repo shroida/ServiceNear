@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/common/core/app_colors.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 
 class AwesomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppUser user;

@@ -1,5 +1,5 @@
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
-import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 
 abstract class AuthRepository {
   Future<AppUser> register({

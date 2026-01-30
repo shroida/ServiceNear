@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
 

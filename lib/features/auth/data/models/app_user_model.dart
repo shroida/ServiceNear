@@ -1,23 +1,22 @@
-import '../../domain/entities/app_user.dart';
-import '../../domain/entities/user_location.dart';
-import '../../domain/entities/user_type.dart';
+import 'package:servicenear/common/entities/user_location.dart';
+import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 
-class AppUserModel extends AppUser {
+import '../../../../common/entities/user_type.dart';
+
+class AppUserAuthRemoteModel extends AppUserAuth {
   final String? specialty;
-
-  const AppUserModel({
+  AppUserAuthRemoteModel({
     required super.id,
     required super.firstName,
     required super.lastName,
     required super.email,
-    required super.userType,
-    required super.location,
     required super.createdAt,
+    required super.location,
+    required super.userType,
     this.specialty,
   });
-
-  factory AppUserModel.fromJson(Map<String, dynamic> json) {
-    return AppUserModel(
+  factory AppUserAuthRemoteModel.fromJson(Map<String, dynamic> json) {
+    return AppUserAuthRemoteModel(
       id: json['id'],
       firstName: json['first_name'],
       lastName: json['last_name'],

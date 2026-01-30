@@ -1,8 +1,9 @@
+import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/user_location.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/features/auth/data/models/customer_user_model.dart';
 import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
-import 'package:servicenear/features/auth/domain/entities/user_location.dart';
-import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 
@@ -48,8 +49,8 @@ class AuthRepositoryImpl implements AuthRepository {
     } else {
       return WorkerUserModel(
         id: response['id'],
-        firstName: firstName,
         userType: userType,
+        firstName: firstName,
         lastName: lastName,
         email: email,
         location: UserLocation(latitude: latitude, longitude: longitude),

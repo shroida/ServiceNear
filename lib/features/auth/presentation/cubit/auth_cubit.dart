@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import 'auth_state.dart';
 

@@ -1,6 +1,7 @@
+import 'package:servicenear/common/entities/user_location.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
-import 'package:servicenear/features/auth/domain/entities/user_location.dart';
 import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -18,7 +19,7 @@ class UserRepository {
     await supabase.auth.signOut();
   }
 
-  Future<AppUser?> getCurrentUserData() async {
+  Future<AppUserAuth?> getCurrentUserData() async {
     final userId = getCurrentUserId();
     if (userId == null) return null;
 
@@ -30,6 +31,7 @@ class UserRepository {
 
     if (customer != null) {
       return CustomerUser(
+        userType: UserType.customer,
         id: customer['id'],
         firstName: customer['first_name'],
         lastName: customer['last_name'],
@@ -50,6 +52,7 @@ class UserRepository {
 
     if (worker != null) {
       return WorkerUser(
+        userType: UserType.worker,
         id: worker['id'],
         firstName: worker['first_name'],
         lastName: worker['last_name'],

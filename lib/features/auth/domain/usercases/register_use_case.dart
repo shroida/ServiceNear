@@ -1,6 +1,6 @@
-import 'package:servicenear/features/auth/domain/entities/user_type.dart';
+import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 
-import '../entities/app_user.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUseCase {

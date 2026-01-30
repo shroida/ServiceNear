@@ -1,22 +1,13 @@
-import 'user_type.dart';
-import 'user_location.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 
-abstract class AppUser {
-  final String id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final UserType userType;
-  final UserLocation location;
-  final DateTime createdAt;
-
-  const AppUser({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.userType,
-    required this.location,
-    required this.createdAt,
+class AppUserAuth extends AppUser {
+  AppUserAuth({
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.email,
+    required super.userType,
+    required super.location,
+    required super.createdAt,
   });
 }

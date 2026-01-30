@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/features/auth/domain/entities/user_type.dart';
 
 class TypeSelector extends StatelessWidget {
   final UserType selectedType;

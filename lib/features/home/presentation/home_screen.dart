@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
 import 'package:servicenear/features/home/presentation/views/main_screen.dart';
 import 'package:servicenear/features/home/presentation/widgets/app_drawer.dart';
 import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:servicenear/common/entities/app_user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
