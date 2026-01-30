@@ -1,9 +1,7 @@
-import 'app_user_auth.dart';
+import 'package:servicenear/features/home/domain/entities/app_user_home.dart';
 
-class WorkerAuthUser extends AppUserAuth {
-  final String specialty;
-
-  WorkerAuthUser({
+class WorkerUserHomeModel extends AppUserHome {
+  WorkerUserHomeModel({
     required super.id,
     required super.firstName,
     required super.lastName,
@@ -11,6 +9,5 @@ class WorkerAuthUser extends AppUserAuth {
     required super.userType,
     required super.location,
     required super.createdAt,
-    required this.specialty,
   });
 }

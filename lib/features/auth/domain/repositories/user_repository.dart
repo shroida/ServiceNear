@@ -30,7 +30,7 @@ class UserRepository {
         .maybeSingle();
 
     if (customer != null) {
-      return CustomerUser(
+      return CustomerAuthUser(
         userType: UserType.customer,
         id: customer['id'],
         firstName: customer['first_name'],
@@ -51,7 +51,7 @@ class UserRepository {
         .maybeSingle();
 
     if (worker != null) {
-      return WorkerUser(
+      return WorkerAuthUser(
         userType: UserType.worker,
         id: worker['id'],
         firstName: worker['first_name'],

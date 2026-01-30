@@ -1,7 +1,7 @@
 import 'app_user_auth.dart';
 
-class CustomerUser extends AppUserAuth {
-  CustomerUser({
+class CustomerAuthUser extends AppUserAuth {
+  CustomerAuthUser({
     required super.id,
     required super.firstName,
     required super.lastName,
