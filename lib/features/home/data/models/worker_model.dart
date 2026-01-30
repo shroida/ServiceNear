@@ -16,14 +16,16 @@ class WorkerModel extends WorkerUserHomeModel {
 
   factory WorkerModel.fromMap(Map<String, dynamic> map) {
     return WorkerModel(
-      id: map['id'],
-      firstName: map['first_name'],
-      lastName: map['last_name'],
-      email: map['email'],
-      userType: UserTypeExtension.fromString(map['user_type']),
+      id: map['id']?.toString() ?? 'unknown-id',
+      firstName: map['first_name'] ?? 'Unknown',
+      lastName: map['last_name'] ?? 'Unknown',
+      email: map['email'] ?? 'no-email@example.com',
+      userType: UserTypeExtension.fromString(map['user_type'] ?? 'customer'),
       location: UserLocation.fromJson(map),
-      createdAt: DateTime.parse(map['created_at']),
-      specialty: map['specialty'],
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'])
+          : DateTime.now(),
+      specialty: map['specialty'], // can stay null
     );
   }
 }

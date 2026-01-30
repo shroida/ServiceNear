@@ -22,7 +22,10 @@ class WorkerUserAuthModel extends AppUserModel {
       email: json['email'],
       specialty: json['specialty'],
       userType: UserTypeExtension.fromString(json['user_type']),
-      location: UserLocation.fromJson(json),
+      location: UserLocation.fromJson({
+        'latitude': json['latitude'],
+        'longitude': json['longitude'],
+      }),
       createdAt: DateTime.parse(json['created_at']),
     );
   }

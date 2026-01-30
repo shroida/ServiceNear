@@ -12,7 +12,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<WorkerModel>> getWorkers() async {
-    final data = await supabase.from('worker').select();
+    final data = await supabase.from('workers').select();
+    print('Supabase returned from data source: $data');
 
     return (data as List).map((e) => WorkerModel.fromMap(e)).toList();
   }

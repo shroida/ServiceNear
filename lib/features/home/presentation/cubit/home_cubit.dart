@@ -1,18 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/get_workers_usecase.dart';
+import 'package:servicenear/features/home/domain/repositories/home_repositories.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final GetWorkersUseCase getWorkers;
-
-  HomeCubit(this.getWorkers) : super(HomeInitial());
-
+  HomeCubit(this.homeRepository) : super(HomeInitial());
+  final HomeRepository homeRepository;
   Future<void> fetchWorkers() async {
     emit(HomeLoading());
     try {
-      final workers = await getWorkers();
+      final workers = await homeRepository.getWorkers();
+      print('Fetched workers: ${workers.length}'); // debug
       emit(HomeLoaded(workers));
     } catch (e) {
+      print('Error fetching workers: $e'); // debug
       emit(HomeError(e.toString()));
     }
   }
