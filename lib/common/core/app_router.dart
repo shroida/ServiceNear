@@ -68,8 +68,12 @@ class AppRouter {
       GoRoute(
         path: RoutePath.profile,
         builder: (context, state) {
-          final user = state.extra as AppUser;
-          return ProfileScreen(user: user);
+          final data = state.extra as Map<String, dynamic>;
+
+          final AppUser user = data['user'];
+          final String specialty = data['specialty'] ?? '';
+
+          return ProfileScreen(user: user, specialty: specialty);
         },
       ),
 

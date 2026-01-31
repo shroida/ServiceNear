@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
@@ -63,7 +64,13 @@ class WorkersView extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
-                            // TODO: navigate to worker details
+                            context.push(
+                              RoutePath.profile,
+                              extra: {
+                                'user': worker,
+                                'specialty': worker.specialty,
+                              },
+                            );
                           },
                           child: Padding(
                             padding: EdgeInsets.all(16.w),

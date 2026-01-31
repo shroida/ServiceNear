@@ -9,16 +9,20 @@ import 'package:servicenear/common/widgets/app_styles.dart';
 
 class WorkerCard extends StatelessWidget {
   final AppUser user;
-  final String? specialist;
+  final String specialist;
 
-  const WorkerCard({super.key, required this.user, this.specialist});
+  const WorkerCard({super.key, required this.user, required this.specialist});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(RoutePath.profile, extra: user);
+        context.push(
+          RoutePath.profile,
+          extra: {'user': user, 'specialty': specialist},
+        );
       },
+
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 30.h),
@@ -65,7 +69,7 @@ class WorkerCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    specialist ?? 'No specialty',
+                    specialist,
                     style: AppStyles.font14DarkBlueMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
