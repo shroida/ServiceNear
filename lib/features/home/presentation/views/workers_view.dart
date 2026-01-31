@@ -59,7 +59,7 @@ class WorkersView extends StatelessWidget {
                         color: AppColors.background,
                         borderRadius: BorderRadius.circular(18.r),
                         elevation: 2,
-                        shadowColor: Colors.black.withOpacity(0.05),
+                        shadowColor: Colors.black.withValues(alpha: .05),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
@@ -103,8 +103,8 @@ class WorkersView extends StatelessWidget {
                                           vertical: 4.h,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: AppColors.primary.withOpacity(
-                                            .1,
+                                          color: AppColors.primary.withValues(
+                                            alpha: .1,
                                           ),
                                           borderRadius: BorderRadius.circular(
                                             20.r,
@@ -118,7 +118,6 @@ class WorkersView extends StatelessWidget {
 
                                       SizedBox(height: 8.h),
 
-                                      // META INFO
                                       Row(
                                         children: [
                                           const Icon(
@@ -168,30 +167,5 @@ class WorkersView extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-String getWorkerImage(String? specialty) {
-  switch (specialty?.toLowerCase()) {
-    case 'plumber':
-      return Assets.plumber;
-    case 'electrician':
-      return Assets.worker;
-    case 'carpenter':
-      return Assets.carpenter;
-    case 'painter':
-      return Assets.painter;
-    case 'mechanic':
-      return Assets.mechanic;
-    case 'cleaner':
-      return Assets.cleaner;
-    case 'ac technician':
-      return Assets.acTechnician;
-    case 'garage':
-      return Assets.garage;
-    case 'supermarket':
-      return Assets.supermarket;
-    default:
-      return Assets.worker; // fallback
   }
 }

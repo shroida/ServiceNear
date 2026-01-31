@@ -38,7 +38,7 @@ class WorkerCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-              child: Image.network(
+              child: Image.asset(
                 imageUrl,
                 height: 150.h,
                 width: double.infinity,
