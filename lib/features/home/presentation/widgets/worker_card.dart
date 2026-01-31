@@ -18,7 +18,9 @@ class WorkerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        print(name);
+      },
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 30.h),
