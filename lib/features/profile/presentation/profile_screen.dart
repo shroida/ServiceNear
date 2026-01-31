@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 
-class Profile extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   final AppUser user;
-  const Profile({super.key, required this.user});
+  const ProfileScreen({super.key, required this.user});
 
   @override
-  ProfileState createState() => ProfileState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class ProfileState extends State<Profile> {
+class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(

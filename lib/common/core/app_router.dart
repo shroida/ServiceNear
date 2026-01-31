@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource_impl.dart';
 import 'package:servicenear/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
@@ -15,6 +16,7 @@ import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
 import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
+import 'package:servicenear/features/profile/presentation/profile_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppRouter {
@@ -63,8 +65,14 @@ class AppRouter {
         path: RoutePath.onBoarding,
         builder: (context, state) => const OnBoardingScreen(),
       ),
+      GoRoute(
+        path: RoutePath.profile,
+        builder: (context, state) {
+          final user = state.extra as AppUser;
+          return ProfileScreen(user: user);
+        },
+      ),
 
-      /// 🔥 HOME SHELL (Cubit created ONCE)
       ShellRoute(
         builder: (context, state, child) {
           return BlocProvider(
