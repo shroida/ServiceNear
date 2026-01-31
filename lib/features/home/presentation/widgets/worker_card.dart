@@ -21,55 +21,58 @@ class WorkerCard extends StatelessWidget {
       onTap: () {},
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        width: 190.w,
-        padding: EdgeInsets.all(10.w),
+        margin: EdgeInsets.symmetric(vertical: 30.h),
+        width: 180.w,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Colors.black.withValues(alpha: .08),
               blurRadius: 12,
-              offset: const Offset(0, 1),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(14.r),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
               child: Image.network(
                 imageUrl,
+                height: 150.h,
                 width: double.infinity,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 errorBuilder: (_, _, _) => Container(
-                  height: 80.h,
+                  height: 120.h,
                   color: AppColors.divider,
-                  child: const Icon(Icons.person, size: 36),
+                  child: const Icon(Icons.person, size: 40),
                 ),
               ),
             ),
 
-            SizedBox(height: 2.h),
-
-            Text(
-              name,
-              style: AppStyles.font14DarkBlueBold,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-
-            SizedBox(height: 4.h),
-            Text(
-              specialist!,
-              style: AppStyles.font12GrayRegular,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    style: AppStyles.font18DarkGreyMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    specialist ?? 'No specialty',
+                    style: AppStyles.font18GrayMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

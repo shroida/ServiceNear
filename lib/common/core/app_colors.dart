@@ -12,6 +12,7 @@ class AppColors {
   static const Color scaffoldBackground = Color(0xFFFFFFFF);
 
   static const Color textPrimary = Color(0xFF1B1B1B);
+  static const Color darkGrey = Color(0xFF313131);
   static const Color textSecondary = Color(0xFF6B6B6B);
   static const Color textHint = Color(0xFF9E9E9E);
   static const Color textOnPrimary = Colors.white;

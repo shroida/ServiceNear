@@ -43,7 +43,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Text('Categories', style: AppStyles.font18DarkMedium),
+            Text('Categories', style: AppStyles.font18DarkGreyMedium),
             SizedBox(height: 10),
             SizedBox(
               height: 100.h,
@@ -66,7 +66,7 @@ class HomeView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Workers', style: AppStyles.font18DarkMedium),
+                Text('Workers', style: AppStyles.font18DarkGreyMedium),
                 Text(
                   'View all',
                   style: AppStyles.font18DarkBlueSemiBold.copyWith(
