@@ -18,6 +18,7 @@ class HomeRepositoryImpl implements HomeRepository {
             firstName: m.firstName,
             lastName: m.lastName,
             email: m.email,
+            phoneNubmer: m.phoneNubmer,
             userType: m.userType,
             location: m.location,
             createdAt: m.createdAt,

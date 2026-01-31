@@ -10,6 +10,7 @@ class WorkerModel extends WorkerUserHomeModel {
     required super.email,
     required super.userType,
     required super.location,
+    required super.phoneNubmer,
     required super.createdAt,
     super.specialty,
   });
@@ -19,6 +20,7 @@ class WorkerModel extends WorkerUserHomeModel {
       id: map['id']?.toString() ?? 'unknown-id',
       firstName: map['first_name'] ?? 'Unknown',
       lastName: map['last_name'] ?? 'Unknown',
+      phoneNubmer: map['phone'] ?? 'Unknown',
       email: map['email'] ?? 'no-email@example.com',
       userType: UserTypeExtension.fromString(map['user_type'] ?? 'customer'),
       location: UserLocation.fromJson(map),

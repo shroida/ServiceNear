@@ -7,6 +7,7 @@ class CustomerUserAuthModel extends AppUserModel {
     required super.lastName,
     required super.email,
     required super.userType,
+    required super.phoneNubmer,
     required super.location,
     required super.createdAt,
   });

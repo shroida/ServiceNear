@@ -36,6 +36,7 @@ class UserRepository {
         firstName: customer['first_name'],
         lastName: customer['last_name'],
         email: customer['email'],
+        phoneNubmer: customer['phone'] ?? '',
         location: UserLocation(
           latitude: (customer['latitude'] as num?)?.toDouble() ?? 0.0,
           longitude: (customer['longitude'] as num?)?.toDouble() ?? 0.0,
@@ -57,6 +58,7 @@ class UserRepository {
         firstName: worker['first_name'],
         lastName: worker['last_name'],
         email: worker['email'],
+        phoneNubmer: worker['phone'],
         location: UserLocation(
           latitude: (worker['latitude'] as num?)?.toDouble() ?? 0.0,
           longitude: (worker['longitude'] as num?)?.toDouble() ?? 0.0,

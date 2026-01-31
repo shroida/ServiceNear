@@ -10,6 +10,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
     required super.firstName,
     required super.lastName,
     required super.email,
+    required super.phoneNubmer,
     required super.createdAt,
     required super.location,
     required super.userType,
@@ -21,6 +22,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
+      phoneNubmer: json['phone'],
       userType: UserTypeExtension.fromString(json['user_type']),
       location: UserLocation(
         latitude: (json['latitude'] as num).toDouble(),
@@ -37,6 +39,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
+      'phone': phoneNubmer,
       'user_type': userType.nameStr,
       'latitude': location.latitude,
       'longitude': location.longitude,

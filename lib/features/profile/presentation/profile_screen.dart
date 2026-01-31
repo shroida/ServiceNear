@@ -16,18 +16,7 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         children: [
           _ProfileHeader(user: user, specialty: specialty),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(20.w),
-              child: Column(
-                children: [
-                  _StatsCard(),
-                  SizedBox(height: 24.h),
-                  _WeekActivity(),
-                ],
-              ),
-            ),
-          ),
+          SizedBox(height: 20.h),
         ],
       ),
     );
@@ -42,12 +31,12 @@ class _ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220.h,
+      height: 270.h,
       width: double.infinity,
       padding: EdgeInsets.only(top: 60.h),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.7)],
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.7)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -81,130 +70,20 @@ class _ProfileHeader extends StatelessWidget {
             user.email,
             style: TextStyle(fontSize: 13.sp, color: Colors.white70),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatsCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 6),
+          SizedBox(height: 4.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(onPressed: () {}, child: Text('Message')),
+              SizedBox(width: 6.w),
+              Text(
+                user.phoneNubmer,
+                style: TextStyle(fontSize: 13.sp, color: Colors.white70),
+              ),
+            ],
           ),
         ],
       ),
-      child: Column(
-        children: [
-          _StatRow(
-            leftTitle: 'Distance',
-            leftValue: '6.1 km',
-            rightTitle: 'Calories',
-            rightValue: '300',
-          ),
-          SizedBox(height: 16.h),
-          _StatRow(
-            leftTitle: 'Elevation',
-            leftValue: '492 m',
-            rightTitle: 'Time',
-            rightValue: '5:30',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatRow extends StatelessWidget {
-  final String leftTitle;
-  final String leftValue;
-  final String rightTitle;
-  final String rightValue;
-
-  const _StatRow({
-    required this.leftTitle,
-    required this.leftValue,
-    required this.rightTitle,
-    required this.rightValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _StatItem(title: leftTitle, value: leftValue),
-        ),
-        Expanded(
-          child: _StatItem(title: rightTitle, value: rightValue),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  final String title;
-  final String value;
-
-  const _StatItem({required this.title, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          title,
-          style: TextStyle(fontSize: 12.sp, color: AppColors.textHint),
-        ),
-      ],
-    );
-  }
-}
-
-class _WeekActivity extends StatelessWidget {
-  final days = const ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: days.map((day) {
-        return Container(
-          width: 40.w,
-          height: 40.w,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: day == 'W' ? AppColors.primary : Colors.grey.shade200,
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            day,
-            style: TextStyle(
-              fontSize: 13.sp,
-              color: day == 'W' ? Colors.white : AppColors.textPrimary,
-            ),
-          ),
-        );
-      }).toList(),
     );
   }
 }

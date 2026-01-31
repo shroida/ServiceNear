@@ -9,6 +9,7 @@ class AppUserModel extends AppUser {
     required super.id,
     required super.firstName,
     required super.lastName,
+    required super.phoneNubmer,
     required super.email,
     required super.userType,
     required super.location,
@@ -20,6 +21,7 @@ class AppUserModel extends AppUser {
     return AppUserModel(
       id: json['id'],
       firstName: json['first_name'],
+      phoneNubmer: json['phone'],
       lastName: json['last_name'],
       email: json['email'],
       userType: UserTypeExtension.fromString(json['user_type']),

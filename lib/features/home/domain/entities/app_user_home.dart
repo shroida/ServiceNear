@@ -5,6 +5,7 @@ class AppUserHome extends AppUser {
     required super.id,
     required super.firstName,
     required super.lastName,
+    required super.phoneNubmer,
     required super.email,
     required super.userType,
     required super.location,
