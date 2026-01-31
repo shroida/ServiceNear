@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
-import 'package:servicenear/common/core/images.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
@@ -101,8 +100,7 @@ class HomeView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final worker = workers[index];
                         return WorkerCard(
-                          imageUrl: getWorkerImage(worker.specialty),
-                          name: '${worker.firstName} ${worker.lastName}',
+                          user: worker,
                           specialist: worker.specialty ?? 'No specialty',
                         );
                       },

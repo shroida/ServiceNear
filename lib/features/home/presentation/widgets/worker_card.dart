@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/images.dart';
+import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 
 class WorkerCard extends StatelessWidget {
-  final String name;
-  final String imageUrl;
+  final AppUser user;
   final String? specialist;
 
-  const WorkerCard({
-    super.key,
-    required this.name,
-    required this.imageUrl,
-    this.specialist,
-  });
+  const WorkerCard({super.key, required this.user, this.specialist});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(name);
+        context.push(RoutePath.profile, extra: user);
       },
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
@@ -41,7 +39,7 @@ class WorkerCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
               child: Image.asset(
-                imageUrl,
+                getWorkerImage(specialist),
                 height: 150.h,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -59,7 +57,7 @@ class WorkerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    name,
+                    '${user.firstName} ${user.lastName}',
                     style: AppStyles.font18DarkGreyMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
