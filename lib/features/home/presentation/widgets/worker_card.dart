@@ -66,7 +66,7 @@ class WorkerCard extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Text(
                     specialist ?? 'No specialty',
-                    style: AppStyles.font18GrayMedium,
+                    style: AppStyles.font14DarkBlueMedium,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
