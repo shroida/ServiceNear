@@ -13,6 +13,7 @@ import 'package:servicenear/features/home/data/repositories/home_repository_impl
 import 'package:servicenear/features/home/domain/repositories/home_repositories.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
+import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -50,13 +51,7 @@ class AppRouter {
           child: const LoginScreen(),
         ),
       ),
-      GoRoute(
-        path: RoutePath.home,
-        builder: (context, state) => BlocProvider(
-          create: (_) => HomeCubit(_homeRepository)..fetchWorkers(),
-          child: const HomeScreen(),
-        ),
-      ),
+
       GoRoute(
         path: RoutePath.register,
         builder: (context, state) => BlocProvider(
@@ -67,6 +62,23 @@ class AppRouter {
       GoRoute(
         path: RoutePath.onBoarding,
         builder: (context, state) => const OnBoardingScreen(),
+      ),
+
+      /// 🔥 HOME SHELL (Cubit created ONCE)
+      ShellRoute(
+        builder: (context, state, child) {
+          return BlocProvider(
+            create: (_) => HomeCubit(_homeRepository)..fetchWorkers(),
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(path: RoutePath.home, builder: (_, _) => const HomeScreen()),
+          GoRoute(
+            path: RoutePath.workers,
+            builder: (_, _) => const WorkersView(),
+          ),
+        ],
       ),
     ],
   );

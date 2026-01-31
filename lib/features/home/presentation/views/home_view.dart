@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
@@ -67,11 +69,16 @@ class HomeView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Workers', style: AppStyles.font18DarkGreyMedium),
-                Text(
-                  'View all',
-                  style: AppStyles.font18DarkBlueSemiBold.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 16,
+                GestureDetector(
+                  onTap: () {
+                    context.push(RoutePath.workers);
+                  },
+                  child: Text(
+                    'View all',
+                    style: AppStyles.font18DarkBlueSemiBold.copyWith(
+                      color: AppColors.primary,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],
