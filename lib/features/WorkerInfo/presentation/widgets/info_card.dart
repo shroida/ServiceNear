@@ -4,8 +4,9 @@ import 'package:servicenear/common/entities/app_user.dart';
 
 class InfoCard extends StatelessWidget {
   final AppUser user;
+  final String specialty;
 
-  const InfoCard({super.key, required this.user});
+  const InfoCard({super.key, required this.user, required this.specialty});
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +23,19 @@ class InfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _InfoRow("User Type", user.userType.name),
-          _InfoRow("Joined", user.createdAt.toString().split(' ')[0]),
+          InfoRow("Specialty", specialty),
+          InfoRow("Joined", user.createdAt.toString().split(' ')[0]),
         ],
       ),
     );
   }
 }
 
-class _InfoRow extends StatelessWidget {
+class InfoRow extends StatelessWidget {
   final String title;
   final String value;
 
-  const _InfoRow(this.title, this.value);
+  const InfoRow(this.title, this.value, {super.key});
 
   @override
   Widget build(BuildContext context) {

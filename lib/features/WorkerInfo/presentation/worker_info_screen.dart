@@ -22,7 +22,7 @@ class WorkerInfoScreen extends StatelessWidget {
         children: [
           WorkerInfoHeader(user: user, specialty: specialty),
           SizedBox(height: 20.h),
-          InfoCard(user: user),
+          InfoCard(user: user, specialty: specialty),
           SizedBox(height: 20.h),
         ],
       ),
