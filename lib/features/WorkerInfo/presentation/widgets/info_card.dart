@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
 
 class InfoCard extends StatelessWidget {
-  final AppUser user;
+  final WorkerInfo user;
   final String specialty;
 
   const InfoCard({super.key, required this.user, required this.specialty});

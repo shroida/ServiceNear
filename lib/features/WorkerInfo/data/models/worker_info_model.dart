@@ -21,15 +21,18 @@ class WorkerInfoModel extends WorkerInfo {
   factory WorkerInfoModel.fromJson(Map<String, dynamic> json) {
     return WorkerInfoModel(
       id: json['id'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      phoneNubmer: json['phoneNubmer'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      phoneNubmer: json['phone'],
       email: json['email'],
       userType: UserType.values.firstWhere((e) => e.name == json['userType']),
-      location: UserLocation.fromJson(json['location']),
-      createdAt: DateTime.parse(json['createdAt']),
-      rating: json['rating']?.toDouble() ?? 0.0,
-      reviewsCount: json['reviewsCount'] ?? 0,
+      location: UserLocation.fromJson({
+        'latitude': (json['latitude'] as num).toDouble(),
+        'longitude': (json['longitude'] as num).toDouble(),
+      }),
+      createdAt: DateTime.parse(json['created_at']),
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      reviewsCount: json['reviews_count'] ?? 0,
       about: json['about'] ?? '',
       address: json['address'] ?? '',
     );
@@ -37,15 +40,16 @@ class WorkerInfoModel extends WorkerInfo {
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'firstName': firstName,
-    'lastName': lastName,
-    'phoneNubmer': phoneNubmer,
+    'first_name': firstName,
+    'last_name': lastName,
+    'phone': phoneNubmer,
     'email': email,
     'userType': userType.name,
-    'location': location.toJson(),
-    'createdAt': createdAt.toIso8601String(),
+    'latitude': location.latitude,
+    'longitude': location.longitude,
+    'created_at': createdAt.toIso8601String(),
     'rating': rating,
-    'reviewsCount': reviewsCount,
+    'reviews_count': reviewsCount,
     'about': about,
     'address': address,
   };

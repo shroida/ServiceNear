@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
-import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WorkerInfoHeader extends StatelessWidget {
-  final AppUser user;
+  final WorkerInfo user;
   final String specialty;
   const WorkerInfoHeader({
     super.key,
