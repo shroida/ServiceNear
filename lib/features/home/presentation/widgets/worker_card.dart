@@ -18,7 +18,7 @@ class WorkerCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         context.push(
-          RoutePath.profile,
+          RoutePath.workerInfo,
           extra: {'user': user, 'specialty': specialist},
         );
       },

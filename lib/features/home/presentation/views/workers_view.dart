@@ -65,7 +65,7 @@ class WorkersView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
                             context.push(
-                              RoutePath.profile,
+                              RoutePath.workerInfo,
                               extra: {
                                 'user': worker,
                                 'specialty': worker.specialty,

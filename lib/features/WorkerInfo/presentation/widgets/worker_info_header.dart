@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
 import 'package:servicenear/common/entities/app_user.dart';
-import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProfileScreen extends StatelessWidget {
+class WorkerInfoHeader extends StatelessWidget {
   final AppUser user;
   final String specialty;
-  const ProfileScreen({super.key, required this.user, required this.specialty});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Column(
-        children: [
-          _ProfileHeader(user: user, specialty: specialty),
-          SizedBox(height: 20.h),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProfileHeader extends StatelessWidget {
-  final AppUser user;
-  final String specialty;
-  const _ProfileHeader({required this.user, required this.specialty});
+  const WorkerInfoHeader({
+    super.key,
+    required this.user,
+    required this.specialty,
+  });
 
   @override
   Widget build(BuildContext context) {
