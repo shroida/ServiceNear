@@ -22,13 +22,8 @@ class InfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _InfoRow("User ID", user.id),
           _InfoRow("User Type", user.userType.name),
           _InfoRow("Joined", user.createdAt.toString().split(' ')[0]),
-          _InfoRow(
-            "Coordinates",
-            "${user.location.latitude}, ${user.location.longitude}",
-          ),
         ],
       ),
     );

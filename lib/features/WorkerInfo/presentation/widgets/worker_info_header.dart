@@ -6,10 +6,14 @@ import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ProfileHeader extends StatelessWidget {
+class WorkerInfoHeader extends StatelessWidget {
   final AppUser user;
   final String specialty;
-  const ProfileHeader({super.key, required this.user, required this.specialty});
+  const WorkerInfoHeader({
+    super.key,
+    required this.user,
+    required this.specialty,
+  });
 
   @override
   Widget build(BuildContext context) {

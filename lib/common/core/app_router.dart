@@ -16,7 +16,7 @@ import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
 import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
-import 'package:servicenear/features/profile/presentation/profile_screen.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppRouter {
@@ -66,14 +66,14 @@ class AppRouter {
         builder: (context, state) => const OnBoardingScreen(),
       ),
       GoRoute(
-        path: RoutePath.profile,
+        path: RoutePath.workerInfo,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
 
           final AppUser user = data['user'];
           final String specialty = data['specialty'] ?? '';
 
-          return ProfileScreen(user: user, specialty: specialty);
+          return WorkerInfoScreen(user: user, specialty: specialty);
         },
       ),
 
