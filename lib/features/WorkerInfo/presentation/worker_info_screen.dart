@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/worker_info_header.dart';
 import 'package:servicenear/common/entities/app_user.dart';
@@ -22,6 +23,12 @@ class WorkerInfoScreen extends StatelessWidget {
         children: [
           WorkerInfoHeader(user: user, specialty: specialty),
           SizedBox(height: 20.h),
+          AboutSection(
+            about:
+                'Some Text about the worker. This can be a brief description of their experience, skills, and background.',
+          ),
+
+          SizedBox(height: 5.h),
           InfoCard(user: user, specialty: specialty),
           SizedBox(height: 20.h),
         ],
