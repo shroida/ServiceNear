@@ -16,6 +16,8 @@ class RegisterUseCase {
     required UserType userType,
     required double latitude,
     required double longitude,
+    required String address,
+    required String about,
     String? specialty,
   }) {
     return repository.register(
@@ -27,6 +29,8 @@ class RegisterUseCase {
       latitude: latitude,
       longitude: longitude,
       specialty: specialty,
+      address: address,
+      about: about,
     );
   }
 }

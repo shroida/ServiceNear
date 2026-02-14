@@ -14,6 +14,8 @@ class AuthCubit extends Cubit<AuthState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+  final aboutController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
@@ -54,6 +56,8 @@ class AuthCubit extends Cubit<AuthState> {
         longitude: longitude,
         specialty: selectedSpecialty,
         phone: phoneController.text.trim(),
+        address: addressController.text.trim(),
+        about: aboutController.text.trim(),
       );
 
       emit(AuthSuccess('Registered successfully'));

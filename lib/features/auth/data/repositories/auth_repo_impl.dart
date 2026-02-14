@@ -23,6 +23,8 @@ class AuthRepositoryImpl implements AuthRepository {
     required double longitude,
     String? specialty,
     String? phone,
+    String? address,
+    String? about,
   }) async {
     final response = await remoteDataSource.signUp(
       email: email,

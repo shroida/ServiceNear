@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
@@ -68,16 +70,37 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
                         PasswordField(authCubit: authCubit),
                         SizedBox(height: 16.h),
+
                         if (authCubit.selectedUserType == UserType.worker) ...[
-                          PhoneField(authCubit: authCubit),
+                          // Phone
+                          AppTextFormField(
+                            controller: authCubit.phoneController,
+                            hintStyle: AppStyles.font13GrayRegular,
+
+                            hintText: 'Phone Number',
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Phone number required'
+                                : null,
+                            prefixIcon: const Icon(Icons.phone),
+                          ),
                           SizedBox(height: 16.h),
+
+                          // Specialty Dropdown
                           DropDownSpecialties(
                             selectedSpecialty: authCubit.selectedSpecialty,
-                            onChanged: (value) {
-                              authCubit.changeSpecialty(value);
-                            },
+                            onChanged: (value) =>
+                                authCubit.changeSpecialty(value),
                           ),
+                          SizedBox(height: 16.h),
+
+                          // Address
+                          AddressField(authCubit: authCubit),
+                          SizedBox(height: 16.h),
+
+                          // About
+                          AboutFiled(authCubit: authCubit),
                         ],
+
                         SizedBox(height: 30.h),
                         state is AuthLoading
                             ? const Center(child: CircularProgressIndicator())
@@ -97,6 +120,43 @@ class RegisterScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class AboutFiled extends StatelessWidget {
+  const AboutFiled({super.key, required this.authCubit});
+
+  final AuthCubit authCubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTextFormField(
+      controller: authCubit.aboutController,
+      hintText: 'About Yourself',
+      validator: (_) => null, // optional
+      hintStyle: AppStyles.font13GrayRegular,
+
+      prefixIcon: const Icon(Icons.info_outline),
+    );
+  }
+}
+
+class AddressField extends StatelessWidget {
+  const AddressField({super.key, required this.authCubit});
+
+  final AuthCubit authCubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTextFormField(
+      controller: authCubit.addressController,
+      hintText: 'Address',
+      hintStyle: AppStyles.font13GrayRegular,
+
+      validator: (value) =>
+          value == null || value.isEmpty ? 'Address required' : null,
+      prefixIcon: const Icon(Icons.location_on),
     );
   }
 }
