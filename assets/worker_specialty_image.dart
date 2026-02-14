@@ -14,7 +14,7 @@ String getWorkerImage(String? specialty) {
       return Assets.mechanic;
     case 'cleaner':
       return Assets.cleaner;
-    case 'ac technician':
+    case 'AC Technician':
       return Assets.acTechnician;
     case 'garage':
       return Assets.garage;

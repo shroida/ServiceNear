@@ -4,17 +4,22 @@ import 'package:servicenear/common/entities/user_type.dart';
 
 class AppUserModel extends AppUser {
   final String? specialty;
+  final String? address;
+  final String? about;
+  final String? phoneNubmer;
 
   const AppUserModel({
     required super.id,
     required super.firstName,
     required super.lastName,
-    required super.phoneNubmer,
     required super.email,
     required super.userType,
     required super.location,
     required super.createdAt,
     this.specialty,
+    this.address,
+    this.phoneNubmer,
+    this.about,
   });
 
   factory AppUserModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +36,8 @@ class AppUserModel extends AppUser {
       ),
       createdAt: DateTime.parse(json['created_at']),
       specialty: json['specialty'],
+      address: json['address'],
+      about: json['about'],
     );
   }
 
@@ -44,6 +51,8 @@ class AppUserModel extends AppUser {
       'latitude': location.latitude,
       'longitude': location.longitude,
       if (specialty != null) 'specialty': specialty,
+      if (address != null) 'address': address,
+      if (about != null) 'about': about,
       'created_at': createdAt.toIso8601String(),
     };
   }

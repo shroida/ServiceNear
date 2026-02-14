@@ -17,6 +17,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required double longitude,
     String? specialty,
     String? phone,
+    String? address,
+    String? about,
   }) async {
     final authResponse = await supabase.auth.signUp(
       email: email,
@@ -56,6 +58,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             'email': email,
             'phone': phone ?? '',
             'specialty': specialty ?? '',
+            'address': address ?? '',
+            'about': about ?? '',
             'latitude': latitude,
             'longitude': longitude,
             'created_at': DateTime.now().toIso8601String(),

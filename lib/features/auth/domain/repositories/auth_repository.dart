@@ -10,6 +10,8 @@ abstract class AuthRepository {
     required UserType userType,
     required double latitude,
     required double longitude,
+    String? address,
+    String? about,
     String? specialty,
     String? phone,
   });

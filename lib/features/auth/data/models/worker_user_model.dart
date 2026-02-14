@@ -13,6 +13,8 @@ class WorkerUserAuthModel extends AppUserModel {
     required super.phoneNubmer,
     required super.createdAt,
     super.specialty,
+    super.about,
+    super.address,
   });
 
   factory WorkerUserAuthModel.fromJson(Map<String, dynamic> json) {

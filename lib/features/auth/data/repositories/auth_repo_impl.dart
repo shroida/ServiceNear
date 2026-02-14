@@ -23,6 +23,8 @@ class AuthRepositoryImpl implements AuthRepository {
     required double longitude,
     String? specialty,
     String? phone,
+    String? address,
+    String? about,
   }) async {
     final response = await remoteDataSource.signUp(
       email: email,
@@ -34,6 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
       longitude: longitude,
       specialty: specialty,
       phone: phone,
+      address: address,
+      about: about,
     );
 
     if (userType == UserType.customer) {
@@ -41,7 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
         id: response['id'],
         userType: userType,
         firstName: firstName,
-        phoneNubmer: phone ?? 'Unknown',
+
         lastName: lastName,
         email: email,
         location: UserLocation(latitude: latitude, longitude: longitude),
@@ -81,7 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
         firstName: response['first_name'],
         lastName: response['last_name'],
         email: response['email'],
-        phoneNubmer: response['phone'],
+
         location: UserLocation(
           latitude: response['latitude'],
           longitude: response['longitude'],

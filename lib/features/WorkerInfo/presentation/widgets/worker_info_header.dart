@@ -56,24 +56,28 @@ class WorkerInfoHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // MESSAGE BUTTON
               ElevatedButton.icon(
                 onPressed: () {
                   // TODO: Navigate to chat screen
                 },
-                icon: const Icon(Icons.chat_bubble_outline, size: 18),
-                label: const Text('Message'),
+                icon: const Icon(
+                  Icons.chat_bubble_outline_rounded,
+                  size: 20,
+                  color: AppColors.textOnPrimary,
+                ),
+                label: Text('Message', style: AppStyles.font16WhiteSemiBold),
                 style: ElevatedButton.styleFrom(
-                  textStyle: AppStyles.font14DarkRegular,
-                  backgroundColor: AppColors.divider,
+                  backgroundColor: AppColors.primary,
                   padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 12.h,
+                    horizontal: 24.w,
+                    vertical: 14.h,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14.r),
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
-                  elevation: 4,
+                  elevation: 6,
+                  shadowColor: AppColors.shadow,
+                  textStyle: AppStyles.font16WhiteSemiBold,
                 ),
               ),
 
@@ -82,7 +86,7 @@ class WorkerInfoHeader extends StatelessWidget {
               // CALL BUTTON
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
-                onTap: () => _showCallOptions(context, worker.phoneNubmer),
+                onTap: () => _showCallOptions(context, worker.phoneNubmer!),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
@@ -100,7 +104,7 @@ class WorkerInfoHeader extends StatelessWidget {
                       const Icon(Icons.phone, size: 18, color: Colors.white),
                       SizedBox(width: 6.w),
                       Text(
-                        worker.phoneNubmer,
+                        worker.phoneNubmer!,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.white,

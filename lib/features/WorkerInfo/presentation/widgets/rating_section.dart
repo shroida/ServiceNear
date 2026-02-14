@@ -22,7 +22,7 @@ class RatingSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: .05),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -33,7 +33,7 @@ class RatingSection extends StatelessWidget {
           _buildStars(rating),
           SizedBox(width: 12.w),
           Text(
-            "$rating (${reviewsCount} Reviews)",
+            "$rating ($reviewsCount Reviews)",
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
