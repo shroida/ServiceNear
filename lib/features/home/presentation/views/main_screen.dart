@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
+import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
 
@@ -20,7 +21,9 @@ class _MainScreenState extends State<MainScreen> {
     HomeView(user: widget.user),
     // ChatView(),
     // BookingsView(),
-    // ProfileView(user: widget.user),
+    ProfileView(currentUser: widget.user),
+    ProfileView(currentUser: widget.user),
+    ProfileView(currentUser: widget.user),
   ];
 
   @override
