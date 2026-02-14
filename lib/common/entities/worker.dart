@@ -8,18 +8,20 @@ class Worker extends AppUser {
   final double rating;
   final int reviewsCount;
   final String? about;
+  final String? phoneNubmer;
   final String address;
 
   const Worker({
     required super.id,
     required super.firstName,
     required super.lastName,
-    required super.phoneNubmer,
     required super.email,
     required super.userType,
     required super.location,
     required super.createdAt,
+
     this.specialty,
+    this.phoneNubmer,
     this.rating = 0.0,
     this.reviewsCount = 0,
     this.about = '',

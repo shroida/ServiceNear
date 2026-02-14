@@ -4,7 +4,6 @@ import 'user_location.dart';
 abstract class AppUser {
   final String id;
   final String firstName;
-  final String phoneNubmer;
   final String lastName;
   final String email;
   final UserType userType;
@@ -15,7 +14,6 @@ abstract class AppUser {
     required this.id,
     required this.firstName,
     required this.lastName,
-    required this.phoneNubmer,
     required this.email,
     required this.userType,
     required this.location,

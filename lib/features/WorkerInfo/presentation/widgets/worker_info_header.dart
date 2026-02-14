@@ -86,7 +86,7 @@ class WorkerInfoHeader extends StatelessWidget {
               // CALL BUTTON
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
-                onTap: () => _showCallOptions(context, worker.phoneNubmer),
+                onTap: () => _showCallOptions(context, worker.phoneNubmer!),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
@@ -104,7 +104,7 @@ class WorkerInfoHeader extends StatelessWidget {
                       const Icon(Icons.phone, size: 18, color: Colors.white),
                       SizedBox(width: 6.w),
                       Text(
-                        worker.phoneNubmer,
+                        worker.phoneNubmer!,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.white,

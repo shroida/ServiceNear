@@ -7,16 +7,17 @@ class AppUserAuthRemoteModel extends AppUserAuth {
   final String? specialty;
   final String? address;
   final String? about;
+  final String? phoneNubmer;
   AppUserAuthRemoteModel({
     required super.id,
     required super.firstName,
     required super.lastName,
     required super.email,
-    required super.phoneNubmer,
     required super.createdAt,
     required super.location,
     required super.userType,
     this.address,
+    this.phoneNubmer,
     this.specialty,
     this.about,
   });

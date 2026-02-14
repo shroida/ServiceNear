@@ -6,18 +6,19 @@ class AppUserModel extends AppUser {
   final String? specialty;
   final String? address;
   final String? about;
+  final String? phoneNubmer;
 
   const AppUserModel({
     required super.id,
     required super.firstName,
     required super.lastName,
-    required super.phoneNubmer,
     required super.email,
     required super.userType,
     required super.location,
     required super.createdAt,
     this.specialty,
     this.address,
+    this.phoneNubmer,
     this.about,
   });
 
