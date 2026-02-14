@@ -59,6 +59,8 @@ class UserRepository {
         lastName: worker['last_name'],
         email: worker['email'],
         phoneNubmer: worker['phone'],
+        address: worker['address'],
+        about: worker['about'],
         location: UserLocation(
           latitude: (worker['latitude'] as num?)?.toDouble() ?? 0.0,
           longitude: (worker['longitude'] as num?)?.toDouble() ?? 0.0,

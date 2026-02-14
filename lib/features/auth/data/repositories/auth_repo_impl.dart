@@ -36,6 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
       longitude: longitude,
       specialty: specialty,
       phone: phone,
+      address: address,
+      about: about,
     );
 
     if (userType == UserType.customer) {

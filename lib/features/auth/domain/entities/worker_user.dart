@@ -2,6 +2,8 @@ import 'app_user_auth.dart';
 
 class WorkerAuthUser extends AppUserAuth {
   final String specialty;
+  final String address;
+  final String about;
 
   WorkerAuthUser({
     required super.id,
@@ -13,5 +15,7 @@ class WorkerAuthUser extends AppUserAuth {
     required super.location,
     required super.createdAt,
     required this.specialty,
+    required this.address,
+    required this.about,
   });
 }

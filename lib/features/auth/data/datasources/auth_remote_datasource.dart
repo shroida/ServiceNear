@@ -9,6 +9,8 @@ abstract class AuthRemoteDataSource {
     required double longitude,
     String? specialty,
     String? phone,
+    String? address,
+    String? about,
   });
 
   Future<Map<String, dynamic>> signIn({
