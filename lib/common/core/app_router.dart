@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
-import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource_impl.dart';
 import 'package:servicenear/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
@@ -68,11 +68,9 @@ class AppRouter {
       GoRoute(
         path: RoutePath.workerInfo,
         builder: (context, state) {
-          final data = state.extra as Map<String, dynamic>;
-          final WorkerInfo user = data['user'] as WorkerInfo;
-          final String specialty = data['specialty'] ?? '';
+          final worker = state.extra as Worker;
 
-          return WorkerInfoScreen(user: user, specialty: specialty);
+          return WorkerInfoScreen(user: worker);
         },
       ),
 

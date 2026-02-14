@@ -9,12 +9,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 
 class WorkerInfoScreen extends StatelessWidget {
   final WorkerInfo user;
-  final String specialty;
-  const WorkerInfoScreen({
-    super.key,
-    required this.user,
-    required this.specialty,
-  });
+  const WorkerInfoScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +17,7 @@ class WorkerInfoScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Column(
         children: [
-          WorkerInfoHeader(user: user, specialty: specialty),
+          WorkerInfoHeader(user: user),
           SizedBox(height: 20.h),
           AboutSection(
             about:
@@ -30,7 +25,7 @@ class WorkerInfoScreen extends StatelessWidget {
           ),
 
           SizedBox(height: 5.h),
-          InfoCard(user: user, specialty: specialty),
+          InfoCard(user: user),
           SizedBox(height: 5.h),
           RatingSection(rating: 5.5, reviewsCount: 15),
         ],

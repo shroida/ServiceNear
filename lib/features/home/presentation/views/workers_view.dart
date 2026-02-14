@@ -66,28 +66,11 @@ class WorkersView extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
-                            final workerUser = worker as WorkerUserHomeModel;
-
-                            final workerInfo = WorkerInfo(
-                              id: workerUser.id,
-                              firstName: workerUser.firstName,
-                              lastName: workerUser.lastName,
-                              phoneNubmer: workerUser.phoneNubmer,
-                              email: workerUser.email,
-                              userType: workerUser.userType,
-                              location: workerUser.location,
-                              createdAt: workerUser.createdAt,
-                              rating: 0.0,
-                              reviewsCount: 0,
-                              about: '',
-                              address: '',
-                            );
-
                             context.pushNamed(
                               RoutePath.workerInfo,
                               extra: {
-                                'user': workerInfo,
-                                'specialty': workerUser.specialty ?? '',
+                                'user': worker,
+                                'specialty': worker.specialty ?? '',
                               },
                             );
                           },
