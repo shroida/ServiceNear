@@ -23,6 +23,10 @@ class HomeRepositoryImpl implements HomeRepository {
             location: m.location,
             createdAt: m.createdAt,
             specialty: m.specialty,
+            about: m.about,
+            address: m.address,
+            rating: m.rating,
+            reviewsCount: m.reviewsCount,
           ),
         )
         .toList();

@@ -1,8 +1,6 @@
-import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
-class WorkerUserHomeModel extends AppUser {
-  final String? specialty;
-
+class WorkerUserHomeModel extends Worker {
   WorkerUserHomeModel({
     required super.id,
     required super.firstName,
@@ -12,6 +10,10 @@ class WorkerUserHomeModel extends AppUser {
     required super.userType,
     required super.location,
     required super.createdAt,
-    this.specialty,
+    required super.specialty,
+    required super.about,
+    required super.address,
+    required super.rating,
+    required super.reviewsCount,
   });
 }

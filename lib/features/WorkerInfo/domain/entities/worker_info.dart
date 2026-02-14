@@ -1,11 +1,6 @@
-import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
-class WorkerInfo extends AppUser {
-  final double rating;
-  final int reviewsCount;
-  final String about;
-  final String address;
-
+class WorkerInfo extends Worker {
   const WorkerInfo({
     required super.id,
     required super.firstName,
@@ -15,9 +10,9 @@ class WorkerInfo extends AppUser {
     required super.userType,
     required super.location,
     required super.createdAt,
-    required this.rating,
-    required this.reviewsCount,
-    required this.about,
-    required this.address,
+    required super.rating,
+    required super.reviewsCount,
+    required super.about,
+    required super.address,
   });
 }

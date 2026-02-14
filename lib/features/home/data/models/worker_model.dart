@@ -12,7 +12,11 @@ class WorkerModel extends WorkerUserHomeModel {
     required super.location,
     required super.phoneNubmer,
     required super.createdAt,
-    super.specialty,
+    required super.specialty,
+    required super.about,
+    required super.address,
+    required super.rating,
+    required super.reviewsCount,
   });
 
   factory WorkerModel.fromMap(Map<String, dynamic> map) {
@@ -28,6 +32,12 @@ class WorkerModel extends WorkerUserHomeModel {
           ? DateTime.parse(map['created_at'])
           : DateTime.now(),
       specialty: map['specialty'],
+      about: map['about'] ?? '',
+      address: map['address'] ?? '',
+      rating: (map['rating'] != null)
+          ? double.tryParse(map['rating'].toString()) ?? 0.0
+          : 0.0,
+      reviewsCount: map['reviews_count'] ?? 0,
     );
   }
 }
