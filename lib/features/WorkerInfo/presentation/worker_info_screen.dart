@@ -25,8 +25,7 @@ class WorkerInfoScreen extends StatelessWidget {
           WorkerInfoHeader(worker: worker),
           SizedBox(height: 20.h),
           AboutSection(
-            about:
-                'Some Text about the worker. This can be a brief description of their experience, skills, and background.',
+            about: worker.about ?? "No description available for this worker.",
           ),
 
           SizedBox(height: 5.h),

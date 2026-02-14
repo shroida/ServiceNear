@@ -7,7 +7,7 @@ class Worker extends AppUser {
   final String? specialty;
   final double rating;
   final int reviewsCount;
-  final String about;
+  final String? about;
   final String address;
 
   const Worker({
