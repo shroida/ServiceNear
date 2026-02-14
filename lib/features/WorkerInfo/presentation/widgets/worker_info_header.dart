@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
-import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WorkerInfoHeader extends StatelessWidget {
-  final AppUser user;
-  final String specialty;
-  const WorkerInfoHeader({
-    super.key,
-    required this.user,
-    required this.specialty,
-  });
+  final Worker worker;
+  const WorkerInfoHeader({super.key, required this.worker});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class WorkerInfoHeader extends StatelessWidget {
             backgroundColor: Colors.white,
             child: ClipOval(
               child: Image.asset(
-                getWorkerImage(specialty),
+                getWorkerImage(worker.specialty),
                 width: 60.w,
                 height: 60.h,
                 fit: BoxFit.cover,
@@ -45,7 +40,7 @@ class WorkerInfoHeader extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text(
-            '${user.firstName} ${user.lastName}',
+            '${worker.firstName} ${worker.lastName}',
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
@@ -54,7 +49,7 @@ class WorkerInfoHeader extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            user.email,
+            worker.email,
             style: TextStyle(fontSize: 13.sp, color: Colors.white70),
           ),
           SizedBox(height: 4.h),
@@ -87,7 +82,7 @@ class WorkerInfoHeader extends StatelessWidget {
               // CALL BUTTON
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
-                onTap: () => _showCallOptions(context, user.phoneNubmer),
+                onTap: () => _showCallOptions(context, worker.phoneNubmer),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
@@ -105,7 +100,7 @@ class WorkerInfoHeader extends StatelessWidget {
                       const Icon(Icons.phone, size: 18, color: Colors.white),
                       SizedBox(width: 6.w),
                       Text(
-                        user.phoneNubmer,
+                        worker.phoneNubmer,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.white,

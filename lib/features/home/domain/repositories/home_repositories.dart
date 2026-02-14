@@ -1,5 +1,5 @@
-import '../entities/worker_user_home_model.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
 abstract class HomeRepository {
-  Future<List<WorkerUserHomeModel>> getWorkers();
+  Future<List<Worker>> getWorkers();
 }

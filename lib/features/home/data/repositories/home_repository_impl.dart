@@ -1,4 +1,5 @@
-import '../../domain/entities/worker_user_home_model.dart';
+import 'package:servicenear/common/entities/worker.dart';
+
 import '../../domain/repositories/home_repositories.dart';
 import '../datasource/home_remote_datasource.dart';
 
@@ -8,12 +9,12 @@ class HomeRepositoryImpl implements HomeRepository {
   HomeRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<WorkerUserHomeModel>> getWorkers() async {
+  Future<List<Worker>> getWorkers() async {
     final models = await remoteDataSource.getWorkers();
 
     return models
         .map(
-          (m) => WorkerUserHomeModel(
+          (m) => Worker(
             id: m.id,
             firstName: m.firstName,
             lastName: m.lastName,
@@ -23,6 +24,10 @@ class HomeRepositoryImpl implements HomeRepository {
             location: m.location,
             createdAt: m.createdAt,
             specialty: m.specialty,
+            about: m.about,
+            address: m.address,
+            rating: m.rating,
+            reviewsCount: m.reviewsCount,
           ),
         )
         .toList();

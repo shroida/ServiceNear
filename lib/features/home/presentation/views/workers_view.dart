@@ -64,14 +64,15 @@ class WorkersView extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
-                            context.push(
+                            context.pushNamed(
                               RoutePath.workerInfo,
                               extra: {
                                 'user': worker,
-                                'specialty': worker.specialty,
+                                'specialty': worker.specialty ?? '',
                               },
                             );
                           },
+
                           child: Padding(
                             padding: EdgeInsets.all(16.w),
                             child: Row(

@@ -1,4 +1,4 @@
-import 'package:servicenear/features/home/domain/entities/worker_user_home_model.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/home/domain/repositories/home_repositories.dart';
 
 class GetWorkersUseCase {
@@ -6,7 +6,7 @@ class GetWorkersUseCase {
 
   GetWorkersUseCase(this.repository);
 
-  Future<List<WorkerUserHomeModel>> call() {
+  Future<List<Worker>> call() {
     return repository.getWorkers();
   }
 }

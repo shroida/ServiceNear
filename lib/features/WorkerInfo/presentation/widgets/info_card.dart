@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
 class InfoCard extends StatelessWidget {
-  final AppUser user;
-  final String specialty;
+  final Worker worker;
 
-  const InfoCard({super.key, required this.user, required this.specialty});
+  const InfoCard({super.key, required this.worker});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,8 @@ class InfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InfoRow("Specialty", specialty),
-          InfoRow("Joined", user.createdAt.toString().split(' ')[0]),
+          InfoRow("Specialty", worker.specialty ?? 'N/A'),
+          InfoRow("Joined", worker.createdAt.toString().split(' ')[0]),
         ],
       ),
     );
