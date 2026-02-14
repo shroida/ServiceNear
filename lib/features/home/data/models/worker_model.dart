@@ -1,8 +1,8 @@
 import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import '../../domain/entities/worker_user_home_model.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
-class WorkerModel extends WorkerUserHomeModel {
+class WorkerModel extends Worker {
   WorkerModel({
     required super.id,
     required super.firstName,

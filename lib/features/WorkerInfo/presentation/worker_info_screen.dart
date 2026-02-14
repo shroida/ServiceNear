@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/rating_section.dart';
@@ -8,8 +8,8 @@ import 'package:servicenear/features/WorkerInfo/presentation/widgets/worker_info
 import 'package:servicenear/common/core/app_colors.dart';
 
 class WorkerInfoScreen extends StatelessWidget {
-  final WorkerInfo user;
-  const WorkerInfoScreen({super.key, required this.user});
+  final Worker worker;
+  const WorkerInfoScreen({super.key, required this.worker});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class WorkerInfoScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Column(
         children: [
-          WorkerInfoHeader(user: user),
+          WorkerInfoHeader(worker: worker),
           SizedBox(height: 20.h),
           AboutSection(
             about:
@@ -25,7 +25,7 @@ class WorkerInfoScreen extends StatelessWidget {
           ),
 
           SizedBox(height: 5.h),
-          InfoCard(user: user),
+          InfoCard(worker: worker),
           SizedBox(height: 5.h),
           RatingSection(rating: 5.5, reviewsCount: 15),
         ],

@@ -68,9 +68,15 @@ class AppRouter {
       GoRoute(
         path: RoutePath.workerInfo,
         builder: (context, state) {
-          final worker = state.extra as Worker;
+          final extra = state.extra;
 
-          return WorkerInfoScreen(user: worker);
+          if (extra is Worker) {
+            return WorkerInfoScreen(worker: extra);
+          } else if (extra is Map<String, dynamic>) {
+            return WorkerInfoScreen(worker: Worker.fromMap(extra));
+          } else {
+            throw Exception("Invalid worker data");
+          }
         },
       ),
 

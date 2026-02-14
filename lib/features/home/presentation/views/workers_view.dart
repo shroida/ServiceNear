@@ -6,8 +6,6 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
-import 'package:servicenear/features/home/domain/entities/worker_user_home_model.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
 

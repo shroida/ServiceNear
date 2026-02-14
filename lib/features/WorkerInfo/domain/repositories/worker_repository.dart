@@ -1,5 +1,5 @@
-import '../entities/worker_info.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
 abstract class WorkerRepository {
-  Future<WorkerInfo> addAbout(String workerId, String about);
+  Future<Worker> addAbout(String workerId, String about);
 }

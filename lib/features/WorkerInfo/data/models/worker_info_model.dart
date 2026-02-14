@@ -1,8 +1,8 @@
 import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
+import 'package:servicenear/common/entities/worker.dart';
 
-class WorkerInfoModel extends WorkerInfo {
+class WorkerInfoModel extends Worker {
   const WorkerInfoModel({
     required super.id,
     required super.firstName,
