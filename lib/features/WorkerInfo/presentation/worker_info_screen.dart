@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/entities/worker.dart';
+import 'package:servicenear/common/widgets/custom_app_bar.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/rating_section.dart';
@@ -15,20 +15,9 @@ class WorkerInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            context.pop();
-          },
-        ),
-        title: Text(
-          "${worker.firstName} ${worker.lastName}",
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        title: "${worker.firstName} ${worker.lastName}",
+        subtitle: worker.specialty ?? "Worker",
       ),
       backgroundColor: AppColors.background,
       body: Column(
