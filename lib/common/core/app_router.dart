@@ -69,7 +69,6 @@ class AppRouter {
         path: RoutePath.workerInfo,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>;
-
           final WorkerInfo user = data['user'] as WorkerInfo;
           final String specialty = data['specialty'] ?? '';
 

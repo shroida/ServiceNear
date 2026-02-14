@@ -6,6 +6,8 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/features/WorkerInfo/domain/entities/worker_info.dart';
+import 'package:servicenear/features/home/domain/entities/worker_user_home_model.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
 
@@ -64,14 +66,32 @@ class WorkersView extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
                           onTap: () {
-                            context.push(
+                            final workerUser = worker as WorkerUserHomeModel;
+
+                            final workerInfo = WorkerInfo(
+                              id: workerUser.id,
+                              firstName: workerUser.firstName,
+                              lastName: workerUser.lastName,
+                              phoneNubmer: workerUser.phoneNubmer,
+                              email: workerUser.email,
+                              userType: workerUser.userType,
+                              location: workerUser.location,
+                              createdAt: workerUser.createdAt,
+                              rating: 0.0,
+                              reviewsCount: 0,
+                              about: '',
+                              address: '',
+                            );
+
+                            context.pushNamed(
                               RoutePath.workerInfo,
                               extra: {
-                                'user': worker,
-                                'specialty': worker.specialty,
+                                'user': workerInfo,
+                                'specialty': workerUser.specialty ?? '',
                               },
                             );
                           },
+
                           child: Padding(
                             padding: EdgeInsets.all(16.w),
                             child: Row(
