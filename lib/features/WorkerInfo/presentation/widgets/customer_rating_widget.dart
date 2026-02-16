@@ -16,10 +16,54 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
   double selectedRating = 0;
   final TextEditingController reviewController = TextEditingController();
 
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        /// ⭐ Button to open rating
+        if (!isExpanded)
+          GestureDetector(
+            onTap: () {
+              setState(() => isExpanded = true);
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.symmetric(vertical: 14.h),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(16.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadow,
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text("Add Review", style: AppStyles.font16WhiteSemiBold),
+              ),
+            ),
+          ),
+
+        /// ⭐ Animated Rating Form
+        AnimatedCrossFade(
+          firstChild: const SizedBox(),
+          secondChild: _buildRatingCard(),
+          crossFadeState: isExpanded
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 300),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRatingCard() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -36,9 +80,9 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Rate This Worker", style: AppStyles.font18DarkGreyMedium),
-
           SizedBox(height: 15.h),
 
+          /// ⭐ Stars
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(5, (index) {
@@ -50,15 +94,12 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(
-                      Icons.star,
-                      size: 32.sp,
-                      color: index < selectedRating
-                          ? AppColors.warning
-                          : AppColors.border,
-                    ),
+                  child: Icon(
+                    Icons.star,
+                    size: 32.sp,
+                    color: index < selectedRating
+                        ? AppColors.warning
+                        : AppColors.border,
                   ),
                 ),
               );
@@ -67,6 +108,7 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
 
           SizedBox(height: 20.h),
 
+          /// ✍️ Review Field
           TextField(
             controller: reviewController,
             maxLines: 3,
@@ -85,6 +127,7 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
 
           SizedBox(height: 20.h),
 
+          /// 🚀 Submit Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -101,7 +144,11 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
                 widget.onSubmit?.call(selectedRating, reviewController.text);
 
                 reviewController.clear();
-                setState(() => selectedRating = 0);
+
+                setState(() {
+                  selectedRating = 0;
+                  isExpanded = false; // hide again after submit
+                });
               },
               child: Text(
                 "Submit Review",
