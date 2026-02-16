@@ -11,7 +11,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWorker = currentUser is Worker;
+    final isWorker = currentUser.userType.name == 'worker';
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -36,14 +36,12 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  // ================= HEADER =================
-
   Widget _buildHeader(BuildContext context, bool isWorker) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: 220.h,
+          height: 170.h,
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -69,7 +67,6 @@ class ProfileView extends StatelessWidget {
           ),
         ),
 
-        // Avatar
         Positioned(
           bottom: -50.h,
           left: 0,
@@ -95,8 +92,6 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  // ================= BASIC INFO =================
-
   Widget _buildBasicInfoCard() {
     return Container(
       width: double.infinity,
@@ -116,7 +111,9 @@ class ProfileView extends StatelessWidget {
         children: [
           Text(
             "${currentUser.firstName} ${currentUser.lastName}",
-            style: AppStyles.font18DarkBlueBold,
+            style: AppStyles.font18DarkBlueBold.copyWith(
+              color: AppColors.textPrimary,
+            ),
           ),
           SizedBox(height: 8.h),
           Text(currentUser.email, style: AppStyles.font14GrayRegular),
@@ -138,8 +135,6 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
-
-  // ================= WORKER SECTION =================
 
   Widget _buildWorkerSection(Worker worker) {
     return Container(
@@ -191,15 +186,13 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  // ================= INFO ROW =================
-
   Widget _infoRow(IconData icon, String title, String value) {
     return Row(
       children: [
         Container(
           padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Icon(icon, color: AppColors.primary, size: 18.sp),

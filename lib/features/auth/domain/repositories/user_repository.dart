@@ -1,8 +1,8 @@
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import 'package:servicenear/features/auth/domain/entities/app_user_auth.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
-import 'package:servicenear/features/auth/domain/entities/worker_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserRepository {
@@ -19,7 +19,7 @@ class UserRepository {
     await supabase.auth.signOut();
   }
 
-  Future<AppUserAuth?> getCurrentUserData() async {
+  Future<AppUser?> getCurrentUserData() async {
     final userId = getCurrentUserId();
     if (userId == null) return null;
 
@@ -51,7 +51,7 @@ class UserRepository {
         .maybeSingle();
 
     if (worker != null) {
-      return WorkerAuthUser(
+      return Worker(
         userType: UserType.worker,
         id: worker['id'],
         firstName: worker['first_name'],

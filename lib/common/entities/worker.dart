@@ -37,7 +37,7 @@ class Worker extends AppUser {
       specialty: map['specialty'] ?? 'Unknown',
       rating: map['rating'] ?? 0.0,
       reviewsCount: map['reviews_count'] ?? 0,
-      about: map['about'] ?? '',
+      about: map['about'] ?? 'fdgfd',
       userType: UserTypeExtension.fromString(map['user_type'] ?? 'customer'),
       location: UserLocation.fromJson({
         'latitude': map['latitude'],
