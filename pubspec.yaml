@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   url_launcher: ^6.3.2
   flutter_rating_bar: ^4.0.1
+  get_it: ^9.2.0
 
 
 
