@@ -20,19 +20,25 @@ class WorkerInfoScreen extends StatelessWidget {
         subtitle: worker.specialty ?? "Worker",
       ),
       backgroundColor: AppColors.background,
-      body: Column(
-        children: [
-          WorkerInfoHeader(worker: worker),
-          SizedBox(height: 20.h),
-          AboutSection(
-            about: worker.about ?? "No description available for this worker.",
-          ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              WorkerInfoHeader(worker: worker),
+              SizedBox(height: 20.h),
+              AboutSection(
+                about:
+                    worker.about ?? "No description available for this worker.",
+              ),
 
-          SizedBox(height: 5.h),
-          InfoCard(worker: worker),
-          SizedBox(height: 5.h),
-          RatingSection(rating: 5.5, reviewsCount: 15),
-        ],
+              SizedBox(height: 5.h),
+              InfoCard(worker: worker),
+              SizedBox(height: 5.h),
+              RatingSection(rating: 5.5, reviewsCount: 15),
+              SizedBox(height: 20.h),
+            ],
+          ),
+        ),
       ),
     );
   }
