@@ -27,6 +27,7 @@ class InfoCard extends StatelessWidget {
         children: [
           InfoRow("Specialty", worker.specialty ?? 'N/A'),
           InfoRow("Joined", worker.createdAt.toString().split(' ')[0]),
+          InfoRow("Address", worker.address),
         ],
       ),
     );
