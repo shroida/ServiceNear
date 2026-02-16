@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/custom_app_bar.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_rating_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/rating_section.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/worker_info_header.dart';
@@ -35,6 +36,13 @@ class WorkerInfoScreen extends StatelessWidget {
               InfoCard(worker: worker),
               SizedBox(height: 5.h),
               RatingSection(rating: 5.5, reviewsCount: 15),
+              SizedBox(height: 5.h),
+              CustomerRatingWidget(
+                onSubmit: (rating, review) {
+                  print("Rating: $rating");
+                  print("Review: $review");
+                },
+              ),
               SizedBox(height: 20.h),
             ],
           ),
