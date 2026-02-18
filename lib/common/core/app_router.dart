@@ -1,17 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/worker.dart';
-import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource_impl.dart';
-import 'package:servicenear/features/auth/data/repositories/auth_repo_impl.dart';
-import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
+
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
 import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
-import 'package:servicenear/features/home/data/datasource/home_remote_datasource.dart';
-import 'package:servicenear/features/home/data/repositories/home_repository_impl.dart';
-import 'package:servicenear/features/home/domain/repositories/home_repositories.dart';
+
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
 import 'package:servicenear/features/home/presentation/views/workers_view.dart';
@@ -20,12 +17,6 @@ import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppRouter {
-  final AuthRepository _authRepository = AuthRepositoryImpl(
-    remoteDataSource: AuthRemoteDataSourceImpl(Supabase.instance.client),
-  );
-  final HomeRepository _homeRepository = HomeRepositoryImpl(
-    HomeRemoteDataSourceImpl(Supabase.instance.client),
-  );
   late final GoRouter router = GoRouter(
     initialLocation: RoutePath.onBoarding,
     redirect: (context, state) {
@@ -49,7 +40,7 @@ class AppRouter {
       GoRoute(
         path: RoutePath.login,
         builder: (context, state) => BlocProvider(
-          create: (_) => AuthCubit(_authRepository),
+          create: (_) => AuthCubit(sl()),
           child: const LoginScreen(),
         ),
       ),
@@ -57,14 +48,16 @@ class AppRouter {
       GoRoute(
         path: RoutePath.register,
         builder: (context, state) => BlocProvider(
-          create: (_) => AuthCubit(_authRepository),
+          create: (_) => AuthCubit(sl()),
           child: const RegisterScreen(),
         ),
       ),
+
       GoRoute(
         path: RoutePath.onBoarding,
         builder: (context, state) => const OnBoardingScreen(),
       ),
+
       GoRoute(
         path: RoutePath.workerInfo,
         builder: (context, state) {
@@ -77,7 +70,7 @@ class AppRouter {
       ShellRoute(
         builder: (context, state, child) {
           return BlocProvider(
-            create: (_) => HomeCubit(_homeRepository)..fetchWorkers(),
+            create: (_) => HomeCubit(sl())..fetchWorkers(),
             child: child,
           );
         },
