@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
+import 'package:servicenear/features/WorkerInfo/data/datasources/rating_remote_datasource.dart';
 import 'package:servicenear/features/WorkerInfo/data/datasources/rating_remote_datasource_impl.dart';
 import 'package:servicenear/features/WorkerInfo/data/repositories/worker_repository_impl.dart';
 import 'package:servicenear/features/WorkerInfo/domain/repositories/worker_repository.dart';
 import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_usecase.dart';
+import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Auth
@@ -22,7 +24,7 @@ Future<void> init() async {
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
   /// ================= AUTH =================
-  sl.registerLazySingleton<AuthRemoteDataSourceImpl>(
+  sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(sl()),
   );
 
@@ -31,14 +33,14 @@ Future<void> init() async {
   );
 
   /// ================= HOME =================
-  sl.registerLazySingleton<HomeRemoteDataSourceImpl>(
+  sl.registerLazySingleton<HomeRemoteDataSource>(
     () => HomeRemoteDataSourceImpl(sl()),
   );
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
 
   /// ================= RATING =================
-  sl.registerLazySingleton<RatingRemoteDataSourceImpl>(
+  sl.registerLazySingleton<RatingRemoteDataSource>(
     () => RatingRemoteDataSourceImpl(sl()),
   );
 
