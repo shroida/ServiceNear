@@ -16,59 +16,67 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WorkerInfoScreen extends StatelessWidget {
   final Worker worker;
+
   const WorkerInfoScreen({super.key, required this.worker});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: "${worker.firstName} ${worker.lastName}",
-        subtitle: worker.specialty ?? "Worker",
-      ),
-      backgroundColor: AppColors.background,
-      body: BlocProvider(
-        create: (_) => RatingCubit(sl()),
-
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                WorkerInfoHeader(worker: worker),
-                SizedBox(height: 20.h),
-                AboutSection(
-                  about:
-                      worker.about ??
-                      "No description available for this worker.",
-                ),
-
-                SizedBox(height: 5.h),
-                InfoCard(worker: worker),
-                SizedBox(height: 5.h),
-                RatingSection(rating: 5.5, reviewsCount: 15),
-                SizedBox(height: 5.h),
-                CustomerRatingWidget(
-                  onSubmit: (rating, review) {
-                    final user = Supabase.instance.client.auth.currentUser;
-
-                    if (user == null) return;
-
-                    context.read<RatingCubit>().submitRating(
-                      RatingEntity(
-                        createdAt: DateTime.now(),
-                        ratingrId: "",
-                        workerId: worker.id,
-                        customerId: user.id,
-                        rating: rating,
-                        review: review,
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: 20.h),
-              ],
+    return BlocProvider(
+      create: (_) => sl<RatingCubit>(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: CustomAppBar(
+              title: "${worker.firstName} ${worker.lastName}",
+              subtitle: worker.specialty ?? "Worker",
             ),
-          ),
-        ),
+            backgroundColor: AppColors.background,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    WorkerInfoHeader(worker: worker),
+                    SizedBox(height: 20.h),
+
+                    AboutSection(
+                      about:
+                          worker.about ??
+                          "No description available for this worker.",
+                    ),
+
+                    SizedBox(height: 5.h),
+                    InfoCard(worker: worker),
+                    SizedBox(height: 5.h),
+
+                    RatingSection(rating: 5.5, reviewsCount: 15),
+
+                    SizedBox(height: 10.h),
+
+                    CustomerRatingWidget(
+                      onSubmit: (rating, review) {
+                        final user = Supabase.instance.client.auth.currentUser;
+
+                        if (user == null) return;
+
+                        context.read<RatingCubit>().submitRating(
+                          RatingEntity(
+                            createdAt: DateTime.now(),
+                            workerId: worker.id,
+                            customerId: user.id,
+                            rating: rating,
+                            review: review,
+                          ),
+                        );
+                      },
+                    ),
+
+                    SizedBox(height: 20.h),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -6,7 +6,9 @@ import '../../domain/entities/rating_entity.dart';
 class RatingCubit extends Cubit<RatingState> {
   final SubmitRatingUseCase submitRatingUseCase;
 
-  RatingCubit(this.submitRatingUseCase) : super(RatingInitial());
+  RatingCubit(this.submitRatingUseCase) : super(RatingInitial()) {
+    print("🔥 RatingCubit created");
+  }
 
   Future<void> submitRating(RatingEntity rating) async {
     emit(RatingLoading());
