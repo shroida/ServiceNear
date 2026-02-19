@@ -3,6 +3,7 @@ import 'package:servicenear/features/WorkerInfo/data/datasources/rating_remote_d
 import 'package:servicenear/features/WorkerInfo/data/datasources/rating_remote_datasource_impl.dart';
 import 'package:servicenear/features/WorkerInfo/data/repositories/worker_repository_impl.dart';
 import 'package:servicenear/features/WorkerInfo/domain/repositories/worker_repository.dart';
+import 'package:servicenear/features/WorkerInfo/domain/usecases/fetch_reviews_usecase.dart';
 import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_usecase.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -53,5 +54,9 @@ Future<void> init() async {
     () => SubmitRatingUseCase(sl()),
   );
 
-  sl.registerFactory<WorkerInfoCubit>(() => WorkerInfoCubit(sl()));
+  sl.registerLazySingleton<FetchReviewsUseCase>(
+    () => FetchReviewsUseCase(sl()),
+  );
+
+  sl.registerFactory<WorkerInfoCubit>(() => WorkerInfoCubit(sl(), sl()));
 }
