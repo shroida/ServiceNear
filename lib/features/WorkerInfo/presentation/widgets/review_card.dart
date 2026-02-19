@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/WorkerInfo/domain/entities/rating_entity.dart';
 
 class ReviewCard extends StatelessWidget {
@@ -10,70 +13,110 @@ class ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
-      margin: const EdgeInsets.only(right: 16),
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// Header Row
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: Colors.blue.shade100,
-                    child: Text(
-                      review.customerId.substring(0, 2).toUpperCase(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
+      width: 300.w,
+      margin: EdgeInsets.only(right: 16.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24.r),
+        color: AppColors.scaffoldBackground,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 48.w,
+                  height: 48.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary.withValues(alpha: .1),
                   ),
-                  const SizedBox(width: 12),
-
-                  /// Rating Stars
-                  Row(
-                    children: List.generate(
-                      5,
-                      (starIndex) => Icon(
-                        starIndex < review.rating.round()
-                            ? Icons.star
-                            : Icons.star_border,
-                        size: 18,
-                        color: Colors.amber,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 16),
-
-              /// Review Text
-              if (review.review.isNotEmpty)
-                Expanded(
+                  alignment: Alignment.center,
                   child: Text(
-                    review.review,
-                    style: const TextStyle(fontSize: 14, height: 1.4),
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
+                    review.customerId.substring(0, 2).toUpperCase(),
+                    style: AppStyles.font14BlueSemiBold,
                   ),
                 ),
 
-              const SizedBox(height: 12),
+                SizedBox(width: 12.w),
 
-              /// Date
-              Text(
-                DateFormat.yMMMd().format(review.createdAt),
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: .08),
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.star_rounded,
+                        size: 16.sp,
+                        color: AppColors.warning,
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        review.rating.toStringAsFixed(1),
+                        style: AppStyles.font13BlueSemiBold,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 18.h),
+
+            if (review.review.isNotEmpty)
+              Expanded(
+                child: Text(
+                  review.review,
+                  style: AppStyles.font14DarkRegular.copyWith(
+                    height: 1.5,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ],
-          ),
+
+            SizedBox(height: 16.h),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  DateFormat.yMMMd().format(review.createdAt),
+                  style: AppStyles.font12GrayRegular,
+                ),
+
+                Row(
+                  children: List.generate(
+                    review.rating.round(),
+                    (index) => Padding(
+                      padding: EdgeInsets.only(left: 2.w),
+                      child: Icon(
+                        Icons.star,
+                        size: 12.sp,
+                        color: AppColors.accent,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
