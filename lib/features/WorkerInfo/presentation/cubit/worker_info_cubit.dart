@@ -3,11 +3,11 @@ import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_us
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_state.dart';
 import '../../domain/entities/rating_entity.dart';
 
-class RatingCubit extends Cubit<RatingState> {
+class WorkerInfoCubit extends Cubit<RatingState> {
   final SubmitRatingUseCase submitRatingUseCase;
 
-  RatingCubit(this.submitRatingUseCase) : super(RatingInitial()) {
-    print("🔥 RatingCubit created");
+  WorkerInfoCubit(this.submitRatingUseCase) : super(RatingInitial()) {
+    print("🔥 WorkerInfoCubit created");
   }
 
   Future<void> submitRating(RatingEntity rating) async {

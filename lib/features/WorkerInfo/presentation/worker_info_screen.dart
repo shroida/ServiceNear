@@ -5,7 +5,7 @@ import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/custom_app_bar.dart';
 import 'package:servicenear/features/WorkerInfo/domain/entities/rating_entity.dart';
-import 'package:servicenear/features/WorkerInfo/presentation/cubit/rating_cubit.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_rating_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_reviews_widget.dart';
@@ -23,7 +23,7 @@ class WorkerInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<RatingCubit>(),
+      create: (_) => sl<WorkerInfoCubit>(),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -61,7 +61,7 @@ class WorkerInfoScreen extends StatelessWidget {
 
                         if (user == null) return;
 
-                        context.read<RatingCubit>().submitRating(
+                        context.read<WorkerInfoCubit>().submitRating(
                           RatingEntity(
                             createdAt: DateTime.now(),
                             workerId: worker.id,
