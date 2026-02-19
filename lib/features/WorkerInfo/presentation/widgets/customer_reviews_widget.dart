@@ -15,11 +15,7 @@ class CustomerReviewsWidget extends StatelessWidget {
         .eq('worker_id', workerId)
         .order('created_at', ascending: false);
 
-    if (response is List) {
-      return List<Map<String, dynamic>>.from(response);
-    } else {
-      return [];
-    }
+    return List<Map<String, dynamic>>.from(response);
   }
 
   @override
@@ -29,15 +25,18 @@ class CustomerReviewsWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: CircularProgressIndicator(),
+            padding: EdgeInsets.all(16),
+            child: Center(child: CircularProgressIndicator()),
           );
         }
 
         if (snapshot.hasError) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('Error loading reviews: ${snapshot.error}'),
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              'Error loading reviews',
+              style: TextStyle(color: Colors.red),
+            ),
           );
         }
 
@@ -45,7 +44,7 @@ class CustomerReviewsWidget extends StatelessWidget {
 
         if (reviews.isEmpty) {
           return const Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16),
             child: Text('No reviews yet.'),
           );
         }
@@ -54,34 +53,37 @@ class CustomerReviewsWidget extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: reviews.length,
-          separatorBuilder: (_, __) => const Divider(),
+          separatorBuilder: (_, __) => const Divider(height: 24),
           itemBuilder: (context, index) {
             final review = reviews[index];
-            final rating = review['rating'] ?? 0.0;
-            final reviewText = review['review'] ?? '';
-            final customerId = review['customer_id'] ?? '';
-            final createdAt = review['created_at'] ?? '';
+
+            final double rating = (review['rating'] as num?)?.toDouble() ?? 0.0;
+            final String reviewText = review['review']?.toString() ?? '';
+            final String customerId = review['customer_id']?.toString() ?? '';
+            final String createdAt = review['created_at']?.toString() ?? '';
 
             return ListTile(
               leading: CircleAvatar(
                 child: Text(
-                  customerId.toString().substring(0, 2).toUpperCase(),
+                  customerId.isNotEmpty
+                      ? customerId.substring(0, 2).toUpperCase()
+                      : 'U',
                 ),
               ),
               title: Row(
                 children: [
-                  Text('Rating: $rating'),
-                  const SizedBox(width: 8),
-                  Icon(Icons.star, color: Colors.amber, size: 16),
+                  Text(rating.toStringAsFixed(1)),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.star, size: 16, color: Colors.amber),
                 ],
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(reviewText),
+                  if (reviewText.isNotEmpty) Text(reviewText),
                   const SizedBox(height: 4),
                   Text(
-                    createdAt.toString(),
+                    createdAt,
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                 ],
