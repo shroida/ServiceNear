@@ -1,5 +1,4 @@
 class RatingEntity {
-  final String ratingrId;
   final String workerId;
   final String customerId;
   final double rating;
@@ -7,7 +6,6 @@ class RatingEntity {
   final DateTime createdAt;
 
   RatingEntity({
-    required this.ratingrId,
     required this.workerId,
     required this.customerId,
     required this.rating,

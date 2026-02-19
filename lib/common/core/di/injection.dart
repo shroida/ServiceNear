@@ -4,6 +4,7 @@ import 'package:servicenear/features/WorkerInfo/data/datasources/rating_remote_d
 import 'package:servicenear/features/WorkerInfo/data/repositories/worker_repository_impl.dart';
 import 'package:servicenear/features/WorkerInfo/domain/repositories/worker_repository.dart';
 import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_usecase.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/cubit/rating_cubit.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -40,11 +41,17 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
 
   /// ================= RATING =================
+  /// ================= RATING =================
+
   sl.registerLazySingleton<RatingRemoteDataSource>(
     () => RatingRemoteDataSourceImpl(sl()),
   );
 
   sl.registerLazySingleton<WorkerRepository>(() => WorkerRepositoryImpl(sl()));
 
-  sl.registerLazySingleton(() => SubmitRatingUseCase(sl()));
+  sl.registerLazySingleton<SubmitRatingUseCase>(
+    () => SubmitRatingUseCase(sl()),
+  );
+
+  sl.registerFactory<RatingCubit>(() => RatingCubit(sl()));
 }

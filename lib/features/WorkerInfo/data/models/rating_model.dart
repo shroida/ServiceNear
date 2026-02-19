@@ -2,7 +2,6 @@ import '../../domain/entities/rating_entity.dart';
 
 class RatingModel extends RatingEntity {
   RatingModel({
-    required super.ratingrId,
     required super.workerId,
     required super.customerId,
     required super.rating,
@@ -12,7 +11,6 @@ class RatingModel extends RatingEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      "id": ratingrId,
       "worker_id": workerId,
       "customer_id": customerId,
       "rating": rating,

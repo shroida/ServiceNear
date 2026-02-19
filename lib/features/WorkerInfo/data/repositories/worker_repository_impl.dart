@@ -16,7 +16,6 @@ class WorkerRepositoryImpl implements WorkerRepository {
       rating: rating.rating,
       review: rating.review,
       createdAt: rating.createdAt,
-      ratingrId: rating.ratingrId,
     );
 
     await remoteDataSource.submitRating(model);
