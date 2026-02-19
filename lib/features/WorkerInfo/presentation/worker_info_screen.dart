@@ -49,7 +49,7 @@ class WorkerInfoScreen extends StatelessWidget {
                     InfoCard(worker: worker),
                     SizedBox(height: 5.h),
 
-                    RatingSection(rating: 5.5, reviewsCount: 15),
+                    RatingSection(workerId: worker.id),
 
                     SizedBox(height: 10.h),
                     CustomerReviewsWidget(workerId: worker.id),

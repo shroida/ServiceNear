@@ -156,4 +156,6 @@ class AppStyles {
     fontWeight: FontWeightHelper.medium,
     color: AppColors.darkGrey,
   );
+
+  static TextStyle? get font14DarkGreyRegular => null;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_state.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/review_card.dart';
@@ -51,7 +52,7 @@ class _CustomerReviewsWidgetState extends State<CustomerReviewsWidget> {
           }
 
           return SizedBox(
-            height: 200,
+            height: 250.h,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
