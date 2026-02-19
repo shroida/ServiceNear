@@ -166,9 +166,16 @@ class WorkerInfoHeader extends StatelessWidget {
   }
 
   Future<void> _callNumber(String phone) async {
-    final uri = Uri.parse('tel:$phone');
+    final Uri uri = Uri(scheme: 'tel', path: phone);
+
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+      try {
+        await launchUrl(uri, mode: LaunchMode.platformDefault);
+      } catch (e) {
+        debugPrint("Error launching dialer: $e");
+      }
+    } else {
+      debugPrint("Cannot launch dialer for $phone. Maybe running on emulator?");
     }
   }
 }
