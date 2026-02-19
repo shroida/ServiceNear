@@ -8,6 +8,7 @@ import 'package:servicenear/features/WorkerInfo/domain/entities/rating_entity.da
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/rating_cubit.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/about_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_rating_widget.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_reviews_widget.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/rating_section.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/worker_info_header.dart';
@@ -50,6 +51,8 @@ class WorkerInfoScreen extends StatelessWidget {
 
                     RatingSection(rating: 5.5, reviewsCount: 15),
 
+                    SizedBox(height: 10.h),
+                    CustomerReviewsWidget(workerId: worker.id),
                     SizedBox(height: 10.h),
 
                     CustomerRatingWidget(
