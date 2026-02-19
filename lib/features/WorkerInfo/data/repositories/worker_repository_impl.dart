@@ -25,4 +25,9 @@ class WorkerRepositoryImpl implements WorkerRepository {
   Future<Worker> addAbout(String workerId, String about) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<RatingEntity>> fetchReviews(String workerId) {
+    return remoteDataSource.fetchReviews(workerId);
+  }
 }

@@ -23,4 +23,15 @@ class RatingRemoteDataSourceImpl implements RatingRemoteDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<RatingModel>> fetchReviews(String workerId) async {
+    final response = await client
+        .from('ratings')
+        .select()
+        .eq('worker_id', workerId)
+        .order('created_at', ascending: false);
+
+    return (response as List).map((data) => RatingModel.fromMap(data)).toList();
+  }
 }
