@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_state.dart';
+import 'package:servicenear/features/WorkerInfo/presentation/widgets/review_card.dart';
 
 class CustomerReviewsWidget extends StatefulWidget {
   final String workerId;
@@ -39,7 +40,6 @@ class _CustomerReviewsWidgetState extends State<CustomerReviewsWidget> {
             ),
           );
         }
-
         if (state is RatingLoaded) {
           final reviews = state.reviews;
 
@@ -50,38 +50,18 @@ class _CustomerReviewsWidgetState extends State<CustomerReviewsWidget> {
             );
           }
 
-          return ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: reviews.length,
-            separatorBuilder: (_, __) => const Divider(height: 24),
-            itemBuilder: (context, index) {
-              final review = reviews[index];
+          return SizedBox(
+            height: 200,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: reviews.length,
+              itemBuilder: (context, index) {
+                final review = reviews[index];
 
-              return ListTile(
-                leading: CircleAvatar(
-                  child: Text(review.customerId.substring(0, 2).toUpperCase()),
-                ),
-                title: Row(
-                  children: [
-                    Text(review.rating.toStringAsFixed(1)),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.star, size: 16, color: Colors.amber),
-                  ],
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (review.review.isNotEmpty) Text(review.review),
-                    const SizedBox(height: 4),
-                    Text(
-                      review.createdAt.toString(),
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              );
-            },
+                return ReviewCard(review: review);
+              },
+            ),
           );
         }
 
