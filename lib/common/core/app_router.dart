@@ -8,6 +8,7 @@ import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
 import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
+import 'package:servicenear/features/chat/presentation/chat_screen.dart';
 
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
@@ -51,6 +52,13 @@ class AppRouter {
           create: (_) => AuthCubit(sl()),
           child: const RegisterScreen(),
         ),
+      ),
+
+      GoRoute(
+        path: RoutePath.chat,
+
+        builder: (context, state) =>
+            ChatScreen(chatSubtitle: state.extra as String, chatTitle: 'Chat'),
       ),
 
       GoRoute(

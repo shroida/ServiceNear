@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/images.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -58,7 +60,10 @@ class WorkerInfoHeader extends StatelessWidget {
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-                  // TODO: Navigate to chat screen
+                  context.go(
+                    RoutePath.chat,
+                    extra: 'Chat with ${worker.firstName}',
+                  );
                 },
                 icon: const Icon(
                   Icons.chat_bubble_outline_rounded,

@@ -4,5 +4,6 @@ class RoutePath {
   static const String workerInfo = '/workerInfo';
   static const String workers = '/workers';
   static const String onBoarding = '/';
+  static const String chat = '/chat';
   static const String register = '/register';
 }
