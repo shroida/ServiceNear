@@ -147,17 +147,6 @@ class _ChatScreenState extends State<ChatScreen> {
                             : 'worker',
                         messageText: _controller.text,
                       );
-                      print(
-                        '===============================================================',
-                      );
-                      print('receiver Id:${widget.receiver.id}');
-                      print('current Id:${currentUser.id}');
-                      print(' SenderType:${senderType}');
-
-                      print(
-                        '===============================================================',
-                      );
-
                       _controller.clear();
                     },
                     child: Container(

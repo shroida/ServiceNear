@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/common/entities/worker.dart';
-import 'package:servicenear/features/chat/presentation/chat_screen.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
-
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
-
 import '../../../../common/entities/app_user.dart';
 
 class MainScreen extends StatefulWidget {

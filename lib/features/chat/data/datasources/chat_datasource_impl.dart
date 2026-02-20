@@ -9,7 +9,6 @@ class ChatDatasourceImpl implements ChatDataSource {
 
   @override
   Future<void> sendMessage(MessageModel message) async {
-    print("Sending message: $message");
     try {
       await client.from('chats').insert({
         'sender_id': message.senderId,
@@ -21,12 +20,8 @@ class ChatDatasourceImpl implements ChatDataSource {
         'parent_id': message.parentId,
         'created_at': message.createdAt.toIso8601String(),
       });
-      print("Message sent to Supabase: ${message.toMap()}");
     } catch (e) {
-      print("Error sending message: $e");
       rethrow;
     }
-
-    print("Message sent to Supabase: ${message.toMap()}");
   }
 }
