@@ -64,9 +64,9 @@ class WorkerInfoHeader extends StatelessWidget {
                 onPressed: () async {
                   final currentUser = await sl<UserRepository>()
                       .getCurrentUserData();
+                  if (!context.mounted) return;
                   if (currentUser == null) return;
-
-                  context.push(RoutePath.chat, extra: {'user': worker});
+                  context.push(RoutePath.chat, extra: worker);
                 },
                 icon: const Icon(
                   Icons.chat_bubble_outline_rounded,
