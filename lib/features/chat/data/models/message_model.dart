@@ -5,12 +5,26 @@ class MessageModel extends MessageEntity {
     required super.senderId,
     required super.receiverId,
     required super.senderType,
+    required super.receiverType,
     required super.messageText,
     required super.isRead,
-    required super.receiverType,
-    super.parentId,
     required super.createdAt,
+    super.parentId,
   });
+
+  factory MessageModel.fromMap(Map<String, dynamic> map) {
+    return MessageModel(
+      senderId: map['sender_id'],
+      receiverId: map['receiver_id'],
+      senderType: map['sender_type'],
+      receiverType: map['receiver_type'],
+      messageText: map['message_text'],
+      isRead: map['is_read'] ?? false,
+      createdAt: DateTime.parse(map['created_at']),
+      parentId: map['parent_id'],
+    );
+  }
+
   factory MessageModel.fromEntity(MessageEntity entity) {
     return MessageModel(
       senderId: entity.senderId,
@@ -23,6 +37,20 @@ class MessageModel extends MessageEntity {
       parentId: entity.parentId,
     );
   }
+
+  MessageEntity toEntity() {
+    return MessageEntity(
+      senderId: senderId,
+      receiverId: receiverId,
+      senderType: senderType,
+      receiverType: receiverType,
+      messageText: messageText,
+      isRead: isRead,
+      createdAt: createdAt,
+      parentId: parentId,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'sender_id': senderId,
