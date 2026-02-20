@@ -1,15 +1,19 @@
 class MessageEntity {
-  final String id;
-  final String workerId;
-  final String userId;
-  final String lastMessage;
-  final DateTime timestamp;
+  final String senderId;
+  final String receiverId;
+  final String senderType;
+  final String messageText;
+  final bool isRead;
+  final DateTime createdAt;
+  final String? parentId;
 
   MessageEntity({
-    required this.id,
-    required this.workerId,
-    required this.userId,
-    required this.lastMessage,
-    required this.timestamp,
+    required this.senderId,
+    required this.receiverId,
+    required this.senderType,
+    required this.messageText,
+    required this.isRead,
+    required this.createdAt,
+    this.parentId,
   });
 }

@@ -1,3 +1,5 @@
+import 'package:servicenear/features/chat/data/models/message_model.dart';
+
 abstract class ChatDataSource {
-  Future<void> sendMessage(String message, String senderId, String receiverId);
+  Future<void> sendMessage(MessageModel message);
 }
