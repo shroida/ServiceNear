@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/features/chat/presentation/chat_screen.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 
@@ -19,8 +20,10 @@ class _MainScreenState extends State<MainScreen> {
 
   late final List<Widget> _pages = [
     HomeView(user: widget.user),
-    // ChatView(),
-    // BookingsView(),
+    ChatScreen(
+      chatSubtitle: 'Chat with ${widget.user.firstName}',
+      chatTitle: 'Chat',
+    ),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
