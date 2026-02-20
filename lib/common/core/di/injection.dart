@@ -7,6 +7,13 @@ import 'package:servicenear/features/WorkerInfo/domain/usecases/fetch_reviews_us
 import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_usecase.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
+import 'package:servicenear/features/chat/data/datasources/chat_datasource_impl.dart';
+import 'package:servicenear/features/chat/data/repositories/chat_repostories_impl.dart';
+import 'package:servicenear/features/chat/domain/repositories/chat_repositories.dart';
+import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
+import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Auth
@@ -25,6 +32,9 @@ Future<void> init() async {
   /// Supabase
   sl.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 
+  /// UserRepository
+  sl.registerLazySingleton<UserRepository>(() => UserRepository(sl()));
+
   /// ================= AUTH =================
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(sl()),
@@ -42,7 +52,6 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
 
   /// ================= RATING =================
-  /// ================= RATING =================
 
   sl.registerLazySingleton<RatingRemoteDataSource>(
     () => RatingRemoteDataSourceImpl(sl()),
@@ -59,4 +68,14 @@ Future<void> init() async {
   );
 
   sl.registerFactory<WorkerInfoCubit>(() => WorkerInfoCubit(sl(), sl()));
+
+  /// ================= Chat =================
+
+  sl.registerLazySingleton<ChatDataSource>(() => ChatDatasourceImpl(sl()));
+
+  sl.registerLazySingleton<ChatRepository>(() => ChatRepositoryImpl(sl()));
+
+  sl.registerLazySingleton<SendMessageUseCase>(() => SendMessageUseCase(sl()));
+
+  sl.registerFactory<ChatCubit>(() => ChatCubit(sl()));
 }

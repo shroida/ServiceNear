@@ -7,7 +7,7 @@ import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
+import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/about_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/address_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/drop_down_specialties.dart';
@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: BlocConsumer<AuthCubit, AuthState>(
+        child: BlocConsumer<AuthCubit, AppAuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               AppSnackBar.show(

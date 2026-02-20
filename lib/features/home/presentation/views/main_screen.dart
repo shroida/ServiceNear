@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/chat/presentation/chat_screen.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
@@ -20,15 +21,13 @@ class _MainScreenState extends State<MainScreen> {
 
   late final List<Widget> _pages = [
     HomeView(user: widget.user),
-    ChatScreen(
-      chatSubtitle: 'Chat with ${widget.user.firstName}',
-      chatTitle: 'Chat',
-    ),
+    const SizedBox(),
+
+    Center(child: Text('No worker profile available')),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

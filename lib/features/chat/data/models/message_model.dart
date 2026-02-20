@@ -7,6 +7,7 @@ class MessageModel extends MessageEntity {
     required super.senderType,
     required super.messageText,
     required super.isRead,
+    required super.receiverType,
     super.parentId,
     required super.createdAt,
   });
@@ -15,6 +16,7 @@ class MessageModel extends MessageEntity {
       senderId: entity.senderId,
       receiverId: entity.receiverId,
       senderType: entity.senderType,
+      receiverType: entity.receiverType,
       messageText: entity.messageText,
       isRead: entity.isRead,
       createdAt: entity.createdAt,
@@ -26,6 +28,7 @@ class MessageModel extends MessageEntity {
       'sender_id': senderId,
       'receiver_id': receiverId,
       'sender_type': senderType,
+      'receiver_type': receiverType,
       'message_text': messageText,
       'is_read': isRead,
       'created_at': createdAt.toIso8601String(),

@@ -38,7 +38,14 @@ class WorkerInfoScreen extends StatelessWidget {
                   children: [
                     WorkerInfoHeader(worker: worker),
                     SizedBox(height: 20.h),
-
+                    ElevatedButton(
+                      onPressed: () {
+                        print(worker.id);
+                        print(worker.firstName);
+                        print(worker.lastName);
+                      },
+                      child: Text('print data of worker'),
+                    ),
                     AboutSection(
                       about:
                           worker.about ??

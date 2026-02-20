@@ -1,12 +1,25 @@
-abstract class ChatState {}
+import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
 
-class ChatInitial extends ChatState {}
+class ChatState {
+  final List<MessageEntity> messages;
+  final bool isLoading;
+  final String? error;
 
-class ChatLoading extends ChatState {}
+  ChatState({required this.messages, required this.isLoading, this.error});
 
-class ChatSuccess extends ChatState {}
+  factory ChatState.initial() {
+    return ChatState(messages: [], isLoading: false, error: null);
+  }
 
-class ChatError extends ChatState {
-  final String message;
-  ChatError(this.message);
+  ChatState copyWith({
+    List<MessageEntity>? messages,
+    bool? isLoading,
+    String? error,
+  }) {
+    return ChatState(
+      messages: messages ?? this.messages,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
 }

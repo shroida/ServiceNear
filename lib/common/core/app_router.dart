@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/pages/login_screen.dart';
 import 'package:servicenear/features/auth/presentation/pages/register_screen.dart';
 import 'package:servicenear/features/chat/presentation/chat_screen.dart';
+import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
@@ -41,7 +43,7 @@ class AppRouter {
       GoRoute(
         path: RoutePath.login,
         builder: (context, state) => BlocProvider(
-          create: (_) => AuthCubit(sl()),
+          create: (_) => AuthCubit(sl(), sl()),
           child: const LoginScreen(),
         ),
       ),
@@ -49,18 +51,23 @@ class AppRouter {
       GoRoute(
         path: RoutePath.register,
         builder: (context, state) => BlocProvider(
-          create: (_) => AuthCubit(sl()),
+          create: (_) => AuthCubit(sl(), sl()),
           child: const RegisterScreen(),
         ),
       ),
 
       GoRoute(
         path: RoutePath.chat,
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          final AppUser receiver = data['user'] as AppUser;
 
-        builder: (context, state) =>
-            ChatScreen(chatSubtitle: state.extra as String, chatTitle: 'Chat'),
+          return BlocProvider(
+            create: (_) => ChatCubit(sl()),
+            child: ChatScreen(receiver: receiver),
+          );
+        },
       ),
-
       GoRoute(
         path: RoutePath.onBoarding,
         builder: (context, state) => const OnBoardingScreen(),

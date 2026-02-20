@@ -6,7 +6,7 @@ import 'package:servicenear/features/chat/domain/repositories/chat_repositories.
 class ChatRepositoryImpl implements ChatRepository {
   final ChatDataSource dataSource;
 
-  ChatRepositoryImpl({required this.dataSource});
+  ChatRepositoryImpl(this.dataSource);
 
   @override
   Future<void> sendMessage(MessageEntity message) {
