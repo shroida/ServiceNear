@@ -28,13 +28,16 @@ class ChatDatasourceImpl implements ChatDataSource {
   @override
   Future<List<MessageModel>> getMessages(String senderId) async {
     try {
+      print('================================');
+      print('Fetching messages for senderId: $senderId');
+      print('================================');
       final response = await client
           .from('chats')
           .select()
           .or('sender_id.eq.$senderId,receiver_id.eq.$senderId')
           .order('created_at', ascending: true);
 
-      // response بالفعل List<dynamic>
+      print('Fetching messages for senderId: $response');
       return (response as List<dynamic>)
           .map((item) => MessageModel.fromMap(item as Map<String, dynamic>))
           .toList();

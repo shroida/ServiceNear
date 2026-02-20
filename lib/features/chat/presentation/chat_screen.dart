@@ -7,6 +7,7 @@ import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/common/widgets/custom_app_bar.dart';
+import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,11 +23,26 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  late final ChatCubit _chatCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _chatCubit = sl<ChatCubit>();
+    _loadChatHistory();
+  }
+
+  void _loadChatHistory() {
+    final currentUser = Supabase.instance.client.auth.currentUser;
+    if (currentUser != null) {
+      _chatCubit.loadMessages(currentUser.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<ChatCubit>(),
+    return BlocProvider.value(
+      value: _chatCubit, // use the same cubit instance
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: CustomAppBar(
@@ -38,20 +54,23 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: BlocBuilder<ChatCubit, ChatState>(
                 builder: (context, state) {
+                  List<MessageEntity> messages = [];
+                  if (state is ChatLoaded) {
+                    messages = List.from(state.messages)
+                      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+                  }
+
                   return ListView.builder(
                     padding: EdgeInsets.symmetric(
                       horizontal: 16.w,
                       vertical: 12.h,
                     ),
-                    itemCount: state is ChatLoaded ? state.messages.length : 0,
+                    itemCount: messages.length,
                     itemBuilder: (context, index) {
-                      final msg = state is ChatLoaded
-                          ? state.messages[index]
-                          : null;
-
-                      if (msg == null) return const SizedBox.shrink();
-
-                      final isSender = msg.senderType == "worker";
+                      final msg = messages[index];
+                      final currentUserId =
+                          Supabase.instance.client.auth.currentUser?.id;
+                      final isSender = msg.senderId == currentUserId;
 
                       return Align(
                         alignment: isSender
@@ -100,6 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
 
+            // Input field
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Row(
@@ -129,26 +149,22 @@ class _ChatScreenState extends State<ChatScreen> {
                     onTap: () async {
                       final currentUser =
                           Supabase.instance.client.auth.currentUser;
-
-                      if (currentUser == null) {
-                        debugPrint("User not logged in");
-                        return;
-                      }
+                      if (currentUser == null) return;
 
                       final senderId = currentUser.id;
-
-                      // determine sender type
-                      final senderType = widget.receiver.id == senderId
+                      final receiverId = widget.receiver.id;
+                      final senderType = senderId == widget.receiver.id
                           ? 'worker'
                           : 'customer';
+                      final receiverType = senderType == 'worker'
+                          ? 'customer'
+                          : 'worker';
 
-                      context.read<ChatCubit>().sendMessage(
+                      _chatCubit.sendMessage(
                         senderId: senderId,
-                        receiverId: widget.receiver.id,
+                        receiverId: receiverId,
                         senderType: senderType,
-                        receiverType: senderType == 'worker'
-                            ? 'customer'
-                            : 'worker',
+                        receiverType: receiverType,
                         messageText: _controller.text,
                       );
                       _controller.clear();
@@ -180,5 +196,11 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _chatCubit.close();
+    super.dispose();
   }
 }
