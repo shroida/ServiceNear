@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
+import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   final SendMessageUseCase sendMessageUseCase;
-
-  ChatCubit(this.sendMessageUseCase) : super(ChatState.initial());
-
+  final GetMessagesUsecase getMessagesUseCase;
+  final List<MessageEntity> messages = [];
+  ChatCubit(this.sendMessageUseCase, this.getMessagesUseCase)
+    : super(const ChatInitial());
   Future<void> sendMessage({
     required String senderId,
     required String receiverId,
@@ -17,14 +19,14 @@ class ChatCubit extends Cubit<ChatState> {
   }) async {
     if (messageText.trim().isEmpty) return;
 
-    emit(state.copyWith(isLoading: true));
+    emit(ChatLoading());
 
     try {
       final message = MessageEntity(
         senderId: senderId,
-        receiverType: receiverType,
         receiverId: receiverId,
         senderType: senderType,
+        receiverType: receiverType,
         messageText: messageText,
         isRead: false,
         createdAt: DateTime.now(),
@@ -32,18 +34,24 @@ class ChatCubit extends Cubit<ChatState> {
 
       await sendMessageUseCase(message);
 
-      final updatedMessages = List<MessageEntity>.from(state.messages)
-        ..add(message);
+      final currentMessages = state is ChatLoaded
+          ? (state as ChatLoaded).messages
+          : <MessageEntity>[];
+      final updatedMessages = [...currentMessages, message];
 
-      emit(
-        state.copyWith(
-          messages: updatedMessages,
-          isLoading: false,
-          error: null,
-        ),
-      );
+      emit(ChatLoaded(messages: updatedMessages));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
+      emit(ChatError(e.toString()));
+    }
+  }
+
+  Future<void> loadMessages(String senderId) async {
+    emit(ChatLoading());
+    try {
+      final fetchedMessages = await getMessagesUseCase(senderId);
+      emit(ChatLoaded(messages: fetchedMessages));
+    } catch (e) {
+      emit(ChatError(e.toString()));
     }
   }
 }

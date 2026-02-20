@@ -43,9 +43,13 @@ class _ChatScreenState extends State<ChatScreen> {
                       horizontal: 16.w,
                       vertical: 12.h,
                     ),
-                    itemCount: state.messages.length,
+                    itemCount: state is ChatLoaded ? state.messages.length : 0,
                     itemBuilder: (context, index) {
-                      final msg = state.messages[index];
+                      final msg = state is ChatLoaded
+                          ? state.messages[index]
+                          : null;
+
+                      if (msg == null) return const SizedBox.shrink();
 
                       final isSender = msg.senderType == "worker";
 
