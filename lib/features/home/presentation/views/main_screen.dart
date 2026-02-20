@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
-
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
-
 import '../../../../common/entities/app_user.dart';
 
 class MainScreen extends StatefulWidget {
@@ -19,13 +17,13 @@ class _MainScreenState extends State<MainScreen> {
 
   late final List<Widget> _pages = [
     HomeView(user: widget.user),
-    // ChatView(),
-    // BookingsView(),
+    const SizedBox(),
+
+    Center(child: Text('No worker profile available')),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

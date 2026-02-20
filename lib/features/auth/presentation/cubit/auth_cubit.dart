@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
-import 'auth_state.dart';
+import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'app_auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this.authRepository) : super(AuthInitial());
+class AuthCubit extends Cubit<AppAuthState> {
+  AuthCubit(this.authRepository, this.userRepository) : super(AuthInitial());
 
   final AuthRepository authRepository;
+  final UserRepository userRepository;
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -75,19 +77,22 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     try {
+      // Login via repository
       await authRepository.login(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      emit(AuthSuccess('Logged in successfully'));
-    } on Exception catch (e) {
-      String message = 'Something went wrong. Please try again.';
 
-      if (e.toString().contains('Invalid login credentials')) {
-        message = 'Email or password is incorrect';
+      // Fetch current user data
+      final currentUser = await userRepository.getCurrentUserData();
+      if (currentUser == null) {
+        emit(AuthError("Failed to fetch user data"));
+        return;
       }
 
-      emit(AuthError(message));
+      emit(AuthLoggedIn(currentUser));
+    } catch (e) {
+      emit(AuthError(e.toString()));
     }
   }
 

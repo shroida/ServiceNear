@@ -38,7 +38,6 @@ class WorkerInfoScreen extends StatelessWidget {
                   children: [
                     WorkerInfoHeader(worker: worker),
                     SizedBox(height: 20.h),
-
                     AboutSection(
                       about:
                           worker.about ??

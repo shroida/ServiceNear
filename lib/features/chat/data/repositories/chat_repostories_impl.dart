@@ -1,0 +1,22 @@
+import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
+import 'package:servicenear/features/chat/data/models/message_model.dart';
+import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
+import 'package:servicenear/features/chat/domain/repositories/chat_repositories.dart';
+
+class ChatRepositoryImpl implements ChatRepository {
+  final ChatDataSource dataSource;
+
+  ChatRepositoryImpl(this.dataSource);
+
+  @override
+  Future<void> sendMessage(MessageEntity message) {
+    return dataSource.sendMessage(MessageModel.fromEntity(message));
+  }
+
+  @override
+  Future<List<MessageEntity>> getMessages(String senderId) {
+    return dataSource.getMessages(senderId).then((models) {
+      return models.map((model) => model.toEntity()).toList();
+    });
+  }
+}

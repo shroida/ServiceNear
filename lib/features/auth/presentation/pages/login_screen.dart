@@ -6,7 +6,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:servicenear/features/auth/presentation/cubit/auth_state.dart';
+import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/email_field.dart';
 import 'package:servicenear/features/auth/presentation/widgets/navigate_to_login_register.dart';
 import 'package:servicenear/features/auth/presentation/widgets/password_field.dart';
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: BlocConsumer<AuthCubit, AuthState>(
+        child: BlocConsumer<AuthCubit, AppAuthState>(
           listener: (context, state) {
             if (state is AuthError) {
               AppSnackBar.show(
