@@ -12,4 +12,11 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<void> sendMessage(MessageEntity message) {
     return dataSource.sendMessage(MessageModel.fromEntity(message));
   }
+
+  @override
+  Future<List<MessageEntity>> getMessages(String senderId) {
+    return dataSource.getMessages(senderId).then((models) {
+      return models.map((model) => model.toEntity()).toList();
+    });
+  }
 }
