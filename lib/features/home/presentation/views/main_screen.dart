@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:servicenear/features/home/presentation/views/chat_list_view.dart';
+import 'package:servicenear/features/chat/presentation/views/chat_list_view.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
