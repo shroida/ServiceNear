@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/features/home/presentation/widgets/chat_item.dart';
 
 class ChatListView extends StatelessWidget {
   const ChatListView({super.key});
