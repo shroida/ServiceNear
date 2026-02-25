@@ -1,3 +1,4 @@
+import 'package:servicenear/features/chat/domain/entites/chat_conversation_entity.dart';
 import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
 
 abstract class ChatState {
@@ -16,6 +17,12 @@ class ChatLoaded extends ChatState {
   final List<MessageEntity> messages;
 
   const ChatLoaded({required this.messages});
+}
+
+class ChatConversationLoaded extends ChatState {
+  final List<ChatConversationEntity> chats;
+
+  const ChatConversationLoaded({required this.chats});
 }
 
 class ChatError extends ChatState {

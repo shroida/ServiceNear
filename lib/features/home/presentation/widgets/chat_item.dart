@@ -4,7 +4,18 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 
 class ChatItem extends StatelessWidget {
-  const ChatItem({super.key});
+  const ChatItem({
+    super.key,
+    required this.name,
+    required this.lastMessage,
+    required this.time,
+    required this.unreadCount,
+  });
+
+  final String name;
+  final String lastMessage;
+  final DateTime time;
+  final int unreadCount;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +23,6 @@ class ChatItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 12.h),
       child: Row(
         children: [
-          /// Avatar + Online Indicator
           Stack(
             children: [
               CircleAvatar(
@@ -43,10 +53,10 @@ class ChatItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Ahmed Mostafa", style: AppStyles.font18DarkGreyMedium),
+                Text(name, style: AppStyles.font18DarkGreyMedium),
                 SizedBox(height: 4.h),
                 Text(
-                  "Hey, are you available tomorrow?",
+                  lastMessage,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.font14GrayRegular,
@@ -59,7 +69,10 @@ class ChatItem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text("12:45 PM", style: AppStyles.font12GrayRegular),
+              Text(
+                "${time.hour}:${time.minute} ${time.hour >= 12 ? 'PM' : 'AM'}",
+                style: AppStyles.font12GrayRegular,
+              ),
               SizedBox(height: 6.h),
 
               /// Unread Badge
@@ -70,7 +83,7 @@ class ChatItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Text(
-                  "2",
+                  "$unreadCount",
                   style: AppStyles.font12BlueRegular.copyWith(
                     color: Colors.white,
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
+import 'package:servicenear/features/chat/domain/usecases/get_all_chats_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'chat_state.dart';
@@ -7,9 +8,13 @@ import 'chat_state.dart';
 class ChatCubit extends Cubit<ChatState> {
   final SendMessageUseCase sendMessageUseCase;
   final GetMessagesUsecase getMessagesUseCase;
+  final GetAllChatsUseCase getAllChatsUseCase;
   final List<MessageEntity> messages = [];
-  ChatCubit(this.sendMessageUseCase, this.getMessagesUseCase)
-    : super(const ChatInitial());
+  ChatCubit(
+    this.sendMessageUseCase,
+    this.getMessagesUseCase,
+    this.getAllChatsUseCase,
+  ) : super(const ChatInitial());
   Future<void> sendMessage({
     required String senderId,
     required String receiverId,
@@ -50,6 +55,16 @@ class ChatCubit extends Cubit<ChatState> {
     try {
       final fetchedMessages = await getMessagesUseCase(senderId);
       emit(ChatLoaded(messages: fetchedMessages));
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
+  Future<void> loadAllChats(String currentUserId) async {
+    emit(ChatLoading());
+    try {
+      final chats = await getAllChatsUseCase(currentUserId);
+      emit(ChatConversationLoaded(chats: chats));
     } catch (e) {
       emit(ChatError(e.toString()));
     }
