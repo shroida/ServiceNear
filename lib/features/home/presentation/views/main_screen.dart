@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servicenear/features/home/presentation/views/chat_list_view.dart';
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
@@ -17,9 +18,7 @@ class _MainScreenState extends State<MainScreen> {
 
   late final List<Widget> _pages = [
     HomeView(user: widget.user),
-    const SizedBox(),
-
-    Center(child: Text('No worker profile available')),
+    ChatListView(),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
     ProfileView(currentUser: widget.user),
