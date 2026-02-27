@@ -80,21 +80,29 @@ class ChatDatasourceImpl implements ChatDataSource {
     final data = response as List;
 
     final Map<String, ChatConversationModel> chats = {};
+    final Map<String, int> unreadCounter = {};
 
     for (var message in data) {
       final senderId = message['sender_id'];
       final receiverId = message['receiver_id'];
-
       final senderType = message['sender_type'];
       final receiverType = message['receiver_type'];
 
       final otherUserId = senderId == currentUserId ? receiverId : senderId;
+
       final otherUserType = senderId == currentUserId
           ? receiverType
           : senderType;
 
+      // ✅ عد الرسائل غير المقروءة اللي جايالك انت بس
+      if (receiverId == currentUserId && message['is_read'] == false) {
+        unreadCounter[otherUserId] = (unreadCounter[otherUserId] ?? 0) + 1;
+      }
+
+      // أول رسالة (لأنها مرتبة descending)
       if (!chats.containsKey(otherUserId)) {
         final nameMap = await getUserName(otherUserId, otherUserType);
+
         final userName = nameMap != null
             ? "${nameMap['first_name'] ?? ''} ${nameMap['last_name'] ?? ''}"
                   .trim()
@@ -105,10 +113,15 @@ class ChatDatasourceImpl implements ChatDataSource {
           userName: userName,
           lastMessage: message['message_text'],
           lastMessageTime: DateTime.parse(message['created_at']),
-          unreadCount: message['is_read'] == false ? 1 : 0,
+          unreadCount: 0, // هنعملها بعدين
         );
       }
     }
+
+    // ✅ نحط القيمة النهائية للـ unreadCount
+    chats.forEach((key, chat) {
+      chats[key] = chat.copyWith(unreadCount: unreadCounter[key] ?? 0);
+    });
 
     return chats.values.toList();
   }

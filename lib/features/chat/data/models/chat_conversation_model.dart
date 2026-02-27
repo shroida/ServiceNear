@@ -8,4 +8,19 @@ class ChatConversationModel extends ChatConversationEntity {
     required super.lastMessageTime,
     required super.unreadCount,
   });
+  ChatConversationModel copyWith({
+    String? userId,
+    String? userName,
+    String? lastMessage,
+    DateTime? lastMessageTime,
+    int? unreadCount,
+  }) {
+    return ChatConversationModel(
+      userId: userId ?? this.userId,
+      userName: userName ?? this.userName,
+      lastMessage: lastMessage ?? this.lastMessage,
+      lastMessageTime: lastMessageTime ?? this.lastMessageTime,
+      unreadCount: unreadCount ?? this.unreadCount,
+    );
+  }
 }
