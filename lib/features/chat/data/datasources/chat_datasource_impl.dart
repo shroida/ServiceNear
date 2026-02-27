@@ -94,12 +94,10 @@ class ChatDatasourceImpl implements ChatDataSource {
           ? receiverType
           : senderType;
 
-      // ✅ عد الرسائل غير المقروءة اللي جايالك انت بس
       if (receiverId == currentUserId && message['is_read'] == false) {
         unreadCounter[otherUserId] = (unreadCounter[otherUserId] ?? 0) + 1;
       }
 
-      // أول رسالة (لأنها مرتبة descending)
       if (!chats.containsKey(otherUserId)) {
         final nameMap = await getUserName(otherUserId, otherUserType);
 
@@ -113,16 +111,27 @@ class ChatDatasourceImpl implements ChatDataSource {
           userName: userName,
           lastMessage: message['message_text'],
           lastMessageTime: DateTime.parse(message['created_at']),
-          unreadCount: 0, // هنعملها بعدين
+          unreadCount: 0,
         );
       }
     }
 
-    // ✅ نحط القيمة النهائية للـ unreadCount
     chats.forEach((key, chat) {
       chats[key] = chat.copyWith(unreadCount: unreadCounter[key] ?? 0);
     });
 
     return chats.values.toList();
+  }
+
+  Future<void> markMessagesAsRead(String senderId, String receiverId) async {
+    try {
+      await client
+          .from('chats')
+          .update({'is_read': true})
+          .eq('sender_id', senderId)
+          .eq('receiver_id', receiverId);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

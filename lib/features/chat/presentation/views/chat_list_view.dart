@@ -78,11 +78,18 @@ class _ChatListViewState extends State<ChatListView> {
                         itemBuilder: (context, index) {
                           final chat = state.chats[index];
 
-                          return ChatItem(
-                            name: chat.userName,
-                            lastMessage: chat.lastMessage,
-                            time: chat.lastMessageTime,
-                            unreadCount: chat.unreadCount,
+                          return GestureDetector(
+                            onTap: () {
+                              context.read<ChatCubit>().markMessagesAsRead(
+                                chat,
+                              );
+                            },
+                            child: ChatItem(
+                              name: chat.userName,
+                              lastMessage: chat.lastMessage,
+                              time: chat.lastMessageTime,
+                              unreadCount: chat.unreadCount,
+                            ),
                           );
                         },
                       );
