@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/features/chat/domain/entites/chat_conversation_entity.dart';
 import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
 import 'package:servicenear/features/chat/domain/usecases/get_all_chats_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.dart';
+import 'package:servicenear/features/chat/domain/usecases/make_all_chat_messages_read.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'chat_state.dart';
 
@@ -9,11 +11,13 @@ class ChatCubit extends Cubit<ChatState> {
   final SendMessageUseCase sendMessageUseCase;
   final GetMessagesUsecase getMessagesUseCase;
   final GetAllChatsUseCase getAllChatsUseCase;
+  final MakeAllChatMessagesReadUseCase makeAllChatMessagesReadUseCase;
   final List<MessageEntity> messages = [];
   ChatCubit(
     this.sendMessageUseCase,
     this.getMessagesUseCase,
     this.getAllChatsUseCase,
+    this.makeAllChatMessagesReadUseCase,
   ) : super(const ChatInitial());
   Future<void> sendMessage({
     required String senderId,
@@ -65,6 +69,14 @@ class ChatCubit extends Cubit<ChatState> {
     try {
       final chats = await getAllChatsUseCase(currentUserId);
       emit(ChatConversationLoaded(chats: chats));
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
+  Future<void> markMessagesAsRead(ChatConversationEntity chat) async {
+    try {
+      await makeAllChatMessagesReadUseCase(chat);
     } catch (e) {
       emit(ChatError(e.toString()));
     }

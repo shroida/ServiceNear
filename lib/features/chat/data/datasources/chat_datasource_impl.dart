@@ -107,6 +107,8 @@ class ChatDatasourceImpl implements ChatDataSource {
             : "Unknown User";
 
         chats[otherUserId] = ChatConversationModel(
+          senderId: senderId,
+          receiverId: receiverId,
           userId: otherUserId,
           userName: userName,
           lastMessage: message['message_text'],
@@ -123,13 +125,16 @@ class ChatDatasourceImpl implements ChatDataSource {
     return chats.values.toList();
   }
 
-  Future<void> markMessagesAsRead(String senderId, String receiverId) async {
+  @override
+  Future<void> markMessagesAsRead(
+    ChatConversationModel chatConversationModel,
+  ) async {
     try {
       await client
           .from('chats')
           .update({'is_read': true})
-          .eq('sender_id', senderId)
-          .eq('receiver_id', receiverId);
+          .eq('sender_id', chatConversationModel.senderId)
+          .eq('receiver_id', chatConversationModel.receiverId);
     } catch (e) {
       rethrow;
     }

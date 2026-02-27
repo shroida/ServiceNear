@@ -63,7 +63,7 @@ class AppRouter {
           final AppUser receiver = data['user'] as AppUser;
 
           return BlocProvider(
-            create: (_) => ChatCubit(sl(), sl(), sl()),
+            create: (_) => ChatCubit(sl(), sl(), sl(), sl()),
             child: ChatScreen(receiver: receiver),
           );
         },

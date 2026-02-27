@@ -78,8 +78,11 @@ class _ChatListViewState extends State<ChatListView> {
                         itemBuilder: (context, index) {
                           final chat = state.chats[index];
 
-                          return GestureDetector(
+                          return InkWell(
                             onTap: () {
+                              print(
+                                "Tapped on chat with ${chat.userName} (ID: ${chat.userId})",
+                              );
                               context.read<ChatCubit>().markMessagesAsRead(
                                 chat,
                               );

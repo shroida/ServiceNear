@@ -75,20 +75,24 @@ class ChatItem extends StatelessWidget {
               ),
               SizedBox(height: 6.h),
 
-              /// Unread Badge
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Text(
-                  "$unreadCount",
-                  style: AppStyles.font12BlueRegular.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              unreadCount > 0
+                  ? Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Text(
+                        "$unreadCount",
+                        style: AppStyles.font12BlueRegular.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ],

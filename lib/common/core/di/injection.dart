@@ -14,6 +14,7 @@ import 'package:servicenear/features/chat/data/repositories/chat_repostories_imp
 import 'package:servicenear/features/chat/domain/repositories/chat_repositories.dart';
 import 'package:servicenear/features/chat/domain/usecases/get_all_chats_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.dart';
+import 'package:servicenear/features/chat/domain/usecases/make_all_chat_messages_read.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -82,6 +83,9 @@ Future<void> init() async {
   sl.registerLazySingleton<GetMessagesUsecase>(() => GetMessagesUsecase(sl()));
 
   sl.registerLazySingleton<GetAllChatsUseCase>(() => GetAllChatsUseCase(sl()));
+  sl.registerLazySingleton<MakeAllChatMessagesReadUseCase>(
+    () => MakeAllChatMessagesReadUseCase(sl()),
+  );
 
-  sl.registerFactory<ChatCubit>(() => ChatCubit(sl(), sl(), sl()));
+  sl.registerFactory<ChatCubit>(() => ChatCubit(sl(), sl(), sl(), sl()));
 }
