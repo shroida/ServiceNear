@@ -30,19 +30,26 @@ class ChatDatasourceImpl implements ChatDataSource {
   }
 
   @override
-  Future<List<MessageModel>> getMessages(String senderId) async {
+  Future<List<MessageModel>> getMessagesBetweenCustomerAndWorker(
+    String userId1,
+    String userId2,
+  ) async {
     try {
       final response = await client
           .from('chats')
           .select()
-          .or('sender_id.eq.$senderId,receiver_id.eq.$senderId')
+          .or(
+            'and(sender_id.eq.$userId1,receiver_id.eq.$userId2),and(sender_id.eq.$userId2,receiver_id.eq.$userId1)',
+          )
           .order('created_at', ascending: true);
 
       return (response as List<dynamic>)
           .map((item) => MessageModel.fromMap(item as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      rethrow;
+      throw Exception(
+        'Error fetching messages between $userId1 and $userId2: $e',
+      );
     }
   }
 

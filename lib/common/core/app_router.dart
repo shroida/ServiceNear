@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/home_screen.dart';
+import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.dart';
@@ -62,9 +64,8 @@ class AppRouter {
           final currentUserId =
               Supabase.instance.client.auth.currentUser?.id ?? '';
           return BlocProvider(
-            create: (_) =>
-                sl<ChatCubit>()
-                  ..loadMessages(currentUserId, receiverId, "worker"),
+            create: (_) => sl<ChatCubit>()
+              ..loadMessagesBetweenCustomerAndWorker(currentUserId, receiverId),
             child: ChatScreen(receiverId: receiverId),
           );
         },
@@ -80,6 +81,14 @@ class AppRouter {
           final data = state.extra as Map<String, dynamic>;
           final Worker worker = data['user'] as Worker;
           return WorkerInfoScreen(worker: worker);
+        },
+      ),
+      GoRoute(
+        path: RoutePath.profile,
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>;
+          final AppUser profile = data['user'] as AppUser;
+          return ProfileView(currentUser: profile);
         },
       ),
 

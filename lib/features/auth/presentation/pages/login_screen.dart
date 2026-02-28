@@ -32,13 +32,16 @@ class LoginScreen extends StatelessWidget {
                 message: state.message,
                 type: AppSnackBarType.error,
               );
-            } else if (state is AuthSuccess) {
+            } else if (state is AuthLoggedIn) {
               AppSnackBar.show(
                 context,
-                message: state.message,
+                message: "Login successful",
                 type: AppSnackBarType.success,
               );
-              context.go(RoutePath.home);
+
+              if (context.mounted) {
+                context.go(RoutePath.home);
+              }
             }
           },
           builder: (context, state) {
