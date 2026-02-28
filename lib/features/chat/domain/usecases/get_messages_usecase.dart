@@ -6,7 +6,10 @@ class GetMessagesUsecase {
 
   GetMessagesUsecase(this.repository);
 
-  Future<List<MessageEntity>> call(String senderId) async {
-    return await repository.getMessages(senderId);
+  Future<List<MessageEntity>> call(
+    String currentUserId,
+    String receiverId,
+  ) async {
+    return await repository.getMessages(currentUserId, receiverId);
   }
 }

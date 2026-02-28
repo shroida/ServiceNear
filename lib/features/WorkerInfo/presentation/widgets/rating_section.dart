@@ -12,7 +12,6 @@ class RatingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Trigger fetch when first built
     context.read<WorkerInfoCubit>().fetchReviews(workerId);
 
     return BlocBuilder<WorkerInfoCubit, RatingState>(

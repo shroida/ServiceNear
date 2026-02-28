@@ -17,7 +17,6 @@ class WorkerInfoCubit extends Cubit<RatingState> {
     try {
       await submitRatingUseCase(rating);
 
-      // Reload reviews automatically
       final reviews = await fetchReviewsUseCase(rating.workerId);
 
       emit(RatingLoaded(reviews));

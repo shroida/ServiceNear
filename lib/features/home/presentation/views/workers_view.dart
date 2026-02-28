@@ -77,7 +77,6 @@ class WorkersView extends StatelessWidget {
                             padding: EdgeInsets.all(16.w),
                             child: Row(
                               children: [
-                                // AVATAR
                                 CircleAvatar(
                                   radius: 32.r,
                                   backgroundColor: Colors.grey.shade100,
@@ -92,7 +91,6 @@ class WorkersView extends StatelessWidget {
                                 ),
                                 SizedBox(width: 16.w),
 
-                                // INFO
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -104,7 +102,6 @@ class WorkersView extends StatelessWidget {
                                       ),
                                       SizedBox(height: 6.h),
 
-                                      // SPECIALTY BADGE
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 10.w,

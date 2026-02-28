@@ -1,7 +1,7 @@
 import 'user_type.dart';
 import 'user_location.dart';
 
-abstract class AppUser {
+class AppUser {
   final String id;
   final String firstName;
   final String lastName;
@@ -19,4 +19,15 @@ abstract class AppUser {
     required this.location,
     required this.createdAt,
   });
+  factory AppUser.fromMap(Map<String, dynamic> json) {
+    return AppUser(
+      id: json['id'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      email: json['email'] ?? '',
+      userType: UserType.customer,
+      location: UserLocation.fromJson(json['location'] ?? {}),
+      createdAt: DateTime.parse(json['created_at']),
+    );
+  }
 }

@@ -35,18 +35,24 @@ class Worker extends AppUser {
       phoneNubmer: map['phone'] ?? 'Unknown',
       email: map['email'] ?? 'Unknown',
       specialty: map['specialty'] ?? 'Unknown',
-      rating: map['rating'] ?? 0.0,
-      reviewsCount: map['reviews_count'] ?? 0,
-      about: map['about'] ?? 'fdgfd',
+
+      rating: (map['rating'] as num?)?.toDouble() ?? 0.0,
+
+      reviewsCount: (map['reviews_count'] as num?)?.toInt() ?? 0,
+
+      about: map['about'] ?? '',
+      address: map['address'] ?? '',
+
       userType: UserTypeExtension.fromString(map['user_type'] ?? 'customer'),
+
       location: UserLocation.fromJson({
-        'latitude': map['latitude'],
-        'longitude': map['longitude'],
+        'latitude': (map['latitude'] as num?)?.toDouble() ?? 0.0,
+        'longitude': (map['longitude'] as num?)?.toDouble() ?? 0.0,
       }),
+
       createdAt: map['created_at'] != null
           ? DateTime.parse(map['created_at'])
           : DateTime.now(),
-      address: map['address'] ?? '',
     );
   }
 }

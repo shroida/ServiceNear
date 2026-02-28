@@ -1,3 +1,4 @@
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/features/chat/domain/entites/chat_conversation_entity.dart';
 import 'package:servicenear/features/chat/domain/entites/message_entity.dart';
 
@@ -13,10 +14,17 @@ class ChatLoading extends ChatState {
   const ChatLoading();
 }
 
+class ChatReceiverLoaded extends ChatState {
+  final AppUser receiverName;
+
+  const ChatReceiverLoaded({required this.receiverName});
+}
+
 class ChatLoaded extends ChatState {
   final List<MessageEntity> messages;
+  final AppUser? receiver;
 
-  const ChatLoaded({required this.messages});
+  ChatLoaded({required this.messages, required this.receiver});
 }
 
 class ChatConversationLoaded extends ChatState {

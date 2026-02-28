@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
 import 'package:servicenear/features/chat/data/models/chat_conversation_model.dart';
 import 'package:servicenear/features/chat/data/models/message_model.dart';
@@ -80,36 +83,90 @@ class ChatDatasourceImpl implements ChatDataSource {
     final data = response as List;
 
     final Map<String, ChatConversationModel> chats = {};
+    final Map<String, int> unreadCounter = {};
 
     for (var message in data) {
       final senderId = message['sender_id'];
       final receiverId = message['receiver_id'];
-
       final senderType = message['sender_type'];
       final receiverType = message['receiver_type'];
 
       final otherUserId = senderId == currentUserId ? receiverId : senderId;
+
       final otherUserType = senderId == currentUserId
           ? receiverType
           : senderType;
 
+      if (receiverId == currentUserId && message['is_read'] == false) {
+        unreadCounter[otherUserId] = (unreadCounter[otherUserId] ?? 0) + 1;
+      }
+
       if (!chats.containsKey(otherUserId)) {
         final nameMap = await getUserName(otherUserId, otherUserType);
+
         final userName = nameMap != null
             ? "${nameMap['first_name'] ?? ''} ${nameMap['last_name'] ?? ''}"
                   .trim()
             : "Unknown User";
 
         chats[otherUserId] = ChatConversationModel(
+          senderId: senderId,
+          receiverId: receiverId,
           userId: otherUserId,
           userName: userName,
           lastMessage: message['message_text'],
           lastMessageTime: DateTime.parse(message['created_at']),
-          unreadCount: message['is_read'] == false ? 1 : 0,
+          unreadCount: 0,
         );
       }
     }
 
+    chats.forEach((key, chat) {
+      chats[key] = chat.copyWith(unreadCount: unreadCounter[key] ?? 0);
+    });
+
     return chats.values.toList();
+  }
+
+  @override
+  Future<void> markMessagesAsRead(
+    ChatConversationModel chatConversationModel,
+  ) async {
+    try {
+      await client
+          .from('chats')
+          .update({'is_read': true})
+          .eq('sender_id', chatConversationModel.senderId)
+          .eq('receiver_id', chatConversationModel.receiverId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AppUser> getUserById(String userId) async {
+    try {
+      try {
+        final workerRes = await client
+            .from('workers')
+            .select()
+            .eq('id', userId)
+            .single();
+        return Worker.fromMap(workerRes);
+      } catch (e) {
+        debugPrint(
+          'User $userId not found in workers table, trying users table...',
+        );
+      }
+
+      final userRes = await client
+          .from('users')
+          .select()
+          .eq('id', userId)
+          .single();
+      return AppUser.fromMap(userRes);
+    } catch (e) {
+      throw Exception('Error fetching user for $userId: $e');
+    }
   }
 }

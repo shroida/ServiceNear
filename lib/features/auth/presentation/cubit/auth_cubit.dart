@@ -77,13 +77,11 @@ class AuthCubit extends Cubit<AppAuthState> {
     emit(AuthLoading());
 
     try {
-      // Login via repository
       await authRepository.login(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
 
-      // Fetch current user data
       final currentUser = await userRepository.getCurrentUserData();
       if (currentUser == null) {
         emit(AuthError("Failed to fetch user data"));
