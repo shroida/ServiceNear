@@ -38,7 +38,7 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<AppUser> getUserById(String userId, String userType) {
-    return dataSource.getUserById(userId, userType);
+  Future<AppUser> getUserById(String userId) {
+    return dataSource.getUserById(userId);
   }
 }

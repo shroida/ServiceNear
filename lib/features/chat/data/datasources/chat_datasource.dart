@@ -7,5 +7,5 @@ abstract class ChatDataSource {
   Future<List<MessageModel>> getMessages(String senderId);
   Future<List<ChatConversationModel>> getAllChats(String currentUserId);
   Future<void> markMessagesAsRead(ChatConversationModel chatConversationModel);
-  Future<AppUser> getUserById(String userId, String userType);
+  Future<AppUser> getUserById(String userId);
 }

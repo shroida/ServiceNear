@@ -143,29 +143,27 @@ class ChatDatasourceImpl implements ChatDataSource {
   }
 
   @override
-  Future<AppUser> getUserById(String userId, String userType) async {
+  Future<AppUser> getUserById(String userId) async {
     try {
-      if (userType == 'worker') {
-        final res = await client
+      // Try to find in workers table
+      try {
+        final workerRes = await client
             .from('workers')
             .select()
             .eq('id', userId)
             .single();
-
-        return Worker.fromMap(res);
+        return Worker.fromMap(workerRes);
+      } catch (_) {
+        // ignore, will try users table next
       }
 
-      if (userType == 'customer') {
-        final res = await client
-            .from('users')
-            .select()
-            .eq('id', userId)
-            .single();
-
-        return AppUser.fromMap(res);
-      }
-
-      throw Exception("Invalid user type");
+      // If not found in workers, try users table
+      final userRes = await client
+          .from('users')
+          .select()
+          .eq('id', userId)
+          .single();
+      return AppUser.fromMap(userRes);
     } catch (e) {
       throw Exception('Error fetching user for $userId: $e');
     }
