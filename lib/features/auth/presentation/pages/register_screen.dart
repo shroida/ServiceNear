@@ -73,7 +73,6 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
 
                         if (authCubit.selectedUserType == UserType.worker) ...[
-                          // Phone
                           AppTextFormField(
                             controller: authCubit.phoneController,
                             hintStyle: AppStyles.font13GrayRegular,
@@ -86,7 +85,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
 
-                          // Specialty Dropdown
                           DropDownSpecialties(
                             selectedSpecialty: authCubit.selectedSpecialty,
                             onChanged: (value) =>
@@ -94,11 +92,9 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
 
-                          // Address
                           AddressField(authCubit: authCubit),
                           SizedBox(height: 16.h),
 
-                          // About
                           AboutFiled(authCubit: authCubit),
                         ],
 

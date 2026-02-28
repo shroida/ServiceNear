@@ -91,7 +91,6 @@ class WorkerInfoHeader extends StatelessWidget {
 
               SizedBox(width: 12.w),
 
-              // CALL BUTTON
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
                 onTap: () => _showCallOptions(context, worker.phoneNubmer!),

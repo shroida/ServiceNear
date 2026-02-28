@@ -41,11 +41,11 @@ class AppSnackBar {
   static Color _backgroundColor(AppSnackBarType type) {
     switch (type) {
       case AppSnackBarType.success:
-        return AppColors.primaryDark; // Green
+        return AppColors.primaryDark;
       case AppSnackBarType.error:
-        return AppColors.error; // Red
+        return AppColors.error;
       case AppSnackBarType.warning:
-        return AppColors.warning; // Orange
+        return AppColors.warning;
     }
   }
 

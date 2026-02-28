@@ -36,7 +36,6 @@ class Worker extends AppUser {
       email: map['email'] ?? 'Unknown',
       specialty: map['specialty'] ?? 'Unknown',
 
-      // 🔥 أهم تعديل هنا
       rating: (map['rating'] as num?)?.toDouble() ?? 0.0,
 
       reviewsCount: (map['reviews_count'] as num?)?.toInt() ?? 0,
@@ -47,7 +46,6 @@ class Worker extends AppUser {
       userType: UserTypeExtension.fromString(map['user_type'] ?? 'customer'),
 
       location: UserLocation.fromJson({
-        // 🔥 مهم جدًا برضه
         'latitude': (map['latitude'] as num?)?.toDouble() ?? 0.0,
         'longitude': (map['longitude'] as num?)?.toDouble() ?? 0.0,
       }),

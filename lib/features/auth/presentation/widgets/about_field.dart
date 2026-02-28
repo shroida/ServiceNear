@@ -13,7 +13,7 @@ class AboutFiled extends StatelessWidget {
     return AppTextFormField(
       controller: authCubit.aboutController,
       hintText: 'About Yourself',
-      validator: (_) => null, // optional
+      validator: (_) => null,
       hintStyle: AppStyles.font13GrayRegular,
 
       prefixIcon: const Icon(Icons.info_outline),

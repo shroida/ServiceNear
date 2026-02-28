@@ -48,7 +48,6 @@ class ChatItem extends StatelessWidget {
 
           SizedBox(width: 14.w),
 
-          /// Name + Message
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +64,6 @@ class ChatItem extends StatelessWidget {
             ),
           ),
 
-          /// Time + Unread
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

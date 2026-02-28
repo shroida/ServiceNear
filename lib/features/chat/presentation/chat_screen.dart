@@ -64,7 +64,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           body: Column(
             children: [
-              /// ================== Messages ==================
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(
@@ -113,7 +112,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
 
-              /// ================== Input ==================
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 child: Row(
@@ -142,7 +140,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     SizedBox(width: 12.w),
 
-                    /// Send Button
                     GestureDetector(
                       onTap: () {
                         final currentUser =
@@ -152,7 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         context.read<ChatCubit>().sendMessage(
                           senderId: currentUser.id,
                           receiverId: widget.receiverId,
-                          senderType: 'customer', // عدل حسب نظامك
+                          senderType: 'customer',
                           receiverType: 'worker',
                           messageText: _controller.text,
                         );

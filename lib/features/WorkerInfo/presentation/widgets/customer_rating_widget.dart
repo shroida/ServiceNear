@@ -22,7 +22,6 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        /// ⭐ Button to open rating
         if (!isExpanded)
           GestureDetector(
             onTap: () {
@@ -48,7 +47,6 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
             ),
           ),
 
-        /// ⭐ Animated Rating Form
         AnimatedCrossFade(
           firstChild: const SizedBox(),
           secondChild: _buildRatingCard(),
@@ -82,7 +80,6 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
           Text("Rate This Worker", style: AppStyles.font18DarkGreyMedium),
           SizedBox(height: 15.h),
 
-          /// ⭐ Stars
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(5, (index) {
@@ -108,7 +105,6 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
 
           SizedBox(height: 20.h),
 
-          /// ✍️ Review Field
           TextField(
             controller: reviewController,
             maxLines: 3,
@@ -127,7 +123,6 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
 
           SizedBox(height: 20.h),
 
-          /// 🚀 Submit Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -147,7 +142,7 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
 
                 setState(() {
                   selectedRating = 0;
-                  isExpanded = false; // hide again after submit
+                  isExpanded = false;
                 });
               },
               child: Text(

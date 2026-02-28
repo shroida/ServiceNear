@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
@@ -145,7 +146,6 @@ class ChatDatasourceImpl implements ChatDataSource {
   @override
   Future<AppUser> getUserById(String userId) async {
     try {
-      // Try to find in workers table
       try {
         final workerRes = await client
             .from('workers')
@@ -153,11 +153,12 @@ class ChatDatasourceImpl implements ChatDataSource {
             .eq('id', userId)
             .single();
         return Worker.fromMap(workerRes);
-      } catch (_) {
-        // ignore, will try users table next
+      } catch (e) {
+        debugPrint(
+          'User $userId not found in workers table, trying users table...',
+        );
       }
 
-      // If not found in workers, try users table
       final userRes = await client
           .from('users')
           .select()
