@@ -37,9 +37,8 @@ ServiceNear is a user-friendly application that connects **customers** with **se
 ### 🧰 Service Provider Flow
 1. Receive **service requests** notifications
 2. Accept or reject requests
-3. Update availability (Online / Offline)
-4. Chat with customers
-5. View today’s schedule and appointment history
+3. Chat with customers
+4. View today’s schedule and appointment history
 
 ---
 
@@ -98,7 +97,6 @@ ServiceNear is a user-friendly application that connects **customers** with **se
 ## 🎨 Design Specifications
 - Responsive layout for phones and tablets
 - Clean UI with clear status indicators
-- Maps integration for GPS tracking
 - Notifications and chat interfaces
 
 ---
