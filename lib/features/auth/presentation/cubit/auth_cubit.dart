@@ -94,6 +94,16 @@ class AuthCubit extends Cubit<AppAuthState> {
     }
   }
 
+  Future<void> logout() async {
+    emit(AuthLoading());
+    try {
+      await authRepository.logout();
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
   @override
   Future<void> close() {
     firstNameController.dispose();

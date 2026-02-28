@@ -102,10 +102,30 @@ class AppDrawer extends StatelessWidget {
               title: 'Logout',
               color: Colors.red,
               onTap: () async {
+                // أغلق الـ Drawer فورًا
                 Navigator.pop(context);
-                await userRepository.logout();
-                if (!context.mounted) return;
-                context.go(RoutePath.login);
+
+                try {
+                  await userRepository.logout();
+
+                  if (!context.mounted) return;
+
+                  context.go(RoutePath.login);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Logged out successfully"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Logout failed: $e"),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
               },
             ),
           ],
@@ -135,8 +155,8 @@ class AppDrawer extends StatelessWidget {
       horizontalTitleGap: 8.w,
       onTap: onTap,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      hoverColor: AppColors.primary.withOpacity(0.1),
-      splashColor: AppColors.primary.withOpacity(0.2),
+      hoverColor: AppColors.primary.withValues(alpha: .1),
+      splashColor: AppColors.primary.withValues(alpha: .2),
     );
   }
 }
