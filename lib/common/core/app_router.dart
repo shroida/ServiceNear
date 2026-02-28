@@ -63,11 +63,7 @@ class AppRouter {
               Supabase.instance.client.auth.currentUser?.id ?? '';
           return BlocProvider(
             create: (_) => sl<ChatCubit>()
-              ..loadMessagesBetweenCustomerAndWorker(
-                currentUserId,
-                receiverId,
-                "worker",
-              ),
+              ..loadMessagesBetweenCustomerAndWorker(currentUserId, receiverId),
             child: ChatScreen(receiverId: receiverId),
           );
         },

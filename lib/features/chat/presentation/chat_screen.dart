@@ -33,7 +33,6 @@ class _ChatScreenState extends State<ChatScreen> {
       context.read<ChatCubit>().loadMessagesBetweenCustomerAndWorker(
         currentUser.id,
         widget.receiverId,
-        "worker",
       );
     }
   }
