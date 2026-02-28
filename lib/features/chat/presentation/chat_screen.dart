@@ -30,7 +30,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final currentUser = Supabase.instance.client.auth.currentUser;
 
     if (currentUser != null) {
-      context.read<ChatCubit>().loadMessages(
+      context.read<ChatCubit>().loadMessagesBetweenCustomerAndWorker(
         currentUser.id,
         widget.receiverId,
         "worker",

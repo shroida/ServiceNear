@@ -17,10 +17,15 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<List<MessageEntity>> getMessages(String senderId, String receiverId) {
-    return dataSource.getMessages(senderId).then((models) {
-      return models.map((model) => model.toEntity()).toList();
-    });
+  Future<List<MessageEntity>> getMessagesBetweenCustomerAndWorker(
+    String senderId,
+    String receiverId,
+  ) {
+    return dataSource
+        .getMessagesBetweenCustomerAndWorker(senderId, receiverId)
+        .then((models) {
+          return models.map((model) => model.toEntity()).toList();
+        });
   }
 
   @override

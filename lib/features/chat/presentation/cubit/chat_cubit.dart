@@ -70,14 +70,17 @@ class ChatCubit extends Cubit<ChatState> {
     emit(ChatReceiverLoaded(receiverName: user));
   }
 
-  Future<void> loadMessages(
+  Future<void> loadMessagesBetweenCustomerAndWorker(
     String currentUserId,
     String receiverId,
     String receiverType,
   ) async {
     final receiver = await repository.getUserById(receiverId);
 
-    final messages = await repository.getMessages(currentUserId, receiverId);
+    final messages = await repository.getMessagesBetweenCustomerAndWorker(
+      currentUserId,
+      receiverId,
+    );
 
     emit(ChatLoaded(messages: messages, receiver: receiver));
   }

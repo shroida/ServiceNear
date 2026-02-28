@@ -10,6 +10,9 @@ class GetMessagesUsecase {
     String currentUserId,
     String receiverId,
   ) async {
-    return await repository.getMessages(currentUserId, receiverId);
+    return await repository.getMessagesBetweenCustomerAndWorker(
+      currentUserId,
+      receiverId,
+    );
   }
 }
