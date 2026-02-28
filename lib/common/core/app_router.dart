@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
-import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
@@ -59,12 +58,14 @@ class AppRouter {
       GoRoute(
         path: RoutePath.chat,
         builder: (context, state) {
-          final data = state.extra as Map<String, dynamic>;
-          final AppUser receiver = data['user'] as AppUser;
-
+          final receiverId = state.extra as String;
+          final currentUserId =
+              Supabase.instance.client.auth.currentUser?.id ?? '';
           return BlocProvider(
-            create: (_) => ChatCubit(sl(), sl(), sl(), sl()),
-            child: ChatScreen(receiver: receiver),
+            create: (_) =>
+                sl<ChatCubit>()
+                  ..loadMessages(currentUserId, receiverId, "worker"),
+            child: ChatScreen(receiverId: receiverId),
           );
         },
       ),

@@ -1,3 +1,5 @@
+import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
 import 'package:servicenear/features/chat/data/models/chat_conversation_model.dart';
 import 'package:servicenear/features/chat/data/models/message_model.dart';
@@ -137,6 +139,35 @@ class ChatDatasourceImpl implements ChatDataSource {
           .eq('receiver_id', chatConversationModel.receiverId);
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<AppUser> getUserById(String userId, String userType) async {
+    try {
+      if (userType == 'worker') {
+        final res = await client
+            .from('workers')
+            .select()
+            .eq('id', userId)
+            .single();
+
+        return Worker.fromMap(res);
+      }
+
+      if (userType == 'customer') {
+        final res = await client
+            .from('users')
+            .select()
+            .eq('id', userId)
+            .single();
+
+        return AppUser.fromMap(res);
+      }
+
+      throw Exception("Invalid user type");
+    } catch (e) {
+      throw Exception('Error fetching user for $userId: $e');
     }
   }
 }

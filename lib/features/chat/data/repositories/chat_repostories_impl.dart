@@ -1,3 +1,4 @@
+import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
 import 'package:servicenear/features/chat/data/models/chat_conversation_model.dart';
 import 'package:servicenear/features/chat/data/models/message_model.dart';
@@ -16,7 +17,7 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<List<MessageEntity>> getMessages(String senderId) {
+  Future<List<MessageEntity>> getMessages(String senderId, String receiverId) {
     return dataSource.getMessages(senderId).then((models) {
       return models.map((model) => model.toEntity()).toList();
     });
@@ -34,5 +35,10 @@ class ChatRepositoryImpl implements ChatRepository {
     return dataSource.markMessagesAsRead(
       ChatConversationModel.fromEntity(chat),
     );
+  }
+
+  @override
+  Future<AppUser> getUserById(String userId, String userType) {
+    return dataSource.getUserById(userId, userType);
   }
 }

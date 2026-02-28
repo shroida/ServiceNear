@@ -87,5 +87,5 @@ Future<void> init() async {
     () => MakeAllChatMessagesReadUseCase(sl()),
   );
 
-  sl.registerFactory<ChatCubit>(() => ChatCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory<ChatCubit>(() => ChatCubit(sl(), sl(), sl(), sl(), sl()));
 }

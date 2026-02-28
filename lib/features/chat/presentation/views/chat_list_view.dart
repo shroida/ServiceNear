@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
@@ -80,12 +82,10 @@ class _ChatListViewState extends State<ChatListView> {
 
                           return InkWell(
                             onTap: () {
-                              print(
-                                "Tapped on chat with ${chat.userName} (ID: ${chat.userId})",
-                              );
                               context.read<ChatCubit>().markMessagesAsRead(
                                 chat,
                               );
+                              context.push(RoutePath.chat, extra: chat.userId);
                             },
                             child: ChatItem(
                               name: chat.userName,
