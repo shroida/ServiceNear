@@ -4,7 +4,6 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/common/widgets/custom_app_bar.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.currentUser});
@@ -15,10 +14,6 @@ class ProfileView extends StatelessWidget {
     final isWorker = currentUser.userType.name == 'worker';
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: isWorker ? "Worker Profile" : "User Profile",
-        subtitle: "${currentUser.firstName} ${currentUser.lastName}",
-      ),
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
         child: Column(
