@@ -1,7 +1,7 @@
 class ServiceRequest {
   final String id;
-  final int customerId;
-  final int workerId;
+  final String customerId;
+  final String workerId;
   final String title;
   final String description;
   final String status;

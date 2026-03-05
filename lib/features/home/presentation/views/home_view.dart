@@ -12,6 +12,8 @@ import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
+import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
+import 'package:servicenear/features/serviceRequest/presentation/widgets/service_request_card.dart';
 
 class HomeView extends StatelessWidget {
   final AppUser user;
@@ -120,40 +122,36 @@ class HomeView extends StatelessWidget {
               ),
             ],
 
-            // ================= Worker UI =================
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
-              SizedBox(height: 10.h),
-              // Example placeholder: هنا ممكن تحط الـ list للطلبات أو العملاء
+
+              SizedBox(height: 12.h),
+
               Expanded(
-                child: ListView.builder(
-                  itemCount: 5, // عدد افتراضي، استبدله ببيانات حقيقية
+                child: ListView.separated(
+                  padding: EdgeInsets.only(bottom: 20.h),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 5,
+                  separatorBuilder: (_, __) => SizedBox(height: 14.h),
                   itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.only(bottom: 16.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: AppColors.primary,
-                          child: Icon(Icons.person, color: Colors.white),
-                        ),
-                        title: Text(
-                          'Request #$index',
-                          style: AppStyles.font16WhiteSemiBold.copyWith(
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'Customer info here',
-                          style: AppStyles.font14GrayRegular,
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios, size: 16.sp),
-                        onTap: () {
-                          // Navigate to request details
-                        },
-                      ),
+                    final request = ServiceRequest(
+                      createdAt: DateTime.now(),
+                      customerId: '1',
+                      workerId: '2',
+                      location: 'Cairo, Egypt',
+                      price: 30.0,
+                      id: '$index',
+                      title: 'Fix my sink',
+                      description:
+                          'The sink is leaking and needs to be fixed as soon as possible.',
+                      status: 'pending',
+                    );
+
+                    return ServiceRequestCard(
+                      request: request,
+                      onTap: () {
+                        // open request details
+                      },
                     );
                   },
                 ),
