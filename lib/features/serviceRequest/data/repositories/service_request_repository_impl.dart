@@ -18,12 +18,12 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
   }
 
   @override
-  Future<List<ServiceRequest>> getWorkerRequests(int workerId) async {
+  Future<List<ServiceRequest>> getWorkerRequests(String workerId) async {
     return remoteDataSource.getWorkerRequests(workerId);
   }
 
   @override
-  Future<List<ServiceRequest>> getCustomerRequests(int customerId) async {
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
     return remoteDataSource.getCustomerRequests(customerId);
   }
 

@@ -11,7 +11,7 @@ class ServiceRequestRemoteDataSource {
     await client.from('service_requests').insert(data);
   }
 
-  Future<List<ServiceRequest>> getWorkerRequests(int workerId) async {
+  Future<List<ServiceRequest>> getWorkerRequests(String workerId) async {
     final res = await client
         .from('service_requests')
         .select()
@@ -22,7 +22,7 @@ class ServiceRequestRemoteDataSource {
     }).toList();
   }
 
-  Future<List<ServiceRequest>> getCustomerRequests(int customerId) async {
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
     final res = await client
         .from('service_requests')
         .select()
