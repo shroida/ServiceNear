@@ -18,6 +18,12 @@ import 'package:servicenear/features/chat/domain/usecases/make_all_chat_messages
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:servicenear/features/serviceRequest/data/datasources/service_request_remote_datasource.dart';
+import 'package:servicenear/features/serviceRequest/data/datasources/service_request_remote_datasource_impl.dart';
+import 'package:servicenear/features/serviceRequest/data/repositories/service_request_repository_impl.dart';
+import 'package:servicenear/features/serviceRequest/domain/repositories/service_request_repository.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/create_service_request_usecase.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Auth
@@ -93,5 +99,15 @@ Future<void> init() async {
   /// ================= Service Request =================
   sl.registerLazySingleton<ServiceRequestRemoteDataSource>(
     () => ServiceRequestRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<ServiceRequestRepository>(
+    () => ServiceRequestRepositoryImpl(sl(), sl()),
+  );
+  sl.registerLazySingleton<CreateServiceRequestUseCase>(
+    () => CreateServiceRequestUseCase(sl()),
+  );
+  sl.registerLazySingleton<GetRequestsUseCase>(() => GetRequestsUseCase(sl()));
+  sl.registerFactory<ServiceRequestCubit>(
+    () => ServiceRequestCubit(sl(), sl()),
   );
 }

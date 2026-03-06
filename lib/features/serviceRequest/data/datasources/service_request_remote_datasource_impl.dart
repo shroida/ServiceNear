@@ -27,19 +27,6 @@ class ServiceRequestRemoteDataSourceImpl
   }
 
   @override
-  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
-    final res = await client
-        .from('service_requests')
-        .select()
-        .eq('customer_id', customerId)
-        .order('created_at', ascending: false);
-
-    return res
-        .map<ServiceRequest>((e) => ServiceRequestModel.fromMap(e))
-        .toList();
-  }
-
-  @override
   Future<void> updateRequestStatus(String requestId, String status) async {
     await client
         .from('service_requests')

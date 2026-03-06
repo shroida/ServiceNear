@@ -6,7 +6,7 @@ class GetRequestsUseCase {
 
   GetRequestsUseCase(this.repository);
 
-  Future<List<ServiceRequest>> call(String customerId) async {
-    return await repository.getCustomerRequests(customerId);
+  Future<List<ServiceRequest>> call(String workerId) async {
+    return await repository.getWorkerRequests(workerId);
   }
 }
