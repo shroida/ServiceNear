@@ -7,9 +7,13 @@ import 'service_request_state.dart';
 class ServiceRequestCubit extends Cubit<ServiceRequestState> {
   final CreateServiceRequestUseCase createUseCase;
   final GetRequestsUseCase getRequestsUseCase;
+  final UpdateRequestStatus updateRequestStatus;
 
-  ServiceRequestCubit(this.createUseCase, this.getRequestsUseCase)
-    : super(ServiceRequestInitial());
+  ServiceRequestCubit(
+    this.createUseCase,
+    this.getRequestsUseCase,
+    this.updateRequestStatus,
+  ) : super(ServiceRequestInitial());
 
   Future<void> createRequest(ServiceRequest request) async {
     emit(ServiceRequestLoading());
