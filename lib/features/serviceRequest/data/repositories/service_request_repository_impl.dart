@@ -12,7 +12,17 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
 
   @override
   Future<void> createRequest(ServiceRequest request) async {
-    final model = request as ServiceRequestModel;
+    final model = ServiceRequestModel(
+      id: request.id,
+      customerId: request.customerId,
+      workerId: request.workerId,
+      title: request.title,
+      description: request.description,
+      status: request.status,
+      location: request.location,
+      price: request.price,
+      createdAt: request.createdAt,
+    );
 
     await remoteDataSource.createRequest(model.toMap());
   }

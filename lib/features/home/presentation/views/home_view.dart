@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
@@ -12,7 +13,8 @@ import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
-import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
 import 'package:servicenear/features/serviceRequest/presentation/widgets/service_request_card.dart';
 
 class HomeView extends StatelessWidget {
@@ -121,39 +123,44 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             ],
-
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
 
               SizedBox(height: 12.h),
 
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.only(bottom: 20.h),
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: 5,
-                  separatorBuilder: (_, __) => SizedBox(height: 14.h),
-                  itemBuilder: (context, index) {
-                    final request = ServiceRequest(
-                      createdAt: DateTime.now(),
-                      customerId: '1',
-                      workerId: '2',
-                      location: 'Cairo, Egypt',
-                      price: 30.0,
-                      id: '$index',
-                      title: 'Fix my sink',
-                      description:
-                          'The sink is leaking and needs to be fixed as soon as possible.',
-                      status: 'pending',
-                    );
+              BlocProvider(
+                create: (_) =>
+                    sl<ServiceRequestCubit>()..getServiceRequests(user.id),
+                child: Expanded(
+                  child: BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
+                    builder: (context, state) {
+                      if (state is ServiceRequestLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    return ServiceRequestCard(
-                      request: request,
-                      onTap: () {
-                        // open request details
-                      },
-                    );
-                  },
+                      if (state is ServiceRequestLoaded) {
+                        final requests = state.requests;
+
+                        return ListView.separated(
+                          padding: EdgeInsets.only(bottom: 20.h),
+                          itemCount: requests.length,
+                          separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                          itemBuilder: (context, index) {
+                            return ServiceRequestCard(
+                              request: requests[index],
+                              onTap: () {},
+                            );
+                          },
+                        );
+                      }
+
+                      if (state is ServiceRequestError) {
+                        return Center(child: Text(state.message));
+                      }
+
+                      return const SizedBox();
+                    },
+                  ),
                 ),
               ),
             ],

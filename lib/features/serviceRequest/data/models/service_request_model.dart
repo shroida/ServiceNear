@@ -35,6 +35,7 @@ class ServiceRequestModel extends ServiceRequest {
       'description': description,
       'status': status,
       'location': location,
+      'created_at': createdAt.toIso8601String(),
       'price': price,
     };
   }

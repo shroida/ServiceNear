@@ -17,6 +17,7 @@ import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.d
 import 'package:servicenear/features/chat/domain/usecases/make_all_chat_messages_read.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
 import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
+import 'package:servicenear/features/serviceRequest/data/datasources/service_request_remote_datasource.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Auth
@@ -88,4 +89,9 @@ Future<void> init() async {
   );
 
   sl.registerFactory<ChatCubit>(() => ChatCubit(sl(), sl(), sl(), sl(), sl()));
+
+  /// ================= Service Request =================
+  sl.registerLazySingleton<ServiceRequestRemoteDataSource>(
+    () => ServiceRequestRemoteDataSourceImpl(sl()),
+  );
 }

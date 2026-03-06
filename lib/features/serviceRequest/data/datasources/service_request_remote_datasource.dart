@@ -25,8 +25,9 @@ class ServiceRequestRemoteDataSource {
   Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
     final res = await client
         .from('service_requests')
-        .select()
-        .eq('customer_id', customerId);
+        .select('*')
+        .eq('customer_id', customerId)
+        .order('created_at', ascending: false);
 
     return res.map<ServiceRequest>((e) {
       return ServiceRequestModel.fromMap(e);
