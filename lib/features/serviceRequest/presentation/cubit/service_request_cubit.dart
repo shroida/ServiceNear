@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/update_request_status.dart';
 import '../../domain/entities/service_request.dart';
 import '../../domain/usecases/create_service_request_usecase.dart';
 import 'service_request_state.dart';

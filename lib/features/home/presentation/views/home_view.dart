@@ -148,7 +148,12 @@ class HomeView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ServiceRequestCard(
                               request: requests[index],
-                              onTap: () {},
+                              onTap: () {
+                                context.push(
+                                  RoutePath.requestDetails,
+                                  extra: requests[index],
+                                );
+                              },
                             );
                           },
                         );

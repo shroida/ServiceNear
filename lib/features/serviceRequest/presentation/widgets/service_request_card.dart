@@ -16,7 +16,7 @@ class ServiceRequestCard extends StatelessWidget {
         return AppColors.warning;
       case "accepted":
         return AppColors.success;
-      case "rejected":
+      case "cancelled":
         return AppColors.error;
       default:
         return AppColors.info;

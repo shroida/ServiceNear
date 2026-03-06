@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/custom_app_bar.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 
@@ -16,9 +17,9 @@ class RequestDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text("Request Details", style: AppStyles.font18WhiteMedium),
-        backgroundColor: AppColors.primary,
+      appBar: CustomAppBar(
+        title: "Request Details",
+        subtitle: "View the details of your service request",
       ),
       body: Padding(
         padding: EdgeInsets.all(20.w),
@@ -47,7 +48,12 @@ class RequestDetailsView extends StatelessWidget {
 
                   SizedBox(height: 6.h),
 
-                  Text(request.title, style: AppStyles.font18DarkBlueBold),
+                  Text(
+                    request.title,
+                    style: AppStyles.font18DarkBlueBold.copyWith(
+                      color: Colors.black87,
+                    ),
+                  ),
 
                   SizedBox(height: 20.h),
 
@@ -125,24 +131,46 @@ class RequestDetailsView extends StatelessWidget {
             const Spacer(),
 
             /// CANCEL BUTTON
-            SizedBox(
-              width: double.infinity,
-              height: 55.h,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.error,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+            Row(
+              children: [
+                SizedBox(
+                  height: 40.h,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.success,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                    ),
+                    onPressed: () {
+                      _showAcceptDialog(context);
+                    },
+                    child: Text(
+                      "Accept Request",
+                      style: AppStyles.font16WhiteSemiBold,
+                    ),
                   ),
                 ),
-                onPressed: () {
-                  _showCancelDialog(context);
-                },
-                child: Text(
-                  "Cancel Request",
-                  style: AppStyles.font16WhiteSemiBold,
+                SizedBox(width: 10.w),
+                SizedBox(
+                  height: 40.h,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.error,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r),
+                      ),
+                    ),
+                    onPressed: () {
+                      _showCancelDialog(context);
+                    },
+                    child: Text(
+                      "Cancel Request",
+                      style: AppStyles.font16WhiteSemiBold,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
@@ -187,6 +215,38 @@ class RequestDetailsView extends StatelessWidget {
               child: const Text(
                 "Yes, Cancel",
                 style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAcceptDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text("Accept Request"),
+          content: const Text(
+            "Are you sure you want to accept this service request?",
+          ),
+          actions: [
+            TextButton(onPressed: () => context.pop(), child: const Text("No")),
+            TextButton(
+              onPressed: () {
+                context.read<ServiceRequestCubit>().updateRequestStatus(
+                  request.id,
+                  "accepted",
+                );
+
+                context.pop();
+                context.pop();
+              },
+              child: const Text(
+                "Yes, Accept",
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ],

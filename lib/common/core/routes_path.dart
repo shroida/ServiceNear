@@ -3,6 +3,7 @@ class RoutePath {
   static const String login = '/login';
   static const String profile = '/profile';
   static const String workerInfo = '/workerInfo';
+  static const String requestDetails = '/requestDetails';
   static const String workers = '/workers';
   static const String onBoarding = '/';
   static const String chat = '/chat';

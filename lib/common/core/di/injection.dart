@@ -23,6 +23,7 @@ import 'package:servicenear/features/serviceRequest/data/repositories/service_re
 import 'package:servicenear/features/serviceRequest/domain/repositories/service_request_repository.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/create_service_request_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/update_request_status.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -106,8 +107,11 @@ Future<void> init() async {
   sl.registerLazySingleton<CreateServiceRequestUseCase>(
     () => CreateServiceRequestUseCase(sl()),
   );
+  sl.registerLazySingleton<UpdateRequestStatus>(
+    () => UpdateRequestStatus(sl()),
+  );
   sl.registerLazySingleton<GetRequestsUseCase>(() => GetRequestsUseCase(sl()));
   sl.registerFactory<ServiceRequestCubit>(
-    () => ServiceRequestCubit(sl(), sl()),
+    () => ServiceRequestCubit(sl(), sl(), sl()),
   );
 }
