@@ -93,10 +93,7 @@ class WorkerInfoHeader extends StatelessWidget {
                   if (!context.mounted) return;
                   context.push(
                     RoutePath.addRequest,
-                    extra: {
-                      'workerId': worker.id,
-                      'phone': worker.phoneNubmer ?? '',
-                    },
+                    extra: {'workerId': worker.id},
                   );
                 },
                 child: Container(
@@ -116,7 +113,7 @@ class WorkerInfoHeader extends StatelessWidget {
                       const Icon(Icons.phone, size: 18, color: Colors.white),
                       SizedBox(width: 6.w),
                       Text(
-                        worker.phoneNubmer ?? 'Not provided',
+                        'Request a service',
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.white,

@@ -1,5 +1,5 @@
 class ServiceRequest {
-  final String id;
+  final String? id;
   final String customerId;
   final String workerId;
   final String title;
@@ -10,7 +10,7 @@ class ServiceRequest {
   final DateTime createdAt;
 
   ServiceRequest({
-    required this.id,
+    this.id,
     required this.customerId,
     required this.workerId,
     required this.title,

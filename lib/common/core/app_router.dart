@@ -19,6 +19,7 @@ import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
+import 'package:servicenear/features/serviceRequest/presentation/add_request_screen.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:servicenear/features/serviceRequest/presentation/widgets/request_details_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -99,8 +100,10 @@ class AppRouter {
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>? ?? {};
           final workerId = data['workerId'] as String?;
-          final phone = data['phone'] as String?;
-          return AddRequestScreen(workerId: workerId, phone: phone);
+          return BlocProvider(
+            create: (_) => sl<ServiceRequestCubit>(),
+            child: AddRequestScreen(workerId: workerId),
+          );
         },
       ),
 

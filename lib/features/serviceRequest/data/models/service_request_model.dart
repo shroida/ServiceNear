@@ -29,14 +29,15 @@ class ServiceRequestModel extends ServiceRequest {
 
   Map<String, dynamic> toMap() {
     return {
+      if (id != null) 'id': id,
       'customer_id': customerId,
       'worker_id': workerId,
       'title': title,
       'description': description,
       'status': status,
       'location': location,
-      'created_at': createdAt.toIso8601String(),
       'price': price,
+      'created_at': createdAt.toIso8601String(),
     };
   }
 }

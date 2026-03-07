@@ -205,7 +205,7 @@ class RequestDetailsView extends StatelessWidget {
             TextButton(
               onPressed: () {
                 context.read<ServiceRequestCubit>().updateRequestStatus(
-                  request.id,
+                  request.id ?? '',
                   "cancelled",
                 );
 
@@ -237,7 +237,7 @@ class RequestDetailsView extends StatelessWidget {
             TextButton(
               onPressed: () {
                 context.read<ServiceRequestCubit>().updateRequestStatus(
-                  request.id,
+                  request.id ?? '',
                   "accepted",
                 );
 
