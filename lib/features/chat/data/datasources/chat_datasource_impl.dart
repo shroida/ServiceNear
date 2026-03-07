@@ -99,35 +99,50 @@ class ChatDatasourceImpl implements ChatDataSource {
     final Map<String, ChatConversationModel> chats = {};
     final Map<String, int> unreadCounter = {};
 
+    final Set<Map<String, String>> otherUsers = {};
+
     for (var message in data) {
-      final senderId = message['sender_id'];
-      final receiverId = message['receiver_id'];
-      final senderType = message['sender_type'];
-      final receiverType = message['receiver_type'];
+      final senderId = message['sender_id'].toString();
+      final receiverId = message['receiver_id'].toString();
+      final senderType = message['sender_type'].toString().toLowerCase();
+      final receiverType = message['receiver_type'].toString().toLowerCase();
 
       final otherUserId = senderId == currentUserId ? receiverId : senderId;
-
       final otherUserType = senderId == currentUserId
           ? receiverType
           : senderType;
 
+      otherUsers.add({'id': otherUserId, 'type': otherUserType});
+
       if (receiverId == currentUserId && message['is_read'] == false) {
         unreadCounter[otherUserId] = (unreadCounter[otherUserId] ?? 0) + 1;
       }
+    }
 
-      if (!chats.containsKey(otherUserId)) {
-        final nameMap = await getUserName(otherUserId, otherUserType);
+    final Map<String, String> userNames = {};
 
-        final userName = nameMap != null
+    await Future.wait(
+      otherUsers.map((u) async {
+        final nameMap = await getUserName(u['id']!, u['type']!);
+        userNames[u['id']!] = nameMap != null
             ? "${nameMap['first_name'] ?? ''} ${nameMap['last_name'] ?? ''}"
                   .trim()
             : "Unknown User";
+      }),
+    );
 
+    for (var message in data) {
+      final senderId = message['sender_id'].toString();
+      final receiverId = message['receiver_id'].toString();
+
+      final otherUserId = senderId == currentUserId ? receiverId : senderId;
+
+      if (!chats.containsKey(otherUserId)) {
         chats[otherUserId] = ChatConversationModel(
           senderId: senderId,
           receiverId: receiverId,
           userId: otherUserId,
-          userName: userName,
+          userName: userNames[otherUserId]!,
           lastMessage: message['message_text'],
           lastMessageTime: DateTime.parse(message['created_at']),
           unreadCount: 0,
@@ -135,6 +150,7 @@ class ChatDatasourceImpl implements ChatDataSource {
       }
     }
 
+    // تحديث الـ unreadCount
     chats.forEach((key, chat) {
       chats[key] = chat.copyWith(unreadCount: unreadCounter[key] ?? 0);
     });
