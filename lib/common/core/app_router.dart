@@ -94,6 +94,15 @@ class AppRouter {
           return ProfileView(currentUser: profile);
         },
       ),
+      GoRoute(
+        path: RoutePath.addRequest,
+        builder: (context, state) {
+          final data = state.extra as Map<String, dynamic>? ?? {};
+          final workerId = data['workerId'] as String?;
+          final phone = data['phone'] as String?;
+          return AddRequestScreen(workerId: workerId, phone: phone);
+        },
+      ),
 
       GoRoute(
         path: RoutePath.requestDetails,

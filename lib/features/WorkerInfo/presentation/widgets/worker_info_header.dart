@@ -8,7 +8,6 @@ import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WorkerInfoHeader extends StatelessWidget {
   final Worker worker;
@@ -64,8 +63,7 @@ class WorkerInfoHeader extends StatelessWidget {
                 onPressed: () async {
                   final currentUser = await sl<UserRepository>()
                       .getCurrentUserData();
-                  if (!context.mounted) return;
-                  if (currentUser == null) return;
+                  if (!context.mounted || currentUser == null) return;
                   context.push(RoutePath.chat, extra: worker.id);
                 },
                 icon: const Icon(
@@ -88,12 +86,19 @@ class WorkerInfoHeader extends StatelessWidget {
                   textStyle: AppStyles.font16WhiteSemiBold,
                 ),
               ),
-
               SizedBox(width: 12.w),
-
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
-                onTap: () => _showCallOptions(context, worker.phoneNubmer!),
+                onTap: () {
+                  if (!context.mounted) return;
+                  context.push(
+                    RoutePath.addRequest,
+                    extra: {
+                      'workerId': worker.id,
+                      'phone': worker.phoneNubmer ?? '',
+                    },
+                  );
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
@@ -111,7 +116,7 @@ class WorkerInfoHeader extends StatelessWidget {
                       const Icon(Icons.phone, size: 18, color: Colors.white),
                       SizedBox(width: 6.w),
                       Text(
-                        worker.phoneNubmer!,
+                        worker.phoneNubmer ?? 'Not provided',
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.white,
@@ -127,62 +132,5 @@ class WorkerInfoHeader extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _showCallOptions(BuildContext context, String phone) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-      ),
-      builder: (_) {
-        return Padding(
-          padding: EdgeInsets.all(20.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-              ),
-              SizedBox(height: 20.h),
-
-              ListTile(
-                leading: const Icon(Icons.call, color: AppColors.primary),
-                title: const Text('Call'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _callNumber(phone);
-                },
-              ),
-
-              ListTile(
-                leading: const Icon(Icons.close),
-                title: const Text('Cancel'),
-                onTap: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _callNumber(String phone) async {
-    final Uri uri = Uri(scheme: 'tel', path: phone);
-
-    if (await canLaunchUrl(uri)) {
-      try {
-        await launchUrl(uri, mode: LaunchMode.platformDefault);
-      } catch (e) {
-        debugPrint("Error launching dialer: $e");
-      }
-    } else {
-      debugPrint("Cannot launch dialer for $phone. Maybe running on emulator?");
-    }
   }
 }

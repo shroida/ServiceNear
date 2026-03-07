@@ -1,5 +1,6 @@
 class RoutePath {
   static const String home = '/home';
+  static const String addRequest = '/addRequest';
   static const String login = '/login';
   static const String profile = '/profile';
   static const String workerInfo = '/workerInfo';
