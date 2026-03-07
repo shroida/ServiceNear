@@ -6,6 +6,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
@@ -23,7 +24,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCustomer = user.userType == 'customer';
+    final isCustomer = user.userType == UserType.customer;
 
     return SafeArea(
       child: Padding(
@@ -125,6 +126,12 @@ class HomeView extends StatelessWidget {
             ],
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
+              Text(user.firstName, style: AppStyles.font18DarkGreyMedium),
+              Text(
+                user.userType.nameStr,
+                style: AppStyles.font18DarkGreyMedium,
+              ),
+              Text(user.id, style: AppStyles.font18DarkGreyMedium),
 
               SizedBox(height: 12.h),
 

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/home/presentation/views/main_screen.dart';
 import 'package:servicenear/features/home/presentation/widgets/app_drawer.dart';
 import 'package:servicenear/features/home/presentation/widgets/custom_appbar.dart';
@@ -44,15 +49,28 @@ class _HomeScreenState extends State<HomeScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    return Scaffold(
-      key: _scaffoldKey,
-      endDrawer: const AppDrawer(),
-      appBar: AwesomeAppBar(
-        user: currentUser!,
-        onMenuTap: _openEndDrawer,
-        onNotificationTap: _onNotificationsPressed,
+    return BlocListener<AuthCubit, AppAuthState>(
+      listener: (context, state) {
+        if (state is AuthInitial) {
+          context.go(RoutePath.onBoarding);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Logged out successfully")),
+          );
+        }
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        endDrawer: BlocProvider.value(
+          value: context.read<AuthCubit>(),
+          child: const AppDrawer(),
+        ),
+        appBar: AwesomeAppBar(
+          user: currentUser!,
+          onMenuTap: _openEndDrawer,
+          onNotificationTap: _onNotificationsPressed,
+        ),
+        body: MainScreen(user: currentUser!),
       ),
-      body: MainScreen(user: currentUser!),
     );
   }
 

@@ -98,6 +98,10 @@ class AuthCubit extends Cubit<AppAuthState> {
     emit(AuthLoading());
     try {
       await authRepository.logout();
+
+      emailController.clear();
+      passwordController.clear();
+
       emit(AuthInitial());
     } catch (e) {
       emit(AuthError(e.toString()));

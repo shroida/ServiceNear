@@ -108,8 +108,11 @@ class AppRouter {
 
       ShellRoute(
         builder: (context, state, child) {
-          return BlocProvider(
-            create: (_) => HomeCubit(sl())..fetchWorkers(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => AuthCubit(sl(), sl())),
+              BlocProvider(create: (_) => HomeCubit(sl())..fetchWorkers()),
+            ],
             child: child,
           );
         },

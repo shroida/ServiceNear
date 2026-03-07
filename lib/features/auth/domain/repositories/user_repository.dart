@@ -11,8 +11,7 @@ class UserRepository {
   UserRepository(this.supabase);
 
   String? getCurrentUserId() {
-    final session = supabase.auth.currentSession;
-    return session?.user.id;
+    return supabase.auth.currentUser?.id;
   }
 
   Future<void> logout() async {

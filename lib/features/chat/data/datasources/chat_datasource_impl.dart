@@ -58,24 +58,31 @@ class ChatDatasourceImpl implements ChatDataSource {
     String userType,
   ) async {
     try {
-      if (userType == 'worker') {
+      final type = userType.toLowerCase();
+
+      if (type == 'worker' || type == 'workers') {
         final res = await client
             .from('workers')
             .select('first_name,last_name')
             .eq('id', userId)
-            .single();
-        return res as Map<String, dynamic>?;
-      } else if (userType == 'customer') {
+            .maybeSingle();
+
+        return res;
+      }
+
+      if (type == 'customer' || type == 'customers') {
         final res = await client
-            .from('users')
+            .from('customers')
             .select('first_name,last_name')
             .eq('id', userId)
-            .single();
-        return res as Map<String, dynamic>?;
+            .maybeSingle();
+
+        return res;
       }
     } catch (e) {
-      throw Exception('Error fetching user name for $userId: $e');
+      debugPrint('Error fetching username: $e');
     }
+
     return null;
   }
 
@@ -167,7 +174,7 @@ class ChatDatasourceImpl implements ChatDataSource {
       }
 
       final userRes = await client
-          .from('users')
+          .from('customers')
           .select()
           .eq('id', userId)
           .single();

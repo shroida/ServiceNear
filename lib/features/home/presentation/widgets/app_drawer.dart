@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
@@ -6,6 +7,7 @@ import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/font_weight_helper.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -102,29 +104,15 @@ class AppDrawer extends StatelessWidget {
               title: 'Logout',
               color: Colors.red,
               onTap: () async {
-                // أغلق الـ Drawer فورًا
-                Navigator.pop(context);
-
+                Navigator.pop(context); // close drawer first
                 try {
-                  await userRepository.logout();
-
-                  if (!context.mounted) return;
-
-                  context.go(RoutePath.login);
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Logged out successfully"),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
+                  // استدعاء logout من AuthCubit مباشرة
+                  await context.read<AuthCubit>().logout();
+                  // هنا ممكن تسيب التنقل يتم عن طريق BlocListener في Home لو حابب
                 } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Logout failed: $e"),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("Logout failed: $e")));
                 }
               },
             ),
