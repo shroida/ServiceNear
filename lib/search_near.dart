@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/app_theme.dart';
 
 class SearchNear extends StatelessWidget {
   const SearchNear({super.key, required this.appRouter});
@@ -13,11 +13,7 @@ class SearchNear extends StatelessWidget {
       routerConfig: appRouter,
       title: 'Service Near',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: AppColors.primary,
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
     );
   }
 }
