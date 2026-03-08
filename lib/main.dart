@@ -5,18 +5,22 @@ import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/supabase_client.dart';
 import 'package:servicenear/search_near.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await SupabaseManager.init();
-  final appRouter = AppRouter();
   await init();
+  await SupabaseManager.init();
+
+  final appRouter = AppRouter();
+
   runApp(
     ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => SearchNear(appRouter: appRouter.router),
+      builder: (context, child) {
+        return SearchNear(appRouter: appRouter.router);
+      },
     ),
   );
 }
