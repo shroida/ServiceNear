@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
-import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 
 class ServiceCard extends StatelessWidget {
   final Service service;
-  const ServiceCard({super.key, required this.service});
+  final VoidCallback? onTap;
+
+  const ServiceCard({super.key, required this.service, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +95,7 @@ class ServiceCard extends StatelessWidget {
               const Spacer(),
               // Adorable "Book Now" Button
               ElevatedButton(
-                onPressed: () {
-                  context.go(RoutePath.addRequest);
-                },
+                onPressed: onTap,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,

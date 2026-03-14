@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
@@ -11,9 +12,9 @@ import 'package:servicenear/features/serviceRequest/presentation/cubit/service_r
 
 class AddRequestScreen extends StatefulWidget {
   final String? workerId;
-  final String? phone;
+  final Service? service;
 
-  const AddRequestScreen({super.key, this.workerId, this.phone});
+  const AddRequestScreen({super.key, this.service, this.workerId});
 
   @override
   State<AddRequestScreen> createState() => _AddRequestScreenState();
@@ -34,33 +35,22 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
   }
 
   void _submitRequest() async {
-    if (_formKey.currentState?.validate() != true || widget.workerId == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
-      return;
-    }
-
-    final currentUserId = Supabase.instance.client.auth.currentUser?.id;
-    if (currentUserId == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("User not logged in")));
-      return;
-    }
+    final service = widget.service;
+    if (service == null) return;
 
     final request = ServiceRequest(
-      location: _addressController.text.trim(),
-      title: _titleController.text.trim(),
-      description: _descriptionController.text.trim(),
+      customerId: Supabase.instance.client.auth.currentUser!.id,
+      workerId: widget.workerId ?? '',
+      title: service.title,
+      serviceId: service.id ?? '',
+      description: _descriptionController.text,
       status: 'pending',
-      serviceId: '',
-      workerId: widget.workerId!,
-      customerId: currentUserId, // assign current user
+      location: null,
       createdAt: DateTime.now(),
     );
 
-    context.read<ServiceRequestCubit>().createRequest(request);
+    final cubit = context.read<ServiceRequestCubit>();
+    await cubit.createRequest(request);
   }
 
   @override
@@ -80,7 +70,13 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Worker Phone: ${widget.phone ?? 'N/A'}",
+                  "Service: ${widget.service!.id}",
+                  style: AppStyles.font16WhiteSemiBold.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                Text(
+                  "Service: ${widget.workerId}",
                   style: AppStyles.font16WhiteSemiBold.copyWith(
                     color: AppColors.textPrimary,
                   ),

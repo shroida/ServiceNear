@@ -18,6 +18,7 @@ import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.dart';
+import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
 import 'package:servicenear/features/serviceRequest/presentation/services_screen.dart';
 import 'package:servicenear/features/serviceRequest/presentation/views/add_request_screen.dart';
@@ -96,14 +97,16 @@ class AppRouter {
           return ProfileView(currentUser: profile);
         },
       ),
+
       GoRoute(
         path: RoutePath.addRequest,
         builder: (context, state) {
           final data = state.extra as Map<String, dynamic>? ?? {};
+          final service = data['service'] as Service?;
           final workerId = data['workerId'] as String?;
           return BlocProvider(
             create: (_) => sl<ServiceRequestCubit>(),
-            child: AddRequestScreen(workerId: workerId),
+            child: AddRequestScreen(service: service, workerId: workerId),
           );
         },
       ),
@@ -121,10 +124,12 @@ class AppRouter {
       GoRoute(
         path: RoutePath.services,
         builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?; // safe cast
+          final workerId = extra?['workerId'] as String? ?? ''; // fallback
           return BlocProvider(
             create: (_) =>
                 sl<ServiceRequestCubit>()..fetchServices('AC Technician'),
-            child: ServicesScreen(),
+            child: ServicesScreen(workerId: workerId),
           );
         },
       ),
