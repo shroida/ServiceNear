@@ -169,7 +169,7 @@ class ProfileView extends StatelessWidget {
             "${worker.rating} (${worker.reviewsCount} reviews)",
           ),
           SizedBox(height: 10.h),
-          _infoRow(Icons.phone, "Phone", worker.phoneNubmer ?? "Not provided"),
+          _infoRow(Icons.phone, "Phone", worker.phoneNumber ?? "Not provided"),
           SizedBox(height: 10.h),
           _infoRow(Icons.home, "Address", worker.address),
 

@@ -8,7 +8,7 @@ class Worker extends AppUser {
   final double rating;
   final int reviewsCount;
   final String? about;
-  final String? phoneNubmer;
+  final String? phoneNumber;
   final String address;
 
   const Worker({
@@ -21,7 +21,7 @@ class Worker extends AppUser {
     required super.createdAt,
 
     this.specialty,
-    this.phoneNubmer,
+    this.phoneNumber,
     this.rating = 0.0,
     this.reviewsCount = 0,
     this.about = '',
@@ -32,7 +32,7 @@ class Worker extends AppUser {
       id: map['id']?.toString() ?? 'unknown-id',
       firstName: map['first_name'] ?? 'Unknown',
       lastName: map['last_name'] ?? 'Unknown',
-      phoneNubmer: map['phone'] ?? 'Unknown',
+      phoneNumber: map['phone'] ?? 'Unknown',
       email: map['email'] ?? 'Unknown',
       specialty: map['specialty'] ?? 'Unknown',
 

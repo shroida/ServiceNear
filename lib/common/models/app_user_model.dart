@@ -6,7 +6,7 @@ class AppUserModel extends AppUser {
   final String? specialty;
   final String? address;
   final String? about;
-  final String? phoneNubmer;
+  final String? phoneNumber;
 
   const AppUserModel({
     required super.id,
@@ -18,7 +18,7 @@ class AppUserModel extends AppUser {
     required super.createdAt,
     this.specialty,
     this.address,
-    this.phoneNubmer,
+    this.phoneNumber,
     this.about,
   });
 
@@ -26,7 +26,7 @@ class AppUserModel extends AppUser {
     return AppUserModel(
       id: json['id'],
       firstName: json['first_name'],
-      phoneNubmer: json['phone'],
+      phoneNumber: json['phone'],
       lastName: json['last_name'],
       email: json['email'],
       userType: UserTypeExtension.fromString(json['user_type']),

@@ -10,7 +10,7 @@ class WorkerUserAuthModel extends AppUserModel {
     required super.email,
     required super.userType,
     required super.location,
-    required super.phoneNubmer,
+    required super.phoneNumber,
     required super.createdAt,
     super.specialty,
     super.about,
@@ -23,7 +23,7 @@ class WorkerUserAuthModel extends AppUserModel {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      phoneNubmer: json['phone'],
+      phoneNumber: json['phone'],
       specialty: json['specialty'],
       userType: UserTypeExtension.fromString(json['user_type']),
       location: UserLocation.fromJson({

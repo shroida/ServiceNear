@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
         id: response['id'],
         userType: userType,
         firstName: firstName,
-        phoneNubmer: phone ?? 'Unknown',
+        phoneNumber: phone ?? 'Unknown',
         lastName: lastName,
         email: email,
         location: UserLocation(latitude: latitude, longitude: longitude),
@@ -96,7 +96,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return WorkerUserAuthModel(
         id: response['id'],
         userType: userType,
-        phoneNubmer: response['phone'],
+        phoneNumber: response['phone'],
         firstName: response['first_name'],
         lastName: response['last_name'],
         email: response['email'],

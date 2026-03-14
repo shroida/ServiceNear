@@ -7,7 +7,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
   final String? specialty;
   final String? address;
   final String? about;
-  final String? phoneNubmer;
+  final String? phoneNumber;
   AppUserAuthRemoteModel({
     required super.id,
     required super.firstName,
@@ -17,7 +17,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
     required super.location,
     required super.userType,
     this.address,
-    this.phoneNubmer,
+    this.phoneNumber,
     this.specialty,
     this.about,
   });
@@ -27,7 +27,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      phoneNubmer: json['phone'],
+      phoneNumber: json['phone'],
       address: json['address'],
       about: json['about'],
       userType: UserTypeExtension.fromString(json['user_type']),
@@ -46,7 +46,7 @@ class AppUserAuthRemoteModel extends AppUserAuth {
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'phone': phoneNubmer,
+      'phone': phoneNumber,
       'user_type': userType.nameStr,
       'latitude': location.latitude,
       'longitude': location.longitude,
