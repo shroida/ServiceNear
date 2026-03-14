@@ -28,4 +28,12 @@ class ServiceModel extends Service {
       'specialty': specialty,
     };
   }
+
+  Service toEntity() => Service(
+    id: id,
+    description: description,
+    title: title,
+    specialty: specialty,
+    price: price,
+  );
 }
