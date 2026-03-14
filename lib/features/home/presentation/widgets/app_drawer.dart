@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
-import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/font_weight_helper.dart';
 import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
@@ -116,13 +115,6 @@ class _AppDrawerState extends State<AppDrawer> {
                   if (!context.mounted) return;
 
                   ScaffoldMessenger.of(context);
-                } catch (e) {
-                  if (!context.mounted) return;
-                  AppSnackBar.show(
-                    context,
-                    message: "Logout failed: $e",
-                    type: AppSnackBarType.error,
-                  );
                 }
               },
             ),

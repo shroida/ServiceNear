@@ -159,7 +159,7 @@ class HomeView extends StatelessWidget {
                         return ListView.separated(
                           padding: EdgeInsets.only(bottom: 20.h),
                           itemCount: requests.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                          separatorBuilder: (_, _) => SizedBox(height: 14.h),
                           itemBuilder: (context, index) {
                             final request = requests[index];
                             return RequestCard(
