@@ -14,10 +14,8 @@ class FloatingBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20.h,
-      left: 20.w,
-      right: 20.w,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: Container(
         height: 65.h,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
