@@ -8,6 +8,7 @@ import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_us
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource_impl.dart';
 import 'package:servicenear/features/chat/data/repositories/chat_repostories_impl.dart';
@@ -54,6 +55,7 @@ Future<void> init() async {
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(remoteDataSource: sl()),
   );
+  sl.registerFactory<AuthCubit>(() => AuthCubit(sl(), sl()));
 
   /// ================= HOME =================
   sl.registerLazySingleton<HomeRemoteDataSource>(

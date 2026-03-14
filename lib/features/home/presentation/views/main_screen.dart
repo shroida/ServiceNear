@@ -49,16 +49,10 @@ class _MainScreenState extends State<MainScreen> {
     ];
 
     return Scaffold(
-      body: Stack(
-        children: [
-          _pages[_currentIndex],
-          FloatingBottomNav(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() => _currentIndex = index);
-            },
-          ),
-        ],
+      body: _pages[_currentIndex],
+      bottomNavigationBar: FloatingBottomNav(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() => _currentIndex = index),
       ),
     );
   }

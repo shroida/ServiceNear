@@ -104,11 +104,9 @@ class AppDrawer extends StatelessWidget {
               title: 'Logout',
               color: Colors.red,
               onTap: () async {
-                Navigator.pop(context); // close drawer first
+                Navigator.pop(context);
                 try {
-                  // استدعاء logout من AuthCubit مباشرة
                   await context.read<AuthCubit>().logout();
-                  // هنا ممكن تسيب التنقل يتم عن طريق BlocListener في Home لو حابب
                 } catch (e) {
                   ScaffoldMessenger.of(
                     context,
