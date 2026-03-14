@@ -91,8 +91,9 @@ class WorkerInfoHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14.r),
                 onTap: () {
                   if (!context.mounted) return;
+
                   context.push(
-                    RoutePath.addRequest,
+                    RoutePath.services,
                     extra: {'workerId': worker.id},
                   );
                 },

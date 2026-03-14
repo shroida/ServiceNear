@@ -112,13 +112,10 @@ class _AppDrawerState extends State<AppDrawer> {
 
                 try {
                   await context.read<AuthCubit>().logout();
-
+                } catch (e) {
                   if (!context.mounted) return;
-                  AppSnackBar.show(
-                    context,
-                    message: "Logged out successfully",
-                    type: AppSnackBarType.success,
-                  );
+
+                  ScaffoldMessenger.of(context);
                 } catch (e) {
                   if (!context.mounted) return;
                   AppSnackBar.show(

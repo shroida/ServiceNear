@@ -117,7 +117,7 @@ class RequestDetailsView extends StatelessWidget {
                         ),
                         child: Text(
                           request.status,
-                          style: AppStyles.font12BlueRegular.copyWith(
+                          style: AppStyles.font13BlueSemiBold.copyWith(
                             color: Colors.white,
                           ),
                         ),
@@ -182,7 +182,7 @@ class RequestDetailsView extends StatelessWidget {
     switch (status) {
       case "pending":
         return AppColors.warning;
-      case "accepted":
+      case "confirmed":
         return AppColors.success;
       case "cancelled":
         return AppColors.error;
@@ -238,7 +238,7 @@ class RequestDetailsView extends StatelessWidget {
               onPressed: () {
                 context.read<ServiceRequestCubit>().updateRequestStatus(
                   request.id ?? '',
-                  "accepted",
+                  "confirmed",
                 );
 
                 context.pop();

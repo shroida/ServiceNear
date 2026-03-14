@@ -117,7 +117,7 @@ class WorkersView extends StatelessWidget {
                                         ),
                                         child: Text(
                                           worker.specialty ?? 'General',
-                                          style: AppStyles.font12BlueRegular,
+                                          style: AppStyles.font13BlueSemiBold,
                                         ),
                                       ),
 

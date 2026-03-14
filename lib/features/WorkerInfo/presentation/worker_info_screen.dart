@@ -12,7 +12,6 @@ import 'package:servicenear/features/WorkerInfo/presentation/widgets/customer_re
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/info_card.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/rating_section.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/widgets/worker_info_header.dart';
-import 'package:servicenear/common/core/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class WorkerInfoScreen extends StatelessWidget {
@@ -27,11 +26,12 @@ class WorkerInfoScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
+            backgroundColor: const Color(0xFFF8F9FD),
+            extendBodyBehindAppBar: true,
             appBar: CustomAppBar(
               title: "${worker.firstName} ${worker.lastName}",
               subtitle: worker.specialty ?? "Worker",
             ),
-            backgroundColor: AppColors.background,
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(

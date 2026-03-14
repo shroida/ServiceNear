@@ -98,7 +98,7 @@ class ReviewCard extends StatelessWidget {
               children: [
                 Text(
                   DateFormat.yMMMd().format(review.createdAt),
-                  style: AppStyles.font12GrayRegular,
+                  style: AppStyles.font12GrayMedium,
                 ),
 
                 Row(

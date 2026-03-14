@@ -6,6 +6,8 @@ import 'package:servicenear/features/chat/presentation/views/chat_list_view.dart
 import 'package:servicenear/features/home/presentation/views/home_view.dart';
 import 'package:servicenear/features/home/presentation/views/profile_view.dart';
 import 'package:servicenear/features/home/presentation/widgets/floating_bottom_nav.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
+import 'package:servicenear/features/serviceRequest/presentation/views/booking_screen.dart';
 import '../../../../common/entities/app_user.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,16 +22,21 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   late final ChatCubit _chatCubit;
+  late final ServiceRequestCubit _serviceRequestCubit;
 
   @override
   void initState() {
     super.initState();
     _chatCubit = sl<ChatCubit>()..loadAllChats(widget.user.id);
+    _serviceRequestCubit = sl<ServiceRequestCubit>()
+      ..fetchBookedServices(widget.user.id);
   }
 
   @override
   void dispose() {
     _chatCubit.close();
+    _serviceRequestCubit.close();
+
     super.dispose();
   }
 
@@ -43,6 +50,7 @@ class _MainScreenState extends State<MainScreen> {
         value: _chatCubit,
         child: ChatListView(currentUserId: widget.user.id, cubit: _chatCubit),
       ),
+      BlocProvider.value(value: _serviceRequestCubit, child: BookingsScreen()),
       ProfileView(currentUser: widget.user),
       ProfileView(currentUser: widget.user),
       ProfileView(currentUser: widget.user),

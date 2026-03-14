@@ -17,10 +17,10 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
       customerId: request.customerId,
       workerId: request.workerId,
       title: request.title,
+      serviceId: request.serviceId,
       description: request.description,
       status: request.status,
       location: request.location,
-      price: request.price,
       createdAt: request.createdAt,
     );
 
@@ -35,5 +35,10 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
   @override
   Future<void> updateRequestStatus(String requestId, String status) async {
     return remoteDataSource.updateRequestStatus(requestId, status);
+  }
+
+  @override
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
+    return remoteDataSource.getCustomerRequests(customerId);
   }
 }

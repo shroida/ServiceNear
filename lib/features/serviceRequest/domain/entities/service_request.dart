@@ -2,11 +2,11 @@ class ServiceRequest {
   final String? id;
   final String customerId;
   final String workerId;
+  final String serviceId;
   final String title;
   final String description;
   final String status;
   final String? location;
-  final double? price;
   final DateTime createdAt;
 
   ServiceRequest({
@@ -16,8 +16,8 @@ class ServiceRequest {
     required this.title,
     required this.description,
     required this.status,
+    required this.serviceId,
     this.location,
-    this.price,
     required this.createdAt,
   });
 }

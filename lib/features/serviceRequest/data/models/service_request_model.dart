@@ -8,25 +8,29 @@ class ServiceRequestModel extends ServiceRequest {
     required super.title,
     required super.description,
     required super.status,
+    required super.serviceId,
+
     super.location,
-    super.price,
     required super.createdAt,
   });
 
   factory ServiceRequestModel.fromMap(Map<String, dynamic> map) {
     return ServiceRequestModel(
-      id: map['id'],
-      customerId: map['customer_id'],
-      workerId: map['worker_id'],
-      title: map['title'],
-      description: map['description'] ?? '',
-      status: map['status'],
-      location: map['location'],
-      price: map['price']?.toDouble(),
-      createdAt: DateTime.parse(map['created_at']),
+      id: map['id'] as String? ?? '',
+      customerId: map['customer_id'] as String? ?? '',
+      workerId: map['worker_id'] as String? ?? '',
+      // Handle the null service_id found in your logs
+      serviceId: map['service_id'] as String? ?? '',
+      title: map['title'] as String? ?? 'No Title',
+      description: map['description'] as String? ?? '',
+      status: map['status'] as String? ?? 'pending',
+      // Handle the null location found in your logs
+      location: map['location'] as String? ?? 'No Location Provided',
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'])
+          : DateTime.now(),
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       if (id != null) 'id': id,
@@ -36,7 +40,7 @@ class ServiceRequestModel extends ServiceRequest {
       'description': description,
       'status': status,
       'location': location,
-      'price': price,
+      'service_id': serviceId,
       'created_at': createdAt.toIso8601String(),
     };
   }
