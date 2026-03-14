@@ -12,6 +12,7 @@ import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
+import 'package:servicenear/features/home/presentation/views/worker_home.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
@@ -124,52 +125,7 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             ],
-            if (!isCustomer) ...[
-              Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
-
-              SizedBox(height: 12.h),
-
-              BlocProvider(
-                create: (_) =>
-                    sl<ServiceRequestCubit>()..getServiceRequests(user.id),
-                child: Expanded(
-                  child: BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
-                    builder: (context, state) {
-                      if (state is ServiceRequestLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      if (state is ServiceRequestLoaded) {
-                        final requests = state.requests;
-
-                        return ListView.separated(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          itemCount: requests.length,
-                          separatorBuilder: (_, _) => SizedBox(height: 14.h),
-                          itemBuilder: (context, index) {
-                            return ServiceRequestCard(
-                              request: requests[index],
-                              onTap: () {
-                                context.push(
-                                  RoutePath.requestDetails,
-                                  extra: requests[index],
-                                );
-                              },
-                            );
-                          },
-                        );
-                      }
-
-                      if (state is ServiceRequestError) {
-                        return Center(child: Text(state.message));
-                      }
-
-                      return const SizedBox();
-                    },
-                  ),
-                ),
-              ),
-            ],
+            if (!isCustomer) ...[WorkerHome(user: user)],
           ],
         ),
       ),
