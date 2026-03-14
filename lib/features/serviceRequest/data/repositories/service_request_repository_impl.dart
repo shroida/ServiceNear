@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/service_request.dart';
 import '../../domain/repositories/service_request_repository.dart';
@@ -35,5 +37,11 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
   @override
   Future<void> updateRequestStatus(String requestId, String status) async {
     return remoteDataSource.updateRequestStatus(requestId, status);
+  }
+
+  @override
+  Future<List<Service>> getServices({String? specialty}) {
+    // TODO: implement getServices
+    throw UnimplementedError();
   }
 }
