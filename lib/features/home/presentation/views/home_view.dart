@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
@@ -17,7 +18,6 @@ import 'package:servicenear/features/home/presentation/widgets/worker_card.dart'
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
-import 'package:servicenear/features/serviceRequest/presentation/widgets/service_request_card.dart';
 
 class HomeView extends StatelessWidget {
   final AppUser user;
@@ -29,33 +29,33 @@ class HomeView extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppTextFormField(
-                hintText: isCustomer
-                    ? 'Search for services or workers'
-                    : 'Search for your requests or clients',
-                validator: (_) => null,
-                hintStyle: AppStyles.font14GrayRegular,
-                prefixIcon: const Icon(Icons.search),
-                backgroundColor: Colors.grey[200],
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 20.h,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                  borderSide: BorderSide.none,
-                ),
+        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ================= Search Bar =================
+            AppTextFormField(
+              hintText: isCustomer
+                  ? 'Search for services or workers'
+                  : 'Search for your requests or clients',
+              validator: (_) => null,
+              hintStyle: AppStyles.font14GrayRegular,
+              prefixIcon: const Icon(Icons.search, color: AppColors.textHint),
+              backgroundColor: AppColors.divider,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 20.h,
               ),
-              SizedBox(height: 20.h),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            SizedBox(height: 20.h),
 
             // ================= Customer UI =================
             if (isCustomer) ...[
@@ -127,12 +127,6 @@ class HomeView extends StatelessWidget {
             ],
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
-              Text(user.firstName, style: AppStyles.font18DarkGreyMedium),
-              Text(
-                user.userType.nameStr,
-                style: AppStyles.font18DarkGreyMedium,
-              ),
-              Text(user.id, style: AppStyles.font18DarkGreyMedium),
 
               SizedBox(height: 12.h),
 
@@ -147,18 +141,29 @@ class HomeView extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive(),
                         );
                       }
+
                       if (state is ServiceRequestLoaded) {
-                        final requests = state.requests;
+                        final requests = state.requests
+                            .whereType<ServiceRequest>()
+                            .toList();
+
+                        if (requests.isEmpty) {
+                          return Center(
+                            child: Text(
+                              "No requests found",
+                              style: AppStyles.font14GrayRegular,
+                            ),
+                          );
+                        }
 
                         return ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
                           padding: EdgeInsets.only(bottom: 20.h),
                           itemCount: requests.length,
                           separatorBuilder: (_, __) => SizedBox(height: 14.h),
                           itemBuilder: (context, index) {
-                            return ServiceRequestCard(
-                              request: requests[index],
+                            final request = requests[index];
+                            return RequestCard(
+                              request: request,
                               onTap: () {
                                 context.push(
                                   RoutePath.requestDetails,
@@ -169,6 +174,7 @@ class HomeView extends StatelessWidget {
                           },
                         );
                       }
+
                       if (state is ServiceRequestError) {
                         return Center(
                           child: Text(
@@ -178,15 +184,13 @@ class HomeView extends StatelessWidget {
                         );
                       }
 
-                      return const SizedBox();
+                      return const SizedBox.shrink();
                     },
                   ),
                 ),
-              ],
-
-              SizedBox(height: 50.h),
+              ),
             ],
-          ),
+          ],
         ),
       ),
     );
