@@ -156,6 +156,16 @@ class AppStyles {
     fontWeight: FontWeightHelper.medium,
     color: AppColors.darkGrey,
   );
+  static TextStyle font20DarkBlueBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: AppColors.info,
+  );
+  static TextStyle font12PrimaryBold = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: AppColors.primary,
+  );
 
   static TextStyle? get font14DarkGreyRegular => null;
 }
