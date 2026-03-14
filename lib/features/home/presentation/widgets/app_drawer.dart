@@ -5,14 +5,20 @@ import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
+import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/font_weight_helper.dart';
 import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
 
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     final userRepository = UserRepository(Supabase.instance.client);
@@ -90,14 +96,12 @@ class AppDrawer extends StatelessWidget {
               title: 'Settings',
               onTap: () {
                 Navigator.pop(context);
-                // context.go(RoutePath.settings);
               },
             ),
 
             const Spacer(),
 
             const Divider(),
-
             _buildDrawerItem(
               context,
               icon: Icons.logout,
@@ -105,12 +109,23 @@ class AppDrawer extends StatelessWidget {
               color: Colors.red,
               onTap: () async {
                 Navigator.pop(context);
+
                 try {
                   await context.read<AuthCubit>().logout();
-                } catch (e) {
-                  ScaffoldMessenger.of(
+
+                  if (!mounted) return;
+                  AppSnackBar.show(
                     context,
-                  ).showSnackBar(SnackBar(content: Text("Logout failed: $e")));
+                    message: "Logged out successfully",
+                    type: AppSnackBarType.success,
+                  );
+                } catch (e) {
+                  if (!mounted) return;
+                  AppSnackBar.show(
+                    context,
+                    message: "Logout failed: $e",
+                    type: AppSnackBarType.error,
+                  );
                 }
               },
             ),
