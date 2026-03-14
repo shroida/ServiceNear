@@ -8,5 +8,6 @@ class RoutePath {
   static const String workers = '/workers';
   static const String onBoarding = '/';
   static const String chat = '/chat';
+  static const String services = '/services';
   static const String register = '/register';
 }

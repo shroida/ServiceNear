@@ -19,7 +19,8 @@ import 'package:servicenear/features/home/presentation/views/workers_view.dart';
 import 'package:servicenear/features/onboarding/pages/onboarding_screen.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/worker_info_screen.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
-import 'package:servicenear/features/serviceRequest/presentation/add_request_screen.dart';
+import 'package:servicenear/features/serviceRequest/presentation/services_screen.dart';
+import 'package:servicenear/features/serviceRequest/presentation/views/add_request_screen.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:servicenear/features/serviceRequest/presentation/widgets/request_details_view.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -114,6 +115,16 @@ class AppRouter {
           return BlocProvider(
             create: (_) => sl<ServiceRequestCubit>(),
             child: RequestDetailsView(request: request),
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutePath.services,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (_) =>
+                sl<ServiceRequestCubit>()..fetchServices('AC Technician'),
+            child: ServicesScreen(),
           );
         },
       ),

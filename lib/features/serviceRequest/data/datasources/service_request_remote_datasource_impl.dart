@@ -37,9 +37,17 @@ class ServiceRequestRemoteDataSourceImpl
 
   @override
   Future<List<ServiceModel>> getServices({String? specialty}) async {
+    print(
+      "[Remote] fetching services from Supabase with specialty: $specialty",
+    );
     final query = client.from('services').select();
     if (specialty != null) query.eq('specialty', specialty);
+
     final res = await query;
-    return (res as List).map((e) => ServiceModel.fromMap(e)).toList();
+    print("[Remote] raw response: $res");
+
+    final list = (res as List).map((e) => ServiceModel.fromMap(e)).toList();
+    print("[Remote] mapped ${list.length} services");
+    return list;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/get_services_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/update_request_status.dart';
 import '../../domain/entities/service_request.dart';
 import '../../domain/usecases/create_service_request_usecase.dart';
@@ -9,11 +10,13 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
   final CreateServiceRequestUseCase createUseCase;
   final GetRequestsUseCase getRequestsUseCase;
   final UpdateRequestStatus updateRequestStatus;
+  final GetServicesUsecase getServicesUsecase;
 
   ServiceRequestCubit(
     this.createUseCase,
     this.getRequestsUseCase,
     this.updateRequestStatus,
+    this.getServicesUsecase,
   ) : super(ServiceRequestInitial());
 
   Future<void> createRequest(ServiceRequest request) async {
@@ -37,6 +40,23 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
       emit(ServiceRequestLoaded(requests));
     } catch (e) {
       emit(ServiceRequestError(e.toString()));
+    }
+  }
+
+  Future<void> fetchServices([String? specialty]) async {
+    print("[Cubit] fetchServices called with specialty: $specialty");
+    emit(ServiceLoading());
+
+    try {
+      final services = await getServicesUsecase.call(specialty ?? '');
+      print("[Cubit] fetched ${services.length} services");
+      for (var s in services) {
+        print("[Cubit] Service: ${s.title}, ${s.specialty}, \$${s.price}");
+      }
+      emit(ServiceLoaded(services));
+    } catch (e) {
+      print("[Cubit] fetchServices error: $e");
+      emit(ServiceError(e.toString()));
     }
   }
 }

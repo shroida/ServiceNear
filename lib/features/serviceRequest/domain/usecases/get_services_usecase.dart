@@ -1,3 +1,4 @@
+import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 import 'package:servicenear/features/serviceRequest/domain/repositories/service_repository.dart';
 
 class GetServicesUsecase {
@@ -5,7 +6,8 @@ class GetServicesUsecase {
 
   GetServicesUsecase(this.repository);
 
-  Future<void> call(String specialty) {
+  Future<List<Service>> call(String specialty) {
+    print("[UseCase] call called with specialty: $specialty");
     return repository.getServices(specialty: specialty);
   }
 }

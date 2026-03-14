@@ -5,13 +5,14 @@ import 'package:servicenear/features/serviceRequest/domain/repositories/service_
 class ServiceRepositoryImpl implements ServiceRepository {
   final ServiceRequestRemoteDataSource remoteDataSource;
 
-  ServiceRepositoryImpl({required this.remoteDataSource});
+  ServiceRepositoryImpl(this.remoteDataSource);
 
   @override
   Future<List<Service>> getServices({String? specialty}) async {
     final serviceModels = await remoteDataSource.getServices(
       specialty: specialty,
     );
-    return serviceModels.map((model) => model.toEntity()).toList();
+    print("[Repository] fetched ${serviceModels.length} models");
+    return serviceModels.map((m) => m.toEntity()).toList();
   }
 }

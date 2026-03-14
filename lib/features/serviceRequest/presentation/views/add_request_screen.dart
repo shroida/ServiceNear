@@ -12,7 +12,7 @@ import 'package:servicenear/features/serviceRequest/presentation/cubit/service_r
 class AddRequestScreen extends StatefulWidget {
   final String? workerId;
   final String? phone;
-  
+
   const AddRequestScreen({super.key, this.workerId, this.phone});
 
   @override
@@ -54,7 +54,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
       status: 'pending',
-      serviceId: ,
+      serviceId: '',
       workerId: widget.workerId!,
       customerId: currentUserId, // assign current user
       createdAt: DateTime.now(),
