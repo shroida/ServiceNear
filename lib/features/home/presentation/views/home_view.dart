@@ -126,12 +126,6 @@ class HomeView extends StatelessWidget {
             ],
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
-              Text(user.firstName, style: AppStyles.font18DarkGreyMedium),
-              Text(
-                user.userType.nameStr,
-                style: AppStyles.font18DarkGreyMedium,
-              ),
-              Text(user.id, style: AppStyles.font18DarkGreyMedium),
 
               SizedBox(height: 12.h),
 
