@@ -7,7 +7,7 @@ import 'package:servicenear/features/WorkerInfo/domain/usecases/fetch_reviews_us
 import 'package:servicenear/features/WorkerInfo/domain/usecases/sumbit_rating_usecase.dart';
 import 'package:servicenear/features/WorkerInfo/presentation/cubit/worker_info_cubit.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource.dart';
 import 'package:servicenear/features/chat/data/datasources/chat_datasource_impl.dart';

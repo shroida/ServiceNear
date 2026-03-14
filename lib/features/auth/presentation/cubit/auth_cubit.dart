@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
-import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'app_auth_state.dart';
 
 class AuthCubit extends Cubit<AppAuthState> {
@@ -82,7 +82,7 @@ class AuthCubit extends Cubit<AppAuthState> {
         password: passwordController.text.trim(),
       );
 
-      final currentUser = await userRepository.getCurrentUserData();
+      final currentUser = await userRepository.getCurrentUser();
       if (currentUser == null) {
         emit(AuthError("Failed to fetch user data"));
         return;

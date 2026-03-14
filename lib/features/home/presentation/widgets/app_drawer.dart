@@ -6,7 +6,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/widgets/font_weight_helper.dart';
-import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -77,7 +77,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
 
                 final AppUser? currentUser = await userRepository
-                    .getCurrentUserData();
+                    .getCurrentUser();
 
                 if (currentUser != null && context.mounted) {
                   context.push(RoutePath.profile, extra: {'user': currentUser});

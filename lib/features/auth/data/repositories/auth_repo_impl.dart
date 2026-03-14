@@ -1,8 +1,8 @@
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import 'package:servicenear/features/auth/data/models/customer_user_model.dart';
-import 'package:servicenear/features/auth/data/models/worker_user_model.dart';
+import 'package:servicenear/common/entities/worker.dart';
+import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
 
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
@@ -41,7 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     if (userType == UserType.customer) {
-      return CustomerUserAuthModel(
+      return CustomerAuthUser(
         id: response['id'],
         userType: userType,
         firstName: firstName,
@@ -52,7 +52,7 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: DateTime.parse(response['created_at']),
       );
     } else {
-      return WorkerUserAuthModel(
+      return Worker(
         id: response['id'],
         userType: userType,
         firstName: firstName,
@@ -61,7 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         location: UserLocation(latitude: latitude, longitude: longitude),
         createdAt: DateTime.parse(response['created_at']),
-        specialty: specialty!,
+        specialty: specialty ?? '',
       );
     }
   }
@@ -79,7 +79,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final userType = UserTypeExtension.fromString(response['user_type']);
 
     if (userType == UserType.customer) {
-      return CustomerUserAuthModel(
+      return CustomerAuthUser(
         id: response['id'],
         userType: userType,
         firstName: response['first_name'],
@@ -93,7 +93,7 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: DateTime.parse(response['created_at']),
       );
     } else {
-      return WorkerUserAuthModel(
+      return Worker(
         id: response['id'],
         userType: userType,
         phoneNumber: response['phone'],

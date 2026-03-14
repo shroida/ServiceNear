@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
-import 'package:servicenear/features/auth/domain/repositories/user_repository.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/home/presentation/views/main_screen.dart';
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadUser() async {
-    final user = await userRepository.getCurrentUserData();
+    final user = await userRepository.getCurrentUser();
     if (!mounted) return;
 
     setState(() {

@@ -10,61 +10,54 @@ class UserRepository {
 
   UserRepository(this.supabase);
 
-  String? getCurrentUserId() {
-    return supabase.auth.currentUser?.id;
-  }
+  String? get currentUserId => supabase.auth.currentUser?.id;
 
-  Future<void> logout() async {
-    await supabase.auth.signOut();
-  }
-
-  Future<AppUser?> getCurrentUserData() async {
-    final userId = getCurrentUserId();
-    if (userId == null) return null;
+  Future<AppUser?> getCurrentUser() async {
+    final id = currentUserId;
+    if (id == null) return null;
 
     final customer = await supabase
         .from('customers')
         .select()
-        .eq('id', userId)
+        .eq('id', id)
         .maybeSingle();
 
     if (customer != null) {
       return CustomerAuthUser(
-        userType: UserType.customer,
         id: customer['id'],
         firstName: customer['first_name'],
         lastName: customer['last_name'],
         email: customer['email'],
+        userType: UserType.customer,
         location: UserLocation(
-          latitude: (customer['latitude'] as num?)?.toDouble() ?? 0.0,
-          longitude: (customer['longitude'] as num?)?.toDouble() ?? 0.0,
+          latitude: (customer['latitude'] as num).toDouble(),
+          longitude: (customer['longitude'] as num).toDouble(),
         ),
-        createdAt: DateTime.parse(customer['created_at'] as String),
+        createdAt: DateTime.parse(customer['created_at']),
       );
     }
 
     final worker = await supabase
         .from('workers')
         .select()
-        .eq('id', userId)
+        .eq('id', id)
         .maybeSingle();
 
     if (worker != null) {
       return Worker(
-        userType: UserType.worker,
         id: worker['id'],
         firstName: worker['first_name'],
         lastName: worker['last_name'],
         email: worker['email'],
+        userType: UserType.worker,
+        location: UserLocation(
+          latitude: (worker['latitude'] as num).toDouble(),
+          longitude: (worker['longitude'] as num).toDouble(),
+        ),
+        createdAt: DateTime.parse(worker['created_at']),
+        specialty: worker['specialty'],
         address: worker['address'],
         about: worker['about'],
-        location: UserLocation(
-          latitude: (worker['latitude'] as num?)?.toDouble() ?? 0.0,
-          longitude: (worker['longitude'] as num?)?.toDouble() ?? 0.0,
-        ),
-
-        createdAt: DateTime.parse(worker['created_at'] as String),
-        specialty: worker['specialty'],
       );
     }
 
