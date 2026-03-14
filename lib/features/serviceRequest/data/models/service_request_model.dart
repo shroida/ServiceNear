@@ -8,8 +8,9 @@ class ServiceRequestModel extends ServiceRequest {
     required super.title,
     required super.description,
     required super.status,
+    required super.serviceId,
+
     super.location,
-    super.price,
     required super.createdAt,
   });
 
@@ -22,7 +23,7 @@ class ServiceRequestModel extends ServiceRequest {
       description: map['description'] ?? '',
       status: map['status'],
       location: map['location'],
-      price: map['price']?.toDouble(),
+      serviceId: map['service_id'],
       createdAt: DateTime.parse(map['created_at']),
     );
   }
@@ -36,7 +37,7 @@ class ServiceRequestModel extends ServiceRequest {
       'description': description,
       'status': status,
       'location': location,
-      'price': price,
+      'service_id': serviceId,
       'created_at': createdAt.toIso8601String(),
     };
   }

@@ -125,23 +125,23 @@ class ServiceRequestCard extends StatelessWidget {
                   ),
                 ],
 
-                if (request.price != null) ...[
-                  SizedBox(width: 10.w),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 4.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: .08),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "\$${request.price}",
-                      style: AppStyles.font13BlueSemiBold,
-                    ),
-                  ),
-                ],
+                // if (request.price != null) ...[
+                //   SizedBox(width: 10.w),
+                //   Container(
+                //     padding: EdgeInsets.symmetric(
+                //       horizontal: 10.w,
+                //       vertical: 4.h,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: AppColors.primary.withValues(alpha: .08),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     child: Text(
+                //       "\$${request.price}",
+                //       style: AppStyles.font13BlueSemiBold,
+                //     ),
+                //   ),
+                // ],
               ],
             ),
 

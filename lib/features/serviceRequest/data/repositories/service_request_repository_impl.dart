@@ -17,10 +17,10 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
       customerId: request.customerId,
       workerId: request.workerId,
       title: request.title,
+      serviceId: request.serviceId,
       description: request.description,
       status: request.status,
       location: request.location,
-      price: request.price,
       createdAt: request.createdAt,
     );
 
