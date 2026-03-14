@@ -35,6 +35,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _chatCubit.close();
+    _serviceRequestCubit.close();
+
     super.dispose();
   }
 

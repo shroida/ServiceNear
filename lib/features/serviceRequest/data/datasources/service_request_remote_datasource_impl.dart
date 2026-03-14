@@ -57,25 +57,12 @@ class ServiceRequestRemoteDataSourceImpl
           .select()
           .eq('customer_id', customerId);
 
-      // Print the raw response
-      print('🔹 Supabase raw response for customerId=$customerId: $res');
-
-      // Check if it's null or empty
-      if (res == null || (res is List && res.isEmpty)) {
-        print('⚠️ No service requests found for customer $customerId');
-        return [];
-      }
-
-      // Ensure each element is Map<String, dynamic>
       final list = (res as List).map((e) {
-        print('Mapping element: $e (${e.runtimeType})');
         return ServiceRequestModel.fromMap(Map<String, dynamic>.from(e));
       }).toList();
 
-      print('✅ Mapped requests: $list');
       return list;
-    } catch (e, stack) {
-      print('❌ Error fetching customer requests: $e\n$stack');
+    } catch (e) {
       return [];
     }
   }

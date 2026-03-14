@@ -63,13 +63,10 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
     emit(ServiceRequestLoading());
 
     try {
-      print('📡 Cubit fetching booked services for customerId=$customerId');
       final requests = await getBookedServicesUseCase(customerId);
-      print('📥 Cubit received ${requests.length} requests: $requests');
 
       emit(ServiceRequestLoaded(requests));
-    } catch (e, stack) {
-      print('❌ Cubit error fetching booked services: $e\n$stack');
+    } catch (e) {
       emit(ServiceRequestError('Failed to load bookings'));
     }
   }

@@ -182,7 +182,7 @@ class RequestDetailsView extends StatelessWidget {
     switch (status) {
       case "pending":
         return AppColors.warning;
-      case "accepted":
+      case "confirmed":
         return AppColors.success;
       case "cancelled":
         return AppColors.error;
@@ -238,7 +238,7 @@ class RequestDetailsView extends StatelessWidget {
               onPressed: () {
                 context.read<ServiceRequestCubit>().updateRequestStatus(
                   request.id ?? '',
-                  "accepted",
+                  "confirmed",
                 );
 
                 context.pop();
