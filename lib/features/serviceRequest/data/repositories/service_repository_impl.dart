@@ -12,7 +12,6 @@ class ServiceRepositoryImpl implements ServiceRepository {
     final serviceModels = await remoteDataSource.getServices(
       specialty: specialty,
     );
-    print("[Repository] fetched ${serviceModels.length} models");
     return serviceModels.map((m) => m.toEntity()).toList();
   }
 }

@@ -69,7 +69,7 @@ class ChatItem extends StatelessWidget {
             children: [
               Text(
                 "${time.hour}:${time.minute} ${time.hour >= 12 ? 'PM' : 'AM'}",
-                style: AppStyles.font12GrayRegular,
+                style: AppStyles.font12GrayMedium,
               ),
               SizedBox(height: 6.h),
 
@@ -85,7 +85,7 @@ class ChatItem extends StatelessWidget {
                       ),
                       child: Text(
                         "$unreadCount",
-                        style: AppStyles.font12BlueRegular.copyWith(
+                        style: AppStyles.font13BlueSemiBold.copyWith(
                           color: Colors.white,
                         ),
                       ),

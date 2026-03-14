@@ -117,7 +117,7 @@ class RequestDetailsView extends StatelessWidget {
                         ),
                         child: Text(
                           request.status,
-                          style: AppStyles.font12BlueRegular.copyWith(
+                          style: AppStyles.font13BlueSemiBold.copyWith(
                             color: Colors.white,
                           ),
                         ),

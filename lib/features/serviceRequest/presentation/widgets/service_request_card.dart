@@ -85,7 +85,7 @@ class ServiceRequestCard extends StatelessWidget {
                   ),
                   child: Text(
                     request.status.toUpperCase(),
-                    style: AppStyles.font12BlueRegular.copyWith(
+                    style: AppStyles.font13BlueSemiBold.copyWith(
                       color: _statusColor(),
                       fontWeight: FontWeight.bold,
                     ),
@@ -154,7 +154,7 @@ class ServiceRequestCard extends StatelessWidget {
                 SizedBox(width: 6.w),
                 Text(
                   "${request.createdAt.day}/${request.createdAt.month}/${request.createdAt.year}",
-                  style: AppStyles.font12GrayRegular,
+                  style: AppStyles.font12GrayMedium,
                 ),
               ],
             ),
