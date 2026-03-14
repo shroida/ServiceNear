@@ -2,62 +2,86 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/widgets/app_styles.dart';
 import '../cubit/worker_info_cubit.dart';
 import '../cubit/worker_info_state.dart';
 
 class RatingSection extends StatelessWidget {
   final String workerId;
-
   const RatingSection({super.key, required this.workerId});
 
   @override
   Widget build(BuildContext context) {
-    context.read<WorkerInfoCubit>().fetchReviews(workerId);
-
     return BlocBuilder<WorkerInfoCubit, RatingState>(
       builder: (context, state) {
-        double averageRating = 0;
-        int reviewsCount = 0;
+        if (state is! RatingLoaded) return const SizedBox.shrink();
 
-        if (state is RatingLoaded && state.reviews.isNotEmpty) {
-          reviewsCount = state.reviews.length;
-          averageRating =
-              state.reviews.map((r) => r.rating).reduce((a, b) => a + b) /
-              reviewsCount;
-        }
+        double avg = state.reviews.isEmpty
+            ? 0
+            : state.reviews.map((r) => r.rating).reduce((a, b) => a + b) /
+                  state.reviews.length;
 
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildStars(averageRating),
-              Text(
-                state is RatingLoaded
-                    ? "${averageRating.toStringAsFixed(1)} ($reviewsCount Reviews)"
-                    : "Loading...",
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[800],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reviews & Ratings",
+                    style: AppStyles.font18DarkBlueBold,
+                  ),
+                  Text("See All", style: AppStyles.font13BlueSemiBold),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        avg.toStringAsFixed(1),
+                        style: AppStyles.font32BlueBold,
+                      ),
+                      _buildStars(avg),
+                      SizedBox(height: 4.h),
+                      Text(
+                        "${state.reviews.length} reviews",
+                        style: AppStyles.font12GrayMedium,
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 30.w),
+                  // Simple mini-bars (Visual only for "awesomeness")
+                  Expanded(
+                    child: Column(
+                      children: List.generate(
+                        3,
+                        (index) => _buildMiniBar(1.0 - (index * 0.2)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildMiniBar(double widthFactor) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.h),
+      child: LinearProgressIndicator(
+        value: widthFactor,
+        backgroundColor: Colors.grey[200],
+        color: AppColors.primary,
+        minHeight: 6.h,
+        borderRadius: BorderRadius.circular(10.r),
+      ),
     );
   }
 
