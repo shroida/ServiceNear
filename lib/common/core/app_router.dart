@@ -124,8 +124,8 @@ class AppRouter {
       GoRoute(
         path: RoutePath.services,
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>?; // safe cast
-          final workerId = extra?['workerId'] as String? ?? ''; // fallback
+          final extra = state.extra as Map<String, dynamic>?;
+          final workerId = extra?['workerId'] as String? ?? '';
           return BlocProvider(
             create: (_) =>
                 sl<ServiceRequestCubit>()..fetchServices('AC Technician'),

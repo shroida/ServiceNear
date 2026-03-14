@@ -22,8 +22,10 @@ class ServiceRequestRemoteDataSourceImpl
         .select()
         .eq('worker_id', workerId);
 
-    return res
-        .map<ServiceRequest>((e) => ServiceRequestModel.fromMap(e))
+    // Cast the list explicitly to avoid runtime type errors
+    final data = res as List<dynamic>;
+    return data
+        .map((e) => ServiceRequestModel.fromMap(Map<String, dynamic>.from(e)))
         .toList();
   }
 
@@ -48,11 +50,33 @@ class ServiceRequestRemoteDataSourceImpl
 
   @override
   Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
-    final res = await client
-        .from('service_requests')
-        .select()
-        .eq('customer_id', customerId);
+    try {
+      // Fetch from Supabase
+      final res = await client
+          .from('service_requests')
+          .select()
+          .eq('customer_id', customerId);
 
-    return (res as List).map((e) => ServiceRequestModel.fromMap(e)).toList();
+      // Print the raw response
+      print('🔹 Supabase raw response for customerId=$customerId: $res');
+
+      // Check if it's null or empty
+      if (res == null || (res is List && res.isEmpty)) {
+        print('⚠️ No service requests found for customer $customerId');
+        return [];
+      }
+
+      // Ensure each element is Map<String, dynamic>
+      final list = (res as List).map((e) {
+        print('Mapping element: $e (${e.runtimeType})');
+        return ServiceRequestModel.fromMap(Map<String, dynamic>.from(e));
+      }).toList();
+
+      print('✅ Mapped requests: $list');
+      return list;
+    } catch (e, stack) {
+      print('❌ Error fetching customer requests: $e\n$stack');
+      return [];
+    }
   }
 }

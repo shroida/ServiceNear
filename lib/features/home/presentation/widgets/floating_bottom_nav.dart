@@ -16,19 +16,18 @@ class FloatingBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Define items based on role
     final List<IconData> icons = isWorker
         ? [
-            Icons.dashboard_rounded, // Worker Home/Dashboard
-            Icons.message_rounded, // Worker Chats
-            Icons.assignment_rounded, // Worker Jobs/Tasks
-            Icons.person_rounded, // Worker Profile
+            Icons.dashboard_rounded,
+            Icons.message_rounded,
+            Icons.assignment_rounded,
+            Icons.person_rounded,
           ]
         : [
-            Icons.home_rounded, // Customer Home
-            Icons.chat_bubble_rounded, // Customer Chats
-            Icons.calendar_month_rounded, // Customer Bookings
-            Icons.person_rounded, // Customer Profile
+            Icons.home_rounded,
+            Icons.chat_bubble_rounded,
+            Icons.calendar_month_rounded,
+            Icons.person_rounded,
           ];
 
     return Positioned(
@@ -36,7 +35,7 @@ class FloatingBottomNav extends StatelessWidget {
       left: 20.w,
       right: 20.w,
       child: Container(
-        height: 70.h, // Slightly taller for better touch targets
+        height: 70.h,
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -57,7 +56,6 @@ class FloatingBottomNav extends StatelessWidget {
               index: index,
               currentIndex: currentIndex,
               onTap: onTap,
-              // Label for better UX (Optional, but makes it "Awesome")
               label: _getLabel(index, isWorker),
             );
           }),

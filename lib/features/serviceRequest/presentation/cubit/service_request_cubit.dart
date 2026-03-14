@@ -58,14 +58,19 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
     }
   }
 
+  // service_request_cubit.dart
   Future<void> fetchBookedServices(String customerId) async {
-    try {
-      emit(ServiceRequestLoading());
+    emit(ServiceRequestLoading());
 
-      final requests = await getBookedServicesUseCase.call(customerId);
+    try {
+      print('📡 Cubit fetching booked services for customerId=$customerId');
+      final requests = await getBookedServicesUseCase(customerId);
+      print('📥 Cubit received ${requests.length} requests: $requests');
+
       emit(ServiceRequestLoaded(requests));
-    } catch (e) {
-      emit(ServiceRequestError(e.toString()));
+    } catch (e, stack) {
+      print('❌ Cubit error fetching booked services: $e\n$stack');
+      emit(ServiceRequestError('Failed to load bookings'));
     }
   }
 }
