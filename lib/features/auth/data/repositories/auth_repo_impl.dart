@@ -1,8 +1,8 @@
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/user_type.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
-import 'package:servicenear/common/core/repositories/user_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -27,7 +27,6 @@ class AuthRepositoryImpl implements AuthRepository {
     String? address,
     String? about,
   }) async {
-    // 1️⃣ Call signup → returns userId
     final userId = await remoteDataSource.signUp(
       email: email,
       password: password,
@@ -42,13 +41,10 @@ class AuthRepositoryImpl implements AuthRepository {
       about: about,
     );
 
-    // 2️⃣ Fetch full user data from UserRepository
     final user = await userRepository.getUserById(userId);
-
     if (user == null) {
       throw Exception("User profile not found after registration");
     }
-
     return user;
   }
 
@@ -57,24 +53,15 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    // 1️⃣ Sign in → returns userId
     final userId = await remoteDataSource.signIn(
       email: email,
       password: password,
     );
-
-    // 2️⃣ Fetch full user profile
     final user = await userRepository.getUserById(userId);
-
-    if (user == null) {
-      throw Exception("User profile not found after login");
-    }
-
+    if (user == null) throw Exception("User profile not found after login");
     return user;
   }
 
   @override
-  Future<void> logout() async {
-    await remoteDataSource.signOut();
-  }
+  Future<void> logout() => remoteDataSource.signOut();
 }

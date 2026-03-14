@@ -24,38 +24,31 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       email: email,
       password: password,
     );
-
     final user = authResponse.user;
 
-    if (user == null) {
-      throw Exception('Signup failed');
-    }
+    if (user == null) throw Exception('Signup failed');
 
-    if (userType == 'customer') {
-      await supabase.from('customers').insert({
-        'id': user.id,
-        'first_name': firstName,
-        'last_name': lastName,
-        'email': email,
-        'latitude': latitude,
-        'longitude': longitude,
-        'created_at': DateTime.now().toIso8601String(),
-      });
-    } else {
-      await supabase.from('workers').insert({
-        'id': user.id,
-        'first_name': firstName,
-        'last_name': lastName,
-        'email': email,
+    final tableData = {
+      'id': user.id,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'latitude': latitude,
+      'longitude': longitude,
+      'created_at': DateTime.now().toIso8601String(),
+    };
+
+    if (userType == 'worker') {
+      tableData.addAll({
         'phone': phone ?? '',
         'specialty': specialty ?? '',
         'address': address ?? '',
         'about': about ?? '',
-        'latitude': latitude,
-        'longitude': longitude,
-        'created_at': DateTime.now().toIso8601String(),
       });
     }
+
+    final table = userType == 'customer' ? 'customers' : 'workers';
+    await supabase.from(table).insert(tableData);
 
     return user.id;
   }
@@ -69,21 +62,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       email: email,
       password: password,
     );
-
-    if (response.user == null) {
-      throw Exception('Invalid login credentials');
-    }
-
+    if (response.user == null) throw Exception('Invalid login credentials');
     return response.user!.id;
   }
 
   @override
-  Future<void> signOut() async {
-    await supabase.auth.signOut();
-  }
+  Future<void> signOut() => supabase.auth.signOut();
 
   @override
-  Future<bool> isLoggedIn() async {
-    return supabase.auth.currentSession != null;
-  }
+  Future<bool> isLoggedIn() =>
+      Future.value(supabase.auth.currentSession != null);
 }
