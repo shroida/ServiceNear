@@ -1,3 +1,4 @@
+import 'package:servicenear/features/serviceRequest/data/models/service_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/service_request.dart';
 import '../models/service_request_model.dart';
@@ -32,5 +33,13 @@ class ServiceRequestRemoteDataSourceImpl
         .from('service_requests')
         .update({'status': status})
         .eq('id', requestId);
+  }
+
+  @override
+  Future<List<ServiceModel>> getServices({String? specialty}) async {
+    final query = client.from('services').select();
+    if (specialty != null) query.eq('specialty', specialty);
+    final res = await query;
+    return (res as List).map((e) => ServiceModel.fromMap(e)).toList();
   }
 }
