@@ -24,6 +24,7 @@ import 'package:servicenear/features/serviceRequest/data/repositories/service_re
 import 'package:servicenear/features/serviceRequest/domain/repositories/service_repository.dart';
 import 'package:servicenear/features/serviceRequest/domain/repositories/service_request_repository.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/create_service_request_usecase.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/get_booked_service_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_services_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/update_request_status.dart';
@@ -117,9 +118,12 @@ Future<void> init() async {
     () => UpdateRequestStatus(sl()),
   );
   sl.registerLazySingleton<GetServicesUsecase>(() => GetServicesUsecase(sl()));
+  sl.registerLazySingleton<GetBookedServicesUseCase>(
+    () => GetBookedServicesUseCase(sl()),
+  );
 
   sl.registerLazySingleton<GetRequestsUseCase>(() => GetRequestsUseCase(sl()));
   sl.registerFactory<ServiceRequestCubit>(
-    () => ServiceRequestCubit(sl(), sl(), sl(), sl()),
+    () => ServiceRequestCubit(sl(), sl(), sl(), sl(), sl()),
   );
 }

@@ -45,4 +45,14 @@ class ServiceRequestRemoteDataSourceImpl
     final list = (res as List).map((e) => ServiceModel.fromMap(e)).toList();
     return list;
   }
+
+  @override
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
+    final res = await client
+        .from('service_requests')
+        .select()
+        .eq('customer_id', customerId);
+
+    return (res as List).map((e) => ServiceRequestModel.fromMap(e)).toList();
+  }
 }

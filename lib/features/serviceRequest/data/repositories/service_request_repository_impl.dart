@@ -36,4 +36,9 @@ class ServiceRequestRepositoryImpl implements ServiceRequestRepository {
   Future<void> updateRequestStatus(String requestId, String status) async {
     return remoteDataSource.updateRequestStatus(requestId, status);
   }
+
+  @override
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId) async {
+    return remoteDataSource.getCustomerRequests(customerId);
+  }
 }

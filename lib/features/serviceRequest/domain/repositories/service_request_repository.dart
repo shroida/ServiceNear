@@ -6,4 +6,5 @@ abstract class ServiceRequestRepository {
   Future<List<ServiceRequest>> getWorkerRequests(String workerId);
 
   Future<void> updateRequestStatus(String requestId, String status);
+  Future<List<ServiceRequest>> getCustomerRequests(String customerId);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/features/serviceRequest/domain/usecases/get_booked_service_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_requests_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/get_services_usecase.dart';
 import 'package:servicenear/features/serviceRequest/domain/usecases/update_request_status.dart';
@@ -11,9 +12,11 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
   final GetRequestsUseCase getRequestsUseCase;
   final UpdateRequestStatus updateRequestStatus;
   final GetServicesUsecase getServicesUsecase;
+  final GetBookedServicesUseCase getBookedServicesUseCase;
 
   ServiceRequestCubit(
     this.createUseCase,
+    this.getBookedServicesUseCase,
     this.getRequestsUseCase,
     this.updateRequestStatus,
     this.getServicesUsecase,
@@ -52,6 +55,17 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
       emit(ServiceLoaded(services));
     } catch (e) {
       emit(ServiceError(e.toString()));
+    }
+  }
+
+  Future<void> fetchBookedServices(String customerId) async {
+    try {
+      emit(ServiceRequestLoading());
+
+      final requests = await getBookedServicesUseCase.call(customerId);
+      emit(ServiceRequestLoaded(requests));
+    } catch (e) {
+      emit(ServiceRequestError(e.toString()));
     }
   }
 }
