@@ -12,9 +12,10 @@ import 'package:servicenear/common/widgets/app_text_form_field.dart';
 import 'package:servicenear/features/auth/domain/constants/worker_spicialties.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
-import 'package:servicenear/features/home/presentation/views/worker_home.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
+import 'package:servicenear/features/home/presentation/widgets/requested_card.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
+import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
 import 'package:servicenear/features/serviceRequest/presentation/widgets/service_request_card.dart';
@@ -125,7 +126,72 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             ],
-            if (!isCustomer) ...[WorkerHome(user: user)],
+            if (!isCustomer) ...[
+              Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
+
+              SizedBox(height: 12.h),
+
+              BlocProvider(
+                create: (_) =>
+                    sl<ServiceRequestCubit>()..getServiceRequests(user.id),
+                child: Expanded(
+                  child: BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
+                    builder: (context, state) {
+                      if (state is ServiceRequestLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
+
+                      if (state is ServiceRequestLoaded) {
+                        // Safety filter: Ensure we don't try to render null items
+                        final requests = state.requests
+                            .whereType<ServiceRequest>()
+                            .toList();
+
+                        if (requests.isEmpty) {
+                          return Center(
+                            child: Text(
+                              "No requests found",
+                              style: AppStyles.font14GrayRegular,
+                            ),
+                          );
+                        }
+
+                        return ListView.separated(
+                          padding: EdgeInsets.only(bottom: 20.h),
+                          itemCount: requests.length,
+                          separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                          itemBuilder: (context, index) {
+                            final request = requests[index];
+                            return RequestCard(
+                              request: request,
+                              onTap: () {
+                                context.push(
+                                  RoutePath.requestDetails,
+                                  extra: request,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      }
+
+                      if (state is ServiceRequestError) {
+                        return Center(
+                          child: Text(
+                            state.message,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
