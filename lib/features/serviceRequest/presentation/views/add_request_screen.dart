@@ -57,7 +57,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFBFE), // Soft modern off-white
+      backgroundColor: const Color(0xFFFBFBFE),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -89,61 +89,73 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- Service Display Card ---
                   _buildServiceHighlight(),
 
                   SizedBox(height: 24.h),
                   Text("Request Details", style: AppStyles.font16DarkBlueBold),
                   SizedBox(height: 16.h),
 
-                  // --- Title Input ---
+                  // ... inside your Column in AddRequestScreen
                   _inputLabel("What do you need?"),
-                  AppTextFormField(
-                    controller: _titleController,
-                    hintText: "e.g. Fix leaking kitchen sink",
-                    prefixIcon: Icon(
-                      Icons.title_rounded,
-                      color: AppColors.primary,
-                      size: 20.sp,
+                  _buildFieldShadow(
+                    child: AppTextFormField(
+                      controller: _titleController,
+                      hintText: "e.g. Fix leaking kitchen sink",
+                      // FIXED: Explicitly setting the hint style to be darker if you want it black
+                      hintStyle: AppStyles.font14GrayRegular.copyWith(
+                        color: Colors.black54,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.title_rounded,
+                        color: AppColors.primary,
+                        size: 20.sp,
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                          ? "Title is required"
+                          : null,
                     ),
-                    validator: (value) => value == null || value.isEmpty
-                        ? "Title is required"
-                        : null,
                   ),
 
                   SizedBox(height: 16.h),
 
-                  // --- Description Input ---
                   _inputLabel("Tell us the details"),
-                  // Note: Added a Container wrapper for the description to handle height
-                  AppTextFormField(
-                    controller: _descriptionController,
-                    hintText: "Describe the issue or requirements...",
-                    validator: (value) => value == null || value.isEmpty
-                        ? "Please add a description"
-                        : null,
+                  _buildFieldShadow(
+                    child: AppTextFormField(
+                      controller: _descriptionController,
+                      hintText: "Describe the issue...",
+                      hintStyle: AppStyles.font14GrayRegular.copyWith(
+                        color: Colors.black54,
+                      ),
+                      validator: (value) => value == null || value.isEmpty
+                          ? "Please add a description"
+                          : null,
+                    ),
                   ),
 
                   SizedBox(height: 16.h),
 
-                  // --- Address Input ---
                   _inputLabel("Where is the service needed?"),
-                  AppTextFormField(
-                    controller: _addressController,
-                    hintText: "Your home or office address",
-                    prefixIcon: Icon(
-                      Icons.location_on_rounded,
-                      color: AppColors.primary,
-                      size: 20.sp,
+                  _buildFieldShadow(
+                    child: AppTextFormField(
+                      controller: _addressController,
+                      hintText: "Your home or office address",
+                      hintStyle: AppStyles.font14GrayRegular.copyWith(
+                        color: Colors.black54,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.location_on_rounded,
+                        color: AppColors.primary,
+                        size: 20.sp,
+                      ),
+
+                      validator: (value) => value == null || value.isEmpty
+                          ? "Address is required"
+                          : null,
                     ),
-                    validator: (value) => value == null || value.isEmpty
-                        ? "Address is required"
-                        : null,
                   ),
 
                   SizedBox(height: 40.h),
 
-                  // --- Submit Action ---
                   _buildActionButton(state is ServiceRequestLoading),
                   SizedBox(height: 30.h),
                 ],
@@ -160,9 +172,9 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: .05),
+        color: AppColors.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.primary.withValues(alpha: .1)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
@@ -227,6 +239,22 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               )
             : Text("Confirm and Submit", style: AppStyles.font16WhiteSemiBold),
       ),
+    );
+  }
+
+  Widget _buildFieldShadow({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03), // Ultra soft shadow
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }
