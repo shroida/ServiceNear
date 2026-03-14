@@ -91,6 +91,7 @@ class AuthCubit extends Cubit<AppAuthState> {
       emit(AuthLoggedIn(currentUser));
     } catch (e) {
       emit(AuthError(e.toString()));
+      debugPrint(e.toString());
     }
   }
 

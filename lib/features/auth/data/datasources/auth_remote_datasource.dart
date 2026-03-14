@@ -1,5 +1,5 @@
 abstract class AuthRemoteDataSource {
-  Future<Map<String, dynamic>> signUp({
+  Future<String> signUp({
     required String email,
     required String password,
     required String firstName,
@@ -13,10 +13,7 @@ abstract class AuthRemoteDataSource {
     String? about,
   });
 
-  Future<Map<String, dynamic>> signIn({
-    required String email,
-    required String password,
-  });
+  Future<String> signIn({required String email, required String password});
 
   Future<void> signOut();
 

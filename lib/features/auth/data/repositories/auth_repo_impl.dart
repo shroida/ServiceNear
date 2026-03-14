@@ -1,16 +1,17 @@
 import 'package:servicenear/common/entities/app_user.dart';
-import 'package:servicenear/common/entities/user_location.dart';
 import 'package:servicenear/common/entities/user_type.dart';
-import 'package:servicenear/common/entities/worker.dart';
-import 'package:servicenear/features/auth/domain/entities/customer_user.dart';
-
+import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart';
-import '../datasources/auth_remote_datasource.dart';
+import 'package:servicenear/common/core/repositories/user_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final UserRepository userRepository;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
+  AuthRepositoryImpl({
+    required this.remoteDataSource,
+    required this.userRepository,
+  });
 
   @override
   Future<AppUser> register({
@@ -26,7 +27,8 @@ class AuthRepositoryImpl implements AuthRepository {
     String? address,
     String? about,
   }) async {
-    final response = await remoteDataSource.signUp(
+    // 1️⃣ Call signup → returns userId
+    final userId = await remoteDataSource.signUp(
       email: email,
       password: password,
       firstName: firstName,
@@ -40,30 +42,14 @@ class AuthRepositoryImpl implements AuthRepository {
       about: about,
     );
 
-    if (userType == UserType.customer) {
-      return CustomerAuthUser(
-        id: response['id'],
-        userType: userType,
-        firstName: firstName,
+    // 2️⃣ Fetch full user data from UserRepository
+    final user = await userRepository.getUserById(userId);
 
-        lastName: lastName,
-        email: email,
-        location: UserLocation(latitude: latitude, longitude: longitude),
-        createdAt: DateTime.parse(response['created_at']),
-      );
-    } else {
-      return Worker(
-        id: response['id'],
-        userType: userType,
-        firstName: firstName,
-        phoneNumber: phone ?? 'Unknown',
-        lastName: lastName,
-        email: email,
-        location: UserLocation(latitude: latitude, longitude: longitude),
-        createdAt: DateTime.parse(response['created_at']),
-        specialty: specialty ?? '',
-      );
+    if (user == null) {
+      throw Exception("User profile not found after registration");
     }
+
+    return user;
   }
 
   @override
@@ -71,43 +57,20 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    final response = await remoteDataSource.signIn(
+    // 1️⃣ Sign in → returns userId
+    final userId = await remoteDataSource.signIn(
       email: email,
       password: password,
     );
 
-    final userType = UserTypeExtension.fromString(response['user_type']);
+    // 2️⃣ Fetch full user profile
+    final user = await userRepository.getUserById(userId);
 
-    if (userType == UserType.customer) {
-      return CustomerAuthUser(
-        id: response['id'],
-        userType: userType,
-        firstName: response['first_name'],
-        lastName: response['last_name'],
-        email: response['email'],
-
-        location: UserLocation(
-          latitude: response['latitude'],
-          longitude: response['longitude'],
-        ),
-        createdAt: DateTime.parse(response['created_at']),
-      );
-    } else {
-      return Worker(
-        id: response['id'],
-        userType: userType,
-        phoneNumber: response['phone'],
-        firstName: response['first_name'],
-        lastName: response['last_name'],
-        email: response['email'],
-        location: UserLocation(
-          latitude: response['latitude'],
-          longitude: response['longitude'],
-        ),
-        createdAt: DateTime.parse(response['created_at']),
-        specialty: response['specialty'],
-      );
+    if (user == null) {
+      throw Exception("User profile not found after login");
     }
+
+    return user;
   }
 
   @override

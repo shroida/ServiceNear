@@ -53,7 +53,7 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(remoteDataSource: sl()),
+    () => AuthRepositoryImpl(remoteDataSource: sl(), userRepository: sl()),
   );
   sl.registerFactory<AuthCubit>(() => AuthCubit(sl(), sl()));
 

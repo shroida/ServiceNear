@@ -7,7 +7,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this.supabase);
 
   @override
-  Future<Map<String, dynamic>> signUp({
+  Future<String> signUp({
     required String email,
     required String password,
     required String firstName,
@@ -26,55 +26,42 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     );
 
     final user = authResponse.user;
+
     if (user == null) {
       throw Exception('Signup failed');
     }
 
-    Map<String, dynamic> userData;
-
     if (userType == 'customer') {
-      final response = await supabase
-          .from('customers')
-          .insert({
-            'id': user.id,
-            'first_name': firstName,
-            'last_name': lastName,
-            'email': email,
-            'latitude': latitude,
-            'longitude': longitude,
-            'created_at': DateTime.now().toIso8601String(),
-          })
-          .select()
-          .single();
-
-      userData = Map<String, dynamic>.from(response);
+      await supabase.from('customers').insert({
+        'id': user.id,
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'latitude': latitude,
+        'longitude': longitude,
+        'created_at': DateTime.now().toIso8601String(),
+      });
     } else {
-      final response = await supabase
-          .from('workers')
-          .insert({
-            'id': user.id,
-            'first_name': firstName,
-            'last_name': lastName,
-            'email': email,
-            'phone': phone ?? '',
-            'specialty': specialty ?? '',
-            'address': address ?? '',
-            'about': about ?? '',
-            'latitude': latitude,
-            'longitude': longitude,
-            'created_at': DateTime.now().toIso8601String(),
-          })
-          .select()
-          .single();
-
-      userData = Map<String, dynamic>.from(response);
+      await supabase.from('workers').insert({
+        'id': user.id,
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'phone': phone ?? '',
+        'specialty': specialty ?? '',
+        'address': address ?? '',
+        'about': about ?? '',
+        'latitude': latitude,
+        'longitude': longitude,
+        'created_at': DateTime.now().toIso8601String(),
+      });
     }
 
-    return userData;
+    return user.id;
   }
 
   @override
-  Future<Map<String, dynamic>> signIn({
+  Future<String> signIn({
     required String email,
     required String password,
   }) async {
@@ -87,29 +74,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('Invalid login credentials');
     }
 
-    final userId = response.user!.id;
-
-    final customer = await supabase
-        .from('customers')
-        .select()
-        .eq('id', userId)
-        .maybeSingle();
-
-    if (customer != null) {
-      return Map<String, dynamic>.from(customer)..['user_type'] = 'customer';
-    }
-
-    final worker = await supabase
-        .from('workers')
-        .select()
-        .eq('id', userId)
-        .maybeSingle();
-
-    if (worker != null) {
-      return Map<String, dynamic>.from(worker)..['user_type'] = 'worker';
-    }
-
-    throw Exception('User not found');
+    return response.user!.id;
   }
 
   @override

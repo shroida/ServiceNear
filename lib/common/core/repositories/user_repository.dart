@@ -63,4 +63,54 @@ class UserRepository {
 
     return null;
   }
+
+  Future<AppUser?> getUserById(String userId) async {
+    final customer = await supabase
+        .from('customers')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (customer != null) {
+      return CustomerAuthUser(
+        id: customer['id'],
+        userType: UserType.customer,
+        firstName: customer['first_name'],
+        lastName: customer['last_name'],
+        email: customer['email'],
+        location: UserLocation(
+          latitude: (customer['latitude'] as num?)?.toDouble() ?? 0.0,
+          longitude: (customer['longitude'] as num?)?.toDouble() ?? 0.0,
+        ),
+        createdAt: DateTime.parse(customer['created_at'] as String),
+      );
+    }
+
+    final worker = await supabase
+        .from('workers')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (worker != null) {
+      return Worker(
+        id: worker['id'],
+        userType: UserType.worker,
+        firstName: worker['first_name'],
+        lastName: worker['last_name'],
+        email: worker['email'],
+        phoneNumber: worker['phone'],
+        address: worker['address'],
+        about: worker['about'],
+        location: UserLocation(
+          latitude: (worker['latitude'] as num?)?.toDouble() ?? 0.0,
+          longitude: (worker['longitude'] as num?)?.toDouble() ?? 0.0,
+        ),
+        createdAt: DateTime.parse(worker['created_at'] as String),
+        specialty: worker['specialty'],
+      );
+    }
+
+    return null;
+  }
 }
