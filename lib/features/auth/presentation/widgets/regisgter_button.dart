@@ -17,18 +17,33 @@ class RegisterLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 50.h,
+      height: 55.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
         onPressed: () => register ? authCubit.register() : authCubit.login(),
-        child: Text(text, style: AppStyles.font16WhiteSemiBold),
+        child: Text(
+          text,
+          style: AppStyles.font16WhiteSemiBold.copyWith(letterSpacing: 1.1),
+        ),
       ),
     );
   }

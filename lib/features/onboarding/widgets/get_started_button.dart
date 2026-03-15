@@ -37,8 +37,8 @@ class _GetStartedButtonState extends State<GetStartedButton> {
               context.go(RoutePath.register);
             } else {
               widget._controller.nextPage(
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.fastOutSlowIn,
               );
             }
           },

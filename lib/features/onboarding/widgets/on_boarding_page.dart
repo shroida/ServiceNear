@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
 
 class OnboardingPageView extends StatelessWidget {
@@ -15,42 +16,50 @@ class OnboardingPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 400),
-            opacity: isActive ? 1 : 0.6,
-            child: Image.asset(item.image, fit: BoxFit.cover),
+        // 1. Full screen background image
+        Positioned.fill(child: Image.asset(item.image, fit: BoxFit.cover)),
+        // 2. Gradient Overlay for readability
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.2),
+                  Colors.black.withValues(alpha: 0.8),
+                ],
+              ),
+            ),
           ),
         ),
-        Center(
+        // 3. Content
+        Align(
+          alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            padding: EdgeInsets.only(bottom: 120.h, left: 32.w, right: 32.w),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 400),
-                  style: const TextStyle(
-                    fontSize: 28,
+                Text(
+                  item.title,
+                  style: TextStyle(
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.white,
                   ),
-                  child: Text(item.title, textAlign: TextAlign.center),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 12),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 400),
-                  opacity: isActive ? 1 : 0.6,
-                  child: Text(
-                    item.subtitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                      height: 1.5,
-                    ),
-                    textAlign: TextAlign.center,
+                SizedBox(height: 16.h),
+                Text(
+                  item.subtitle,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white.withValues(alpha: 0.8),
+                    height: 1.5,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),

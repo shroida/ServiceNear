@@ -27,96 +27,173 @@ class RegisterScreen extends StatelessWidget {
     final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: BlocConsumer<AuthCubit, AppAuthState>(
-          listener: (context, state) {
-            if (state is AuthError) {
-              AppSnackBar.show(
-                context,
-                message: 'Registration failed, ${state.message.toString()}',
-                type: AppSnackBarType.error,
-              );
-            } else if (state is AuthSuccess) {
-              AppSnackBar.show(
-                context,
-                message: 'Registered successfully',
-                type: AppSnackBarType.success,
-              );
-            }
-          },
-          builder: (context, state) {
-            return SingleChildScrollView(
-              padding: EdgeInsets.all(16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20.h),
-                  const WelcomeText(),
-                  SizedBox(height: 30.h),
-                  TypeSelector(
-                    selectedType: authCubit.selectedUserType,
-                    onTypeChanged: (type) {
-                      authCubit.changeUserType(type);
-                    },
-                  ),
-                  SizedBox(height: 30.h),
-                  Form(
-                    key: authCubit.formKey,
-                    child: Column(
-                      children: [
-                        FirstAndLastNameField(authCubit: authCubit),
-                        SizedBox(height: 16.h),
-                        EmailField(authCubit: authCubit),
-                        SizedBox(height: 16.h),
-                        PasswordField(authCubit: authCubit),
-                        SizedBox(height: 16.h),
-
-                        if (authCubit.selectedUserType == UserType.worker) ...[
-                          AppTextFormField(
-                            controller: authCubit.phoneController,
-                            hintStyle: AppStyles.font13GrayRegular,
-
-                            hintText: 'Phone Number',
-                            validator: (value) => value == null || value.isEmpty
-                                ? 'Phone number required'
-                                : null,
-                            prefixIcon: const Icon(Icons.phone),
-                          ),
-                          SizedBox(height: 16.h),
-
-                          DropDownSpecialties(
-                            selectedSpecialty: authCubit.selectedSpecialty,
-                            onChanged: (value) =>
-                                authCubit.changeSpecialty(value),
-                          ),
-                          SizedBox(height: 16.h),
-
-                          AddressField(authCubit: authCubit),
-                          SizedBox(height: 16.h),
-
-                          AboutFiled(authCubit: authCubit),
-                        ],
-
-                        SizedBox(height: 30.h),
-                        state is AuthLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : RegisterLoginButton(
-                                authCubit: authCubit,
-                                text: "Register",
-                                register: true,
-                              ),
-                        SizedBox(height: 20.h),
-                        const NavigateToLoginRegister(toLogin: true),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+      backgroundColor: const Color(0xFFF8F9FD), // Softer background
+      body: BlocConsumer<AuthCubit, AppAuthState>(
+        listener: (context, state) {
+          if (state is AuthError) {
+            AppSnackBar.show(
+              context,
+              message: 'Failed: ${state.message}',
+              type: AppSnackBarType.error,
             );
-          },
+          } else if (state is AuthSuccess) {
+            AppSnackBar.show(
+              context,
+              message: 'Registered successfully!',
+              type: AppSnackBarType.success,
+            );
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildHeader(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 24.h),
+                      const WelcomeText(),
+                      SizedBox(height: 24.h),
+
+                      // User Type Selection
+                      TypeSelector(
+                        selectedType: authCubit.selectedUserType,
+                        onTypeChanged: (type) => authCubit.changeUserType(type),
+                      ),
+
+                      SizedBox(height: 32.h),
+
+                      Form(
+                        key: authCubit.formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Personal Information",
+                              style: AppStyles.font14BlueSemiBold,
+                            ),
+                            SizedBox(height: 12.h),
+                            _fieldWrapper(
+                              child: FirstAndLastNameField(
+                                authCubit: authCubit,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            _fieldWrapper(
+                              child: EmailField(authCubit: authCubit),
+                            ),
+                            SizedBox(height: 16.h),
+                            _fieldWrapper(
+                              child: PasswordField(authCubit: authCubit),
+                            ),
+
+                            if (authCubit.selectedUserType ==
+                                UserType.worker) ...[
+                              SizedBox(height: 32.h),
+                              Text(
+                                "Professional Details",
+                                style: AppStyles.font14BlueSemiBold,
+                              ),
+                              SizedBox(height: 12.h),
+                              _fieldWrapper(
+                                child: AppTextFormField(
+                                  validator: (value) =>
+                                      value == null || value.isEmpty
+                                      ? 'Phone number required'
+                                      : null,
+                                  controller: authCubit.phoneController,
+                                  hintText: 'Phone Number',
+                                  prefixIcon: Icon(
+                                    Icons.phone_iphone_rounded,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+                              _fieldWrapper(
+                                child: DropDownSpecialties(
+                                  selectedSpecialty:
+                                      authCubit.selectedSpecialty,
+                                  onChanged: (value) =>
+                                      authCubit.changeSpecialty(value),
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+                              _fieldWrapper(
+                                child: AddressField(authCubit: authCubit),
+                              ),
+                              SizedBox(height: 16.h),
+                              _fieldWrapper(
+                                child: AboutFiled(authCubit: authCubit),
+                              ),
+                            ],
+
+                            SizedBox(height: 40.h),
+                            state is AuthLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : RegisterLoginButton(
+                                    authCubit: authCubit,
+                                    text: "Create Account",
+                                    register: true,
+                                  ),
+                            SizedBox(height: 24.h),
+                            const NavigateToLoginRegister(toLogin: true),
+                            SizedBox(height: 40.h),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      height: 160.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primary, AppColors.primaryDark],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60.r)),
+      ),
+      child: Center(
+        child: SafeArea(
+          child: Text(
+            "Join Us",
+            style: AppStyles.font18WhiteMedium.copyWith(letterSpacing: 1.2),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _fieldWrapper({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

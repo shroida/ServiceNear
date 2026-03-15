@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/images.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/features/onboarding/widgets/dots_widget.dart';
 import 'package:servicenear/features/onboarding/widgets/get_started_button.dart';
 import 'package:servicenear/features/onboarding/widgets/on_boarding_item.dart';
@@ -33,35 +36,48 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       image: Assets.supermarket,
     ),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: items.length,
-                onPageChanged: (index) {
-                  setState(() => _currentPage = index);
-                },
-                itemBuilder: (context, index) {
-                  return OnboardingPageView(item: items[index]);
-                },
-              ),
+      extendBodyBehindAppBar: true, // Allows image to reach the top
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: _controller,
+            itemCount: items.length,
+            onPageChanged: (index) => setState(() => _currentPage = index),
+            itemBuilder: (context, index) =>
+                OnboardingPageView(item: items[index]),
+          ),
+
+          // Skip Button
+          Positioned(
+            top: 50.h,
+            right: 20.w,
+            child: TextButton(
+              onPressed: () => context.go(RoutePath.register),
+              child: const Text("Skip", style: TextStyle(color: Colors.white)),
             ),
-            DotsWidget(items: items, currentPage: _currentPage),
-            const SizedBox(height: 24),
-            GetStartedButton(
-              currentPage: _currentPage,
-              items: items,
-              controller: _controller,
+          ),
+
+          // Bottom Controls
+          Positioned(
+            bottom: 40.h,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                DotsWidget(items: items, currentPage: _currentPage),
+                SizedBox(height: 32.h),
+                GetStartedButton(
+                  currentPage: _currentPage,
+                  items: items,
+                  controller: _controller,
+                ),
+              ],
             ),
-            const SizedBox(height: 24),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
