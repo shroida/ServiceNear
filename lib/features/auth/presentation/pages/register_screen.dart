@@ -6,6 +6,7 @@ import 'package:servicenear/common/entities/user_type.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/common/widgets/app_text_form_field.dart';
+import 'package:servicenear/common/widgets/build_shadow_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/about_field.dart';
@@ -75,17 +76,17 @@ class RegisterScreen extends StatelessWidget {
                               style: AppStyles.font14BlueSemiBold,
                             ),
                             SizedBox(height: 12.h),
-                            _fieldWrapper(
+                            BuildFieldShadow(
                               child: FirstAndLastNameField(
                                 authCubit: authCubit,
                               ),
                             ),
                             SizedBox(height: 16.h),
-                            _fieldWrapper(
+                            BuildFieldShadow(
                               child: EmailField(authCubit: authCubit),
                             ),
                             SizedBox(height: 16.h),
-                            _fieldWrapper(
+                            BuildFieldShadow(
                               child: PasswordField(authCubit: authCubit),
                             ),
 
@@ -97,7 +98,7 @@ class RegisterScreen extends StatelessWidget {
                                 style: AppStyles.font14BlueSemiBold,
                               ),
                               SizedBox(height: 12.h),
-                              _fieldWrapper(
+                              BuildFieldShadow(
                                 child: AppTextFormField(
                                   validator: (value) =>
                                       value == null || value.isEmpty
@@ -112,7 +113,7 @@ class RegisterScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 16.h),
-                              _fieldWrapper(
+                              BuildFieldShadow(
                                 child: DropDownSpecialties(
                                   selectedSpecialty:
                                       authCubit.selectedSpecialty,
@@ -121,11 +122,11 @@ class RegisterScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 16.h),
-                              _fieldWrapper(
+                              BuildFieldShadow(
                                 child: AddressField(authCubit: authCubit),
                               ),
                               SizedBox(height: 16.h),
-                              _fieldWrapper(
+                              BuildFieldShadow(
                                 child: AboutFiled(authCubit: authCubit),
                               ),
                             ],
@@ -177,23 +178,6 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _fieldWrapper({required Widget child}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 15,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: child,
     );
   }
 }

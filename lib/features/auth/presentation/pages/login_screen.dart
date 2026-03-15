@@ -6,6 +6,7 @@ import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/common/widgets/build_shadow_field.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/widgets/email_field.dart';
@@ -63,9 +64,13 @@ class LoginScreen extends StatelessWidget {
                         key: authCubit.formKey,
                         child: Column(
                           children: [
-                            EmailField(authCubit: authCubit),
+                            BuildFieldShadow(
+                              child: EmailField(authCubit: authCubit),
+                            ),
                             SizedBox(height: 16.h),
-                            PasswordField(authCubit: authCubit),
+                            BuildFieldShadow(
+                              child: PasswordField(authCubit: authCubit),
+                            ),
 
                             Align(
                               alignment: Alignment.centerRight,

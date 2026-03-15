@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/common/widgets/build_shadow_field.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:servicenear/common/core/app_colors.dart';
@@ -95,9 +96,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                   Text("Request Details", style: AppStyles.font16DarkBlueBold),
                   SizedBox(height: 16.h),
 
-                  // ... inside your Column in AddRequestScreen
                   _inputLabel("What do you need?"),
-                  _buildFieldShadow(
+                  BuildFieldShadow(
                     child: AppTextFormField(
                       controller: _titleController,
                       hintText: "e.g. Fix leaking kitchen sink",
@@ -119,7 +119,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                   SizedBox(height: 16.h),
 
                   _inputLabel("Tell us the details"),
-                  _buildFieldShadow(
+                  BuildFieldShadow(
                     child: AppTextFormField(
                       controller: _descriptionController,
                       hintText: "Describe the issue...",
@@ -135,7 +135,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                   SizedBox(height: 16.h),
 
                   _inputLabel("Where is the service needed?"),
-                  _buildFieldShadow(
+                  BuildFieldShadow(
                     child: AppTextFormField(
                       controller: _addressController,
                       hintText: "Your home or office address",
@@ -239,22 +239,6 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               )
             : Text("Confirm and Submit", style: AppStyles.font16WhiteSemiBold),
       ),
-    );
-  }
-
-  Widget _buildFieldShadow({required Widget child}) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03), // Ultra soft shadow
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: child,
     );
   }
 }
