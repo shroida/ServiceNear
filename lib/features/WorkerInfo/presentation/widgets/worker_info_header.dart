@@ -90,7 +90,6 @@ class WorkerInfoHeader extends StatelessWidget {
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
                 onTap: () {
-                  print('Worker specialty: "${worker.specialty}"');
                   context.push(
                     RoutePath.services,
                     extra: {

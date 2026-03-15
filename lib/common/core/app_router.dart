@@ -128,8 +128,6 @@ class AppRouter {
           final workerId = extra?['workerId'] ?? '';
           final specialty = extra?['specialty']?.toString() ?? '';
 
-          print('Routing to ServicesScreen for specialty: "$specialty"');
-
           return BlocProvider(
             create: (_) => sl<ServiceRequestCubit>()..fetchServices(specialty),
             child: ServicesScreen(workerId: workerId, specialty: specialty),
