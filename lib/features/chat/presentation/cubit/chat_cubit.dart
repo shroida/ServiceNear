@@ -6,7 +6,8 @@ import 'package:servicenear/features/chat/domain/usecases/get_all_chats_usecase.
 import 'package:servicenear/features/chat/domain/usecases/get_messages_usecase.dart';
 import 'package:servicenear/features/chat/domain/usecases/make_all_chat_messages_read.dart';
 import 'package:servicenear/features/chat/domain/usecases/send_message_usecase.dart';
-import 'chat_state.dart';
+import 'package:servicenear/features/chat/presentation/cubit/chat_state.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   final SendMessageUseCase sendMessageUseCase;
@@ -14,7 +15,9 @@ class ChatCubit extends Cubit<ChatState> {
   final GetAllChatsUseCase getAllChatsUseCase;
   final MakeAllChatMessagesReadUseCase makeAllChatMessagesReadUseCase;
   final ChatRepository repository;
-  final List<MessageEntity> messages = [];
+
+  RealtimeChannel? _channel;
+
   ChatCubit(
     this.repository,
     this.sendMessageUseCase,
@@ -22,6 +25,7 @@ class ChatCubit extends Cubit<ChatState> {
     this.getAllChatsUseCase,
     this.makeAllChatMessagesReadUseCase,
   ) : super(const ChatInitial());
+
   Future<void> sendMessage({
     required String senderId,
     required String receiverId,
@@ -30,8 +34,6 @@ class ChatCubit extends Cubit<ChatState> {
     required String messageText,
   }) async {
     if (messageText.trim().isEmpty) return;
-
-    emit(ChatLoading());
 
     try {
       final message = MessageEntity(
@@ -45,18 +47,6 @@ class ChatCubit extends Cubit<ChatState> {
       );
 
       await sendMessageUseCase(message);
-
-      final currentMessages = state is ChatLoaded
-          ? (state as ChatLoaded).messages
-          : <MessageEntity>[];
-      final updatedMessages = [...currentMessages, message];
-
-      emit(
-        ChatLoaded(
-          messages: updatedMessages,
-          receiver: (state as ChatLoaded).receiver,
-        ),
-      );
     } catch (e) {
       emit(ChatError(e.toString()));
     }
@@ -74,14 +64,56 @@ class ChatCubit extends Cubit<ChatState> {
     String currentUserId,
     String receiverId,
   ) async {
-    final receiver = await repository.getUserById(receiverId);
+    try {
+      final receiver = await repository.getUserById(receiverId);
 
-    final messages = await repository.getMessagesBetweenCustomerAndWorker(
-      currentUserId,
-      receiverId,
-    );
+      final messages = await repository.getMessagesBetweenCustomerAndWorker(
+        currentUserId,
+        receiverId,
+      );
 
-    emit(ChatLoaded(messages: messages, receiver: receiver));
+      emit(ChatLoaded(messages: messages, receiver: receiver));
+
+      subscribeToMessages(currentUserId, receiverId);
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
+  void subscribeToMessages(String currentUserId, String receiverId) {
+    _channel = Supabase.instance.client
+        .channel('chat_room_$currentUserId$receiverId')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.insert,
+          schema: 'public',
+          table: 'chats',
+          callback: (payload) {
+            final record = payload.newRecord;
+
+            final newMessage = MessageEntity(
+              senderId: record['sender_id'],
+              receiverId: record['receiver_id'],
+              senderType: record['sender_type'],
+              receiverType: record['receiver_type'],
+              messageText: record['message_text'],
+              isRead: record['is_read'] ?? false,
+              createdAt: DateTime.parse(record['created_at']),
+              parentId: record['parent_id'],
+            );
+
+            if (state is ChatLoaded) {
+              final current = state as ChatLoaded;
+
+              emit(
+                ChatLoaded(
+                  messages: [...current.messages, newMessage],
+                  receiver: current.receiver,
+                ),
+              );
+            }
+          },
+        )
+        .subscribe();
   }
 
   Future<void> loadAllChats(String currentUserId) async {
@@ -100,5 +132,11 @@ class ChatCubit extends Cubit<ChatState> {
     } catch (e) {
       emit(ChatError(e.toString()));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _channel?.unsubscribe();
+    return super.close();
   }
 }
