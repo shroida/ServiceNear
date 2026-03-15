@@ -10,9 +10,25 @@ import 'package:servicenear/features/serviceRequest/presentation/cubit/service_r
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
 import 'package:servicenear/features/serviceRequest/presentation/widgets/service_card.dart';
 
-class ServicesScreen extends StatelessWidget {
+class ServicesScreen extends StatefulWidget {
   final String workerId;
-  const ServicesScreen({super.key, required this.workerId});
+  final String specialty;
+
+  const ServicesScreen({
+    super.key,
+    required this.workerId,
+    required this.specialty,
+  });
+
+  @override
+  State<ServicesScreen> createState() => _ServicesScreenState();
+}
+
+class _ServicesScreenState extends State<ServicesScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +67,7 @@ class ServicesScreen extends StatelessWidget {
                         RoutePath.addRequest,
                         extra: {
                           'service': service,
-                          'workerId': workerId, // pass it as a key in a map
+                          'workerId': widget.workerId,
                         },
                       );
                     },

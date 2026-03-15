@@ -6,5 +6,5 @@ abstract class ServiceRequestRemoteDataSource {
   Future<List<ServiceRequest>> getCustomerRequests(String customerId);
   Future<void> createRequest(Map<String, dynamic> data);
   Future<void> updateRequestStatus(String requestId, String status);
-  Future<List<ServiceModel>> getServices({String? specialty});
+  Future<List<ServiceModel>> getServices(String specialty);
 }

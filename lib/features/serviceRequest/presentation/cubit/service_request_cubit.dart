@@ -48,10 +48,9 @@ class ServiceRequestCubit extends Cubit<ServiceRequestState> {
 
   Future<void> fetchServices([String? specialty]) async {
     emit(ServiceLoading());
-
+    print('Fetching services for specialty: $specialty');
     try {
       final services = await getServicesUsecase.call(specialty ?? '');
-
       emit(ServiceLoaded(services));
     } catch (e) {
       emit(ServiceError(e.toString()));

@@ -7,6 +7,6 @@ class GetServicesUsecase {
   GetServicesUsecase(this.repository);
 
   Future<List<Service>> call(String specialty) {
-    return repository.getServices(specialty: specialty);
+    return repository.getServices(specialty);
   }
 }

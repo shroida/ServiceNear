@@ -90,11 +90,13 @@ class WorkerInfoHeader extends StatelessWidget {
               InkWell(
                 borderRadius: BorderRadius.circular(14.r),
                 onTap: () {
-                  if (!context.mounted) return;
-
+                  print('Worker specialty: "${worker.specialty}"');
                   context.push(
                     RoutePath.services,
-                    extra: {'workerId': worker.id},
+                    extra: {
+                      'workerId': worker.id,
+                      'specialty': worker.specialty,
+                    },
                   );
                 },
                 child: Container(

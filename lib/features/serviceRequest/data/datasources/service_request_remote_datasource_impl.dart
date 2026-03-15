@@ -38,14 +38,18 @@ class ServiceRequestRemoteDataSourceImpl
   }
 
   @override
-  Future<List<ServiceModel>> getServices({String? specialty}) async {
-    final query = client.from('services').select();
-    if (specialty != null) query.eq('specialty', specialty);
+  Future<List<ServiceModel>> getServices(String specialty) async {
+    var query = client.from('services').select();
+
+    if (specialty.trim().isNotEmpty) {
+      query = query.ilike('specialty', specialty.trim());
+    }
 
     final res = await query;
 
-    final list = (res as List).map((e) => ServiceModel.fromMap(e)).toList();
-    return list;
+    return (res as List)
+        .map((e) => ServiceModel.fromMap(Map<String, dynamic>.from(e)))
+        .toList();
   }
 
   @override

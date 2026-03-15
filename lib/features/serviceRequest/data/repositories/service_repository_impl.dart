@@ -8,10 +8,8 @@ class ServiceRepositoryImpl implements ServiceRepository {
   ServiceRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<List<Service>> getServices({String? specialty}) async {
-    final serviceModels = await remoteDataSource.getServices(
-      specialty: specialty,
-    );
+  Future<List<Service>> getServices(String specialty) async {
+    final serviceModels = await remoteDataSource.getServices(specialty);
     return serviceModels.map((m) => m.toEntity()).toList();
   }
 }

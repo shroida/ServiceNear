@@ -125,11 +125,14 @@ class AppRouter {
         path: RoutePath.services,
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
-          final workerId = extra?['workerId'] as String? ?? '';
+          final workerId = extra?['workerId'] ?? '';
+          final specialty = extra?['specialty']?.toString() ?? '';
+
+          print('Routing to ServicesScreen for specialty: "$specialty"');
+
           return BlocProvider(
-            create: (_) =>
-                sl<ServiceRequestCubit>()..fetchServices('AC Technician'),
-            child: ServicesScreen(workerId: workerId),
+            create: (_) => sl<ServiceRequestCubit>()..fetchServices(specialty),
+            child: ServicesScreen(workerId: workerId, specialty: specialty),
           );
         },
       ),
