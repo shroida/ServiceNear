@@ -19,13 +19,22 @@ import 'package:servicenear/features/serviceRequest/domain/entities/service_requ
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
 import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   final AppUser user;
+
   const HomeView({super.key, required this.user});
 
   @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final TextEditingController searchController = TextEditingController();
+  String searchQuery = '';
+
+  @override
   Widget build(BuildContext context) {
-    final isCustomer = user.userType == UserType.customer;
+    final isCustomer = widget.user.userType == UserType.customer;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -33,8 +42,9 @@ class HomeView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ================= Search Bar =================
+            /// ================= Search Bar =================
             AppTextFormField(
+              controller: searchController,
               hintText: isCustomer
                   ? 'Search for services or workers'
                   : 'Search for your requests or clients',
@@ -42,6 +52,11 @@ class HomeView extends StatelessWidget {
               hintStyle: AppStyles.font14GrayRegular,
               prefixIcon: const Icon(Icons.search, color: AppColors.textHint),
               backgroundColor: AppColors.divider,
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value.toLowerCase();
+                });
+              },
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 16.w,
                 vertical: 20.h,
@@ -55,12 +70,14 @@ class HomeView extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
+
             SizedBox(height: 20.h),
 
-            // ================= Customer UI =================
+            /// ================= Customer UI =================
             if (isCustomer) ...[
               Text('Categories', style: AppStyles.font18DarkGreyMedium),
               SizedBox(height: 10.h),
+
               SizedBox(
                 height: 100.h,
                 child: ListView.separated(
@@ -76,7 +93,9 @@ class HomeView extends StatelessWidget {
                   },
                 ),
               ),
+
               SizedBox(height: 20.h),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -95,15 +114,42 @@ class HomeView extends StatelessWidget {
                   ),
                 ],
               ),
+
               SizedBox(height: 10.h),
+
               SizedBox(
                 height: 300.h,
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
                     if (state is HomeLoading) {
                       return const Center(child: CircularProgressIndicator());
-                    } else if (state is HomeLoaded) {
-                      final workers = state.workers;
+                    }
+
+                    if (state is HomeLoaded) {
+                      final workers = state.workers
+                          .where(
+                            (worker) =>
+                                worker.firstName.toLowerCase().contains(
+                                  searchQuery,
+                                ) ||
+                                worker.lastName.toLowerCase().contains(
+                                  searchQuery,
+                                ) ||
+                                (worker.specialty ?? '').toLowerCase().contains(
+                                  searchQuery,
+                                ),
+                          )
+                          .toList();
+
+                      if (workers.isEmpty) {
+                        return Center(
+                          child: Text(
+                            "No workers found",
+                            style: AppStyles.font14GrayRegular,
+                          ),
+                        );
+                      }
+
                       return ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: workers.length,
@@ -116,15 +162,19 @@ class HomeView extends StatelessWidget {
                           );
                         },
                       );
-                    } else if (state is HomeError) {
-                      return Center(child: Text(state.message));
-                    } else {
-                      return const SizedBox();
                     }
+
+                    if (state is HomeError) {
+                      return Center(child: Text(state.message));
+                    }
+
+                    return const SizedBox();
                   },
                 ),
               ),
             ],
+
+            /// ================= Worker UI =================
             if (!isCustomer) ...[
               Text('Your Requests', style: AppStyles.font18DarkGreyMedium),
 
@@ -132,61 +182,72 @@ class HomeView extends StatelessWidget {
 
               BlocProvider(
                 create: (_) =>
-                    sl<ServiceRequestCubit>()..getServiceRequests(user.id),
-                child: Expanded(
-                  child: BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
-                    builder: (context, state) {
-                      if (state is ServiceRequestLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        );
-                      }
+                    sl<ServiceRequestCubit>()
+                      ..getServiceRequests(widget.user.id),
+                child: BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
+                  builder: (context, state) {
+                    if (state is ServiceRequestLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    }
 
-                      if (state is ServiceRequestLoaded) {
-                        final requests = state.requests
-                            .whereType<ServiceRequest>()
-                            .toList();
+                    if (state is ServiceRequestLoaded) {
+                      final requests = state.requests
+                          .whereType<ServiceRequest>()
+                          .where(
+                            (request) =>
+                                request.title.toLowerCase().contains(
+                                  searchQuery,
+                                ) ||
+                                request.description.toLowerCase().contains(
+                                  searchQuery,
+                                ),
+                          )
+                          .toList();
 
-                        if (requests.isEmpty) {
-                          return Center(
-                            child: Text(
-                              "No requests found",
-                              style: AppStyles.font14GrayRegular,
-                            ),
-                          );
-                        }
-
-                        return ListView.separated(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          itemCount: requests.length,
-                          separatorBuilder: (_, _) => SizedBox(height: 14.h),
-                          itemBuilder: (context, index) {
-                            final request = requests[index];
-                            return RequestCard(
-                              request: request,
-                              onTap: () {
-                                context.push(
-                                  RoutePath.requestDetails,
-                                  extra: request,
-                                );
-                              },
-                            );
-                          },
-                        );
-                      }
-
-                      if (state is ServiceRequestError) {
+                      if (requests.isEmpty) {
                         return Center(
                           child: Text(
-                            state.message,
-                            style: const TextStyle(color: Colors.red),
+                            "No requests found",
+                            style: AppStyles.font14GrayRegular,
                           ),
                         );
                       }
 
-                      return const SizedBox.shrink();
-                    },
-                  ),
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: 20.h),
+                        itemCount: requests.length,
+                        separatorBuilder: (_, _) => SizedBox(height: 14.h),
+                        itemBuilder: (context, index) {
+                          final request = requests[index];
+
+                          return RequestCard(
+                            request: request,
+                            onTap: () {
+                              context.push(
+                                RoutePath.requestDetails,
+                                extra: request,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    }
+
+                    if (state is ServiceRequestError) {
+                      return Center(
+                        child: Text(
+                          state.message,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
                 ),
               ),
             ],
