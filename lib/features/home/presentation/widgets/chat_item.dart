@@ -19,32 +19,19 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasUnread = unreadCount > 0;
+
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h),
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+      decoration: BoxDecoration(
+        color: hasUnread
+            ? AppColors.primary.withValues(alpha: 0.04)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
       child: Row(
         children: [
-          Stack(
-            children: [
-              CircleAvatar(
-                radius: 28.r,
-                backgroundColor: AppColors.primaryLight,
-                child: Text("A", style: AppStyles.font16WhiteSemiBold),
-              ),
-              Positioned(
-                bottom: 2,
-                right: 2,
-                child: Container(
-                  width: 12.w,
-                  height: 12.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.success,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          _buildModernAvatar(),
 
           SizedBox(width: 14.w),
 
@@ -52,49 +39,133 @@ class ChatItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: AppStyles.font18DarkGreyMedium),
-                SizedBox(height: 4.h),
-                Text(
-                  lastMessage,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.font14GrayRegular,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      name,
+                      style: AppStyles.font16DarkBlueBold.copyWith(
+                        fontWeight: hasUnread
+                            ? FontWeight.bold
+                            : FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      _formatDateTime(time),
+                      style: AppStyles.font12GrayMedium.copyWith(
+                        color: hasUnread
+                            ? AppColors.primary
+                            : Colors.grey.shade500,
+                        fontWeight: hasUnread
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 6.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        lastMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.font14GrayRegular.copyWith(
+                          color: hasUnread
+                              ? Colors.black87
+                              : Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
+                    if (hasUnread) _buildUnreadBadge(),
+                  ],
                 ),
               ],
             ),
           ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "${time.hour}:${time.minute} ${time.hour >= 12 ? 'PM' : 'AM'}",
-                style: AppStyles.font12GrayMedium,
-              ),
-              SizedBox(height: 6.h),
-
-              unreadCount > 0
-                  ? Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Text(
-                        "$unreadCount",
-                        style: AppStyles.font13BlueSemiBold.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
         ],
       ),
     );
+  }
+
+  Widget _buildModernAvatar() {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              colors: [
+                AppColors.primary,
+                AppColors.primary.withValues(alpha: 0.7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.2),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: CircleAvatar(
+            radius: 28.r,
+            backgroundColor: Colors.transparent,
+            child: Text(
+              name.isNotEmpty ? name[0].toUpperCase() : "?",
+              style: AppStyles.font18WhiteMedium,
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 2,
+          right: 2,
+          child: Container(
+            width: 14.w,
+            height: 14.w,
+            decoration: BoxDecoration(
+              color: const Color(0xFF4ADE80),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2.5),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUnreadBadge() {
+    return Container(
+      margin: EdgeInsets.only(left: 8.w),
+      padding: EdgeInsets.all(7.w),
+      decoration: const BoxDecoration(
+        color: AppColors.primary,
+        shape: BoxShape.circle,
+      ),
+      constraints: BoxConstraints(minWidth: 20.w, minHeight: 20.w),
+      child: Center(
+        child: Text(
+          "$unreadCount",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 10.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    final now = DateTime.now();
+    if (dateTime.day == now.day &&
+        dateTime.month == now.month &&
+        dateTime.year == now.year) {
+      return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+    }
+    return "${dateTime.day}/${dateTime.month}";
   }
 }
