@@ -6,6 +6,7 @@ import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/features/home/presentation/views/settings%20views/privacy_security_view.dart';
 import 'package:servicenear/features/home/presentation/views/settings%20views/supportive_center_view.dart';
 
 class ProfileView extends StatelessWidget {
@@ -45,7 +46,6 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  // ================= SETTINGS SECTION =================
   Widget _buildSettingsSection(BuildContext context) {
     return Column(
       children: [
@@ -53,9 +53,7 @@ class ProfileView extends StatelessWidget {
         _settingsTile(
           icon: Icons.notifications_none_rounded,
           title: "Notifications",
-          onTap: () {
-            // Logic for notifications toggle or screen
-          },
+          onTap: () {},
         ),
         _settingsTile(
           icon: Icons.security_rounded,
@@ -85,7 +83,6 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  // ================= LOGOUT LOGIC =================
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
