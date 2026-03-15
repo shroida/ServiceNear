@@ -5,13 +5,13 @@ import 'package:servicenear/common/core/app_colors.dart';
 class FloatingBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final bool isWorker; // Add this to toggle roles
+  final bool isWorker;
 
   const FloatingBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
-    this.isWorker = false, // Default to customer
+    this.isWorker = false,
   });
   @override
   Widget build(BuildContext context) {

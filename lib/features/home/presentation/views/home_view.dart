@@ -28,7 +28,7 @@ class HomeView extends StatelessWidget {
     final isCustomer = user.userType == UserType.customer;
 
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
