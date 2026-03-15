@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
+import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.currentUser});
@@ -14,12 +16,12 @@ class ProfileView extends StatelessWidget {
     final isWorker = currentUser.userType.name == 'worker';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FD), // Softer background
+      backgroundColor: const Color(0xFFF8F9FD),
       body: SingleChildScrollView(
         child: Column(
           children: [
             _buildHeader(context, isWorker),
-            SizedBox(height: 60.h), // Adjusted for better spacing
+            SizedBox(height: 60.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
@@ -42,11 +44,135 @@ class ProfileView extends StatelessWidget {
     );
   }
 
+  // ================= SETTINGS SECTION =================
+  Widget _buildSettingsSection(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 20.h),
+        _settingsTile(
+          icon: Icons.notifications_none_rounded,
+          title: "Notifications",
+          onTap: () {
+            // Logic for notifications toggle or screen
+          },
+        ),
+        _settingsTile(
+          icon: Icons.security_rounded,
+          title: "Privacy & Security",
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PrivacySecurityView(),
+            ),
+          ),
+        ),
+        _settingsTile(
+          icon: Icons.help_outline_rounded,
+          title: "Support Center",
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SupportCenterView()),
+          ),
+        ),
+        _settingsTile(
+          icon: Icons.logout_rounded,
+          title: "Logout",
+          isDestructive: true,
+          onTap: () => _showLogoutDialog(context),
+        ),
+      ],
+    );
+  }
+
+  // ================= LOGOUT LOGIC =================
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (innerContext) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        title: Text("Logout", style: AppStyles.font18DarkBlueBold),
+        content: const Text("Are you sure you want to sign out?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(innerContext),
+            child: Text("Cancel", style: AppStyles.font14GrayRegular),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(innerContext); // Close dialog
+              try {
+                await context.read<AuthCubit>().logout();
+              } catch (e) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Logout failed: ${e.toString()}")),
+                );
+              }
+            },
+            child: const Text(
+              "Logout",
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ================= REUSABLE COMPONENTS =================
+  Widget _settingsTile({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 12.h),
+      decoration: _cardDecoration(),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: isDestructive ? Colors.redAccent : AppColors.primary,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: isDestructive ? Colors.redAccent : AppColors.textPrimary,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
+        onTap: onTap,
+      ),
+    );
+  }
+
+  BoxDecoration _cardDecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(24.r),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 15,
+          offset: const Offset(0, 8),
+        ),
+      ],
+    );
+  }
+
+  // ... (Keep your existing _buildHeader, _buildProfileSummaryCard, _buildStatsRow, _statItem, _buildProfessionalCard, _infoRow)
+  // I've omitted them here for brevity, keep them as they were in your code.
+
   Widget _buildHeader(BuildContext context, bool isWorker) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        // Background Gradient with Curve
         Container(
           height: 190.h,
           width: double.infinity,
@@ -87,15 +213,13 @@ class ProfileView extends StatelessWidget {
                       color: Colors.white,
                       size: 28,
                     ),
-                    onPressed: () {}, // Navigate to Edit Profile
+                    onPressed: () {},
                   ),
                 ],
               ),
             ),
           ),
         ),
-
-        // Floating Avatar with Glow Effect
         Positioned(
           bottom: -50.h,
           left: 0,
@@ -105,13 +229,13 @@ class ProfileView extends StatelessWidget {
               padding: EdgeInsets.all(4.r),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.2), // Outer Ring
+                color: Colors.white.withValues(alpha: 0.2),
               ),
               child: Container(
                 padding: EdgeInsets.all(4.r),
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white, // Inner Border
+                  color: Colors.white,
                 ),
                 child: CircleAvatar(
                   radius: 50.r,
@@ -234,59 +358,6 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsSection(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 20.h),
-        _settingsTile(Icons.notifications_none_rounded, "Notifications"),
-        _settingsTile(Icons.security_rounded, "Privacy & Security"),
-        _settingsTile(Icons.help_outline_rounded, "Support Center"),
-        _settingsTile(Icons.logout_rounded, "Logout", isDestructive: true),
-      ],
-    );
-  }
-
-  // Helper Methods for UI Consistency
-  BoxDecoration _cardDecoration() {
-    return BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(24.r),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.04),
-          blurRadius: 15,
-          offset: const Offset(0, 8),
-        ),
-      ],
-    );
-  }
-
-  Widget _settingsTile(
-    IconData icon,
-    String title, {
-    bool isDestructive = false,
-  }) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      decoration: _cardDecoration(),
-      child: ListTile(
-        leading: Icon(
-          icon,
-          color: isDestructive ? Colors.redAccent : AppColors.primary,
-        ),
-        title: Text(
-          title,
-          style: TextStyle(
-            color: isDestructive ? Colors.redAccent : AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16),
-        onTap: () {},
-      ),
-    );
-  }
-
   Widget _infoRow(IconData icon, String title, String value) {
     return Row(
       children: [
@@ -310,6 +381,138 @@ class ProfileView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// ================= PRIVACY & SECURITY SCREEN =================
+class PrivacySecurityView extends StatelessWidget {
+  const PrivacySecurityView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FD),
+      appBar: AppBar(
+        title: Text("Privacy & Security", style: AppStyles.font18DarkBlueBold),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(20.w),
+        children: [
+          _buildOption(
+            Icons.lock_outline,
+            "Change Password",
+            "Update your secret key",
+          ),
+          _buildOption(
+            Icons.fingerprint,
+            "Biometric ID",
+            "Face ID or Fingerprint",
+          ),
+          _buildOption(
+            Icons.visibility_off_outlined,
+            "Hide Profile",
+            "Temporarily hide your business",
+          ),
+          _buildOption(
+            Icons.delete_forever,
+            "Delete Account",
+            "Permanently remove your data",
+            isWarning: true,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOption(
+    IconData icon,
+    String title,
+    String sub, {
+    bool isWarning = false,
+  }) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(bottom: 12.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
+      child: ListTile(
+        leading: Icon(icon, color: isWarning ? Colors.red : AppColors.primary),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: isWarning ? Colors.red : AppColors.textPrimary,
+          ),
+        ),
+        subtitle: Text(sub, style: AppStyles.font12GrayMedium),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+// ================= SUPPORT CENTER SCREEN =================
+class SupportCenterView extends StatelessWidget {
+  const SupportCenterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FD),
+      appBar: AppBar(
+        title: Text("Support Center", style: AppStyles.font18DarkBlueBold),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          children: [
+            _buildContactMethod(
+              Icons.chat_bubble_outline,
+              "Live Chat",
+              "Talk to our team right now",
+            ),
+            _buildContactMethod(
+              Icons.mail_outline,
+              "Email Support",
+              "Get a response within 24 hours",
+            ),
+            _buildContactMethod(
+              Icons.help_center_outlined,
+              "FAQs",
+              "Common questions answered",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContactMethod(IconData icon, String title, String sub) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(bottom: 15.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+          child: Icon(icon, color: AppColors.primary),
+        ),
+        title: Text(title, style: AppStyles.font14DarkBlueMedium),
+        subtitle: Text(sub, style: AppStyles.font12GrayMedium),
+        onTap: () {},
+      ),
     );
   }
 }
