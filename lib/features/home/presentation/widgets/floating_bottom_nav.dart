@@ -13,7 +13,6 @@ class FloatingBottomNav extends StatelessWidget {
     required this.onTap,
     this.isWorker = false, // Default to customer
   });
-
   @override
   Widget build(BuildContext context) {
     final List<IconData> icons = isWorker
@@ -30,36 +29,32 @@ class FloatingBottomNav extends StatelessWidget {
             Icons.person_rounded,
           ];
 
-    return Positioned(
-      bottom: 20.h,
-      left: 20.w,
-      right: 20.w,
-      child: Container(
-        height: 70.h,
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(35.r),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.15),
-              blurRadius: 25,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(icons.length, (index) {
-            return _NavItem(
-              icon: icons[index],
-              index: index,
-              currentIndex: currentIndex,
-              onTap: onTap,
-              label: _getLabel(index, isWorker),
-            );
-          }),
-        ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+      height: 70.h,
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(35.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.15),
+            blurRadius: 25,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(icons.length, (index) {
+          return _NavItem(
+            icon: icons[index],
+            index: index,
+            currentIndex: currentIndex,
+            onTap: onTap,
+            label: _getLabel(index, isWorker),
+          );
+        }),
       ),
     );
   }
