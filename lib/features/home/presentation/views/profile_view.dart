@@ -6,6 +6,7 @@ import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:servicenear/features/home/presentation/views/settings%20views/supportive_center_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.currentUser});
@@ -165,9 +166,6 @@ class ProfileView extends StatelessWidget {
       ],
     );
   }
-
-  // ... (Keep your existing _buildHeader, _buildProfileSummaryCard, _buildStatsRow, _statItem, _buildProfessionalCard, _infoRow)
-  // I've omitted them here for brevity, keep them as they were in your code.
 
   Widget _buildHeader(BuildContext context, bool isWorker) {
     return Stack(
@@ -385,7 +383,6 @@ class ProfileView extends StatelessWidget {
   }
 }
 
-// ================= PRIVACY & SECURITY SCREEN =================
 class PrivacySecurityView extends StatelessWidget {
   const PrivacySecurityView({super.key});
 
@@ -451,66 +448,6 @@ class PrivacySecurityView extends StatelessWidget {
         ),
         subtitle: Text(sub, style: AppStyles.font12GrayMedium),
         trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
-        onTap: () {},
-      ),
-    );
-  }
-}
-
-// ================= SUPPORT CENTER SCREEN =================
-class SupportCenterView extends StatelessWidget {
-  const SupportCenterView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FD),
-      appBar: AppBar(
-        title: Text("Support Center", style: AppStyles.font18DarkBlueBold),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20.w),
-        child: Column(
-          children: [
-            _buildContactMethod(
-              Icons.chat_bubble_outline,
-              "Live Chat",
-              "Talk to our team right now",
-            ),
-            _buildContactMethod(
-              Icons.mail_outline,
-              "Email Support",
-              "Get a response within 24 hours",
-            ),
-            _buildContactMethod(
-              Icons.help_center_outlined,
-              "FAQs",
-              "Common questions answered",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContactMethod(IconData icon, String title, String sub) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.only(bottom: 15.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-          child: Icon(icon, color: AppColors.primary),
-        ),
-        title: Text(title, style: AppStyles.font14DarkBlueMedium),
-        subtitle: Text(sub, style: AppStyles.font12GrayMedium),
         onTap: () {},
       ),
     );
