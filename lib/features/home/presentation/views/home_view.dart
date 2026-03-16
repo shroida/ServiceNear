@@ -24,6 +24,8 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   String selectedCategory = '';
+  String searchQuery = '';
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -130,15 +132,25 @@ class _HomeViewState extends State<HomeView> {
                           );
                         }
                         if (state is HomeLoaded) {
-                          final workers = selectedCategory.isEmpty
-                              ? state.workers
-                              : state.workers
-                                    .where(
-                                      (w) =>
-                                          w.specialty?.toLowerCase() ==
-                                          selectedCategory.toLowerCase(),
-                                    )
-                                    .toList();
+                          final workers = state.workers.where((worker) {
+                            final name =
+                                "${worker.firstName} ${worker.lastName}"
+                                    .toLowerCase();
+
+                            final specialty =
+                                worker.specialty?.toLowerCase() ?? '';
+
+                            final matchesCategory =
+                                selectedCategory.isEmpty ||
+                                specialty == selectedCategory.toLowerCase();
+
+                            final matchesSearch =
+                                searchQuery.isEmpty ||
+                                name.contains(searchQuery) ||
+                                specialty.contains(searchQuery);
+
+                            return matchesCategory && matchesSearch;
+                          }).toList();
 
                           if (workers.isEmpty) {
                             return _buildEmptyState();
@@ -207,12 +219,19 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       child: AppTextFormField(
+        controller: searchController,
         hintText: isCustomer ? 'Search for services...' : 'Search requests...',
         validator: (_) => null,
         hintStyle: AppStyles.font14GrayRegular,
         prefixIcon: const Icon(Icons.search_rounded, color: AppColors.primary),
         backgroundColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(vertical: 16.h),
+
+        onChanged: (value) {
+          setState(() {
+            searchQuery = value.toLowerCase();
+          });
+        },
       ),
     );
   }
