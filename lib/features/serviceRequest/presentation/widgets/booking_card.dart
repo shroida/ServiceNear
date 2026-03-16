@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
-import 'package:servicenear/features/chat/presentation/cubit/chat_cubit.dart';
-import 'package:servicenear/features/chat/presentation/views/chat_list_view.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BookingCard extends StatelessWidget {
   final ServiceRequest request;
@@ -105,21 +103,7 @@ class BookingCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      final chatCubit = context.read<ChatCubit>();
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => BlocProvider.value(
-                            value: chatCubit,
-                            child: ChatListView(
-                              currentUserId:
-                                  Supabase.instance.client.auth.currentUser!.id,
-                              cubit: chatCubit,
-                            ),
-                          ),
-                        ),
-                      );
+                      context.push(RoutePath.chat, extra: request.workerId);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,

@@ -184,31 +184,16 @@ class ProfileView extends StatelessWidget {
           ),
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
                   Text(
                     isWorker ? "Professional Profile" : "My Account",
                     style: AppStyles.font18WhiteMedium.copyWith(
                       letterSpacing: 1.1,
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.edit_note_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                    onPressed: () {},
                   ),
                 ],
               ),
