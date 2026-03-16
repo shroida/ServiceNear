@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:servicenear/common/core/app_colors.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/worker.dart';
+import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/app_styles.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/home/presentation/views/settings%20views/privacy_security_view.dart';
@@ -104,8 +105,11 @@ class ProfileView extends StatelessWidget {
                 await context.read<AuthCubit>().logout();
               } catch (e) {
                 if (!context.mounted) return;
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Logout failed: ${e.toString()}")),
+
+                AppSnackBar.show(
+                  context,
+                  message: "Logout failed ${e.toString()}",
+                  type: AppSnackBarType.error,
                 );
               }
             },

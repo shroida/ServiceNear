@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/common/widgets/build_shadow_field.dart';
 import 'package:servicenear/features/serviceRequest/domain/entities/service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -69,16 +70,17 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
       body: BlocConsumer<ServiceRequestCubit, ServiceRequestState>(
         listener: (context, state) {
           if (state is ServiceRequestLoaded) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Request sent successfully!")),
+            AppSnackBar.show(
+              context,
+              message: "Request sent successfully!",
+              type: AppSnackBarType.success,
             );
             Navigator.pop(context);
           } else if (state is ServiceRequestError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.redAccent,
-              ),
+            AppSnackBar.show(
+              context,
+              message: "Failed to send request ${state.message}",
+              type: AppSnackBarType.error,
             );
           }
         },

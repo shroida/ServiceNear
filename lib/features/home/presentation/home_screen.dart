@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/core/repositories/user_repository.dart';
+import 'package:servicenear/common/widgets/app_snack_bar.dart';
 import 'package:servicenear/features/auth/presentation/cubit/app_auth_state.dart';
 import 'package:servicenear/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:servicenear/features/home/presentation/views/main_screen.dart';
@@ -53,8 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
       listener: (context, state) {
         if (state is AuthInitial) {
           context.go(RoutePath.onBoarding);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Logged out successfully")),
+          AppSnackBar.show(
+            context,
+            message: "Logged out successfully",
+            type: AppSnackBarType.success,
           );
         }
       },

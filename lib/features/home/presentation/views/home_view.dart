@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:servicenear/common/core/app_colors.dart';
+import 'package:servicenear/common/core/di/injection.dart';
 import 'package:servicenear/common/core/routes_path.dart';
 import 'package:servicenear/common/entities/app_user.dart';
 import 'package:servicenear/common/entities/user_type.dart';
@@ -12,7 +13,11 @@ import 'package:servicenear/features/auth/domain/constants/worker_spicialties.da
 import 'package:servicenear/features/home/presentation/cubit/home_cubit.dart';
 import 'package:servicenear/features/home/presentation/cubit/home_state.dart';
 import 'package:servicenear/features/home/presentation/widgets/category_item.dart';
+import 'package:servicenear/features/home/presentation/widgets/requested_card.dart';
 import 'package:servicenear/features/home/presentation/widgets/worker_card.dart';
+import 'package:servicenear/features/serviceRequest/domain/entities/service_request.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_cubit.dart';
+import 'package:servicenear/features/serviceRequest/presentation/cubit/service_request_state.dart';
 
 class HomeView extends StatefulWidget {
   final AppUser user;
@@ -173,6 +178,88 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 SliverToBoxAdapter(child: SizedBox(height: 50.h)),
+              ],
+              if (!isCustomer) ...[
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Text(
+                      'Your Requests',
+                      style: AppStyles.font18DarkGreyMedium,
+                    ),
+                  ),
+                ),
+
+                SliverToBoxAdapter(child: SizedBox(height: 12.h)),
+
+                SliverToBoxAdapter(
+                  child: BlocProvider(
+                    create: (_) =>
+                        sl<ServiceRequestCubit>()
+                          ..getServiceRequests(widget.user.id),
+                    child:
+                        BlocBuilder<ServiceRequestCubit, ServiceRequestState>(
+                          builder: (context, state) {
+                            if (state is ServiceRequestLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              );
+                            }
+
+                            if (state is ServiceRequestLoaded) {
+                              final requests = state.requests
+                                  .whereType<ServiceRequest>()
+                                  .toList();
+
+                              if (requests.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    "No requests found",
+                                    style: AppStyles.font14GrayRegular,
+                                  ),
+                                );
+                              }
+
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.only(
+                                  left: 20.w,
+                                  right: 20.w,
+                                  bottom: 20.h,
+                                ),
+                                itemCount: requests.length,
+                                separatorBuilder: (_, _) =>
+                                    SizedBox(height: 14.h),
+                                itemBuilder: (context, index) {
+                                  final request = requests[index];
+                                  return RequestCard(
+                                    request: request,
+                                    onTap: () {
+                                      context.push(
+                                        RoutePath.requestDetails,
+                                        extra: request,
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            }
+
+                            if (state is ServiceRequestError) {
+                              return Center(
+                                child: Text(
+                                  state.message,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              );
+                            }
+
+                            return const SizedBox.shrink();
+                          },
+                        ),
+                  ),
+                ),
               ],
             ],
           ),
