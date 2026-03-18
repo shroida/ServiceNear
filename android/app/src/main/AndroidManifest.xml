@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
   
-        android:label="servicenear"
+        android:label="ServiceNear"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <!-- Google Maps API KEY -->
