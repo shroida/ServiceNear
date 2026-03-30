@@ -4,6 +4,12 @@
 ServiceNear is a user-friendly application that connects **customers** with **service providers** nearby. The app allows customers to search for services, book appointments, chat with service providers, and track locations in real-time, while service providers can efficiently manage requests and availability.
 
 ---
+📲 Download & Try the App
+
+You can download:
+
+👉 [Download ServiceNear APK](https://www.mediafire.com/file/shkl0alnyxvszue/ServiceNear.apk/file)
+
 
 ## 📋 Table of Contents
 1. [🚀 User Flow](#-user-flow)
