@@ -47,7 +47,24 @@ You can download:
 4. View today’s schedule and appointment history
 
 ---
+flowchart TD
 
+UI[Presentation Layer (Flutter UI)]
+CUBIT[Auth Cubit / Feature Cubits]
+
+USECASE[Domain Layer - Use Cases]
+REPO[Domain Repositories (Abstract)]
+
+DATA[Data Layer]
+REMOTE[Supabase Remote DataSource]
+MODEL[Models]
+
+UI --> CUBIT
+CUBIT --> USECASE
+USECASE --> REPO
+REPO --> DATA
+DATA --> REMOTE
+REMOTE --> MODEL
 ## ✨ Features
 
 ### 💙 Service Provider Features
