@@ -19,6 +19,29 @@ You can download:
 5. [🔔 Status Indicators](#-status-indicators)
 
 ---
+lib/
+├── common/
+│   ├── core/
+│   ├── di/
+│   ├── entities/
+│   └── widgets/
+│
+├── features/
+│   ├── auth/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   │   ├── usecases/
+│   │   │   └── repositories/
+│   │   └── presentation/
+│   │       ├── cubit/
+│   │       └── pages/
+│   │
+│   ├── chat/
+│   ├── booking/
+│   └── profile/
+
+
+<img width="1070" height="878" alt="image" src="https://github.com/user-attachments/assets/8d34f604-76bc-4708-8db0-218aca4186dd" />
 
 ## 🚀 User Flow
 
