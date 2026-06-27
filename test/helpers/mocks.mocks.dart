@@ -3,13 +3,19 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:servicenear/common/core/repositories/user_repository.dart'
+    as _i9;
 import 'package:servicenear/common/entities/app_user.dart' as _i2;
-import 'package:servicenear/common/entities/user_type.dart' as _i5;
+import 'package:servicenear/common/entities/user_type.dart' as _i6;
+import 'package:servicenear/features/auth/data/datasources/auth_remote_datasource.dart'
+    as _i7;
 import 'package:servicenear/features/auth/domain/repositories/auth_repository.dart'
-    as _i3;
+    as _i4;
+import 'package:supabase_flutter/supabase_flutter.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -31,21 +37,27 @@ class _FakeAppUser_0 extends _i1.SmartFake implements _i2.AppUser {
     : super(parent, parentInvocation);
 }
 
+class _FakeSupabaseClient_1 extends _i1.SmartFake
+    implements _i3.SupabaseClient {
+  _FakeSupabaseClient_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [AuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
+class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
   MockAuthRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.AppUser> register({
+  _i5.Future<_i2.AppUser> register({
     required String? email,
     required String? password,
     required String? firstName,
     required String? lastName,
-    required _i5.UserType? userType,
+    required _i6.UserType? userType,
     required double? latitude,
     required double? longitude,
     String? address,
@@ -67,7 +79,7 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
               #specialty: specialty,
               #phone: phone,
             }),
-            returnValue: _i4.Future<_i2.AppUser>.value(
+            returnValue: _i5.Future<_i2.AppUser>.value(
               _FakeAppUser_0(
                 this,
                 Invocation.method(#register, [], {
@@ -86,16 +98,16 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
               ),
             ),
           )
-          as _i4.Future<_i2.AppUser>);
+          as _i5.Future<_i2.AppUser>);
 
   @override
-  _i4.Future<_i2.AppUser> login({
+  _i5.Future<_i2.AppUser> login({
     required String? email,
     required String? password,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#login, [], {#email: email, #password: password}),
-            returnValue: _i4.Future<_i2.AppUser>.value(
+            returnValue: _i5.Future<_i2.AppUser>.value(
               _FakeAppUser_0(
                 this,
                 Invocation.method(#login, [], {
@@ -105,14 +117,148 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
               ),
             ),
           )
-          as _i4.Future<_i2.AppUser>);
+          as _i5.Future<_i2.AppUser>);
 
   @override
-  _i4.Future<void> logout() =>
+  _i5.Future<void> logout() =>
       (super.noSuchMethod(
             Invocation.method(#logout, []),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
+}
+
+/// A class which mocks [AuthRemoteDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthRemoteDataSource extends _i1.Mock
+    implements _i7.AuthRemoteDataSource {
+  MockAuthRemoteDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<String> signUp({
+    required String? email,
+    required String? password,
+    required String? firstName,
+    required String? lastName,
+    required String? userType,
+    required double? latitude,
+    required double? longitude,
+    String? specialty,
+    String? phone,
+    String? address,
+    String? about,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#signUp, [], {
+              #email: email,
+              #password: password,
+              #firstName: firstName,
+              #lastName: lastName,
+              #userType: userType,
+              #latitude: latitude,
+              #longitude: longitude,
+              #specialty: specialty,
+              #phone: phone,
+              #address: address,
+              #about: about,
+            }),
+            returnValue: _i5.Future<String>.value(
+              _i8.dummyValue<String>(
+                this,
+                Invocation.method(#signUp, [], {
+                  #email: email,
+                  #password: password,
+                  #firstName: firstName,
+                  #lastName: lastName,
+                  #userType: userType,
+                  #latitude: latitude,
+                  #longitude: longitude,
+                  #specialty: specialty,
+                  #phone: phone,
+                  #address: address,
+                  #about: about,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<String>);
+
+  @override
+  _i5.Future<String> signIn({
+    required String? email,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#signIn, [], {
+              #email: email,
+              #password: password,
+            }),
+            returnValue: _i5.Future<String>.value(
+              _i8.dummyValue<String>(
+                this,
+                Invocation.method(#signIn, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<String>);
+
+  @override
+  _i5.Future<void> signOut() =>
+      (super.noSuchMethod(
+            Invocation.method(#signOut, []),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<bool> isLoggedIn() =>
+      (super.noSuchMethod(
+            Invocation.method(#isLoggedIn, []),
+            returnValue: _i5.Future<bool>.value(false),
+          )
+          as _i5.Future<bool>);
+}
+
+/// A class which mocks [UserRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUserRepository extends _i1.Mock implements _i9.UserRepository {
+  MockUserRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.SupabaseClient get supabase =>
+      (super.noSuchMethod(
+            Invocation.getter(#supabase),
+            returnValue: _FakeSupabaseClient_1(
+              this,
+              Invocation.getter(#supabase),
+            ),
+          )
+          as _i3.SupabaseClient);
+
+  @override
+  _i5.Future<_i2.AppUser?> getCurrentUser() =>
+      (super.noSuchMethod(
+            Invocation.method(#getCurrentUser, []),
+            returnValue: _i5.Future<_i2.AppUser?>.value(),
+          )
+          as _i5.Future<_i2.AppUser?>);
+
+  @override
+  _i5.Future<_i2.AppUser?> getUserById(String? userId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserById, [userId]),
+            returnValue: _i5.Future<_i2.AppUser?>.value(),
+          )
+          as _i5.Future<_i2.AppUser?>);
 }
