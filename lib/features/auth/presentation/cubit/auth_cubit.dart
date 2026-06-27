@@ -42,58 +42,63 @@ class AuthCubit extends Cubit<AppAuthState> {
     emit(AuthInitial());
   }
 
-  Future<void> register() async {
-    if (!formKey.currentState!.validate()) return;
+ Future<void> register({
+  required String email,
+  required String password,
+  required String firstName,
+  required String lastName,
+  required double latitude,
+  required double longitude,
+  String? phone,
+  String? address,
+  String? about,
+}) async {
+  emit(AuthLoading());
 
-    emit(AuthLoading());
+  try {
+    await authRepository.register(
+      email: email.trim(),
+      password: password.trim(),
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      userType: selectedUserType,
+      latitude: latitude,
+      longitude: longitude,
+      specialty: selectedSpecialty,
+      phone: phone?.trim(),
+      address: address?.trim(),
+      about: about?.trim(),
+    );
 
-    try {
-      await authRepository.register(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-        firstName: firstNameController.text.trim(),
-        lastName: lastNameController.text.trim(),
-        userType: selectedUserType,
-        latitude: latitude,
-        longitude: longitude,
-        specialty: selectedSpecialty,
-        phone: phoneController.text.trim(),
-        address: addressController.text.trim(),
-        about: aboutController.text.trim(),
-      );
-
-      emit(AuthSuccess('Registered successfully'));
-    } catch (e) {
-      emit(AuthError(e.toString()));
-    }
+    emit(AuthSuccess('Registered successfully'));
+  } catch (e) {
+    emit(AuthError(e.toString()));
   }
+}
+  Future<void> login({
+  required String email,
+  required String password,
+}) async {
+  emit(AuthLoading());
 
-  Future<void> login() async {
-    if (!formKey.currentState!.validate()) {
-      emit(AuthError('Please fill all required fields'));
+  try {
+    await authRepository.login(
+      email: email,
+      password: password,
+    );
+
+    final currentUser = await userRepository.getCurrentUser();
+
+    if (currentUser == null) {
+      emit(AuthError("Failed to fetch user data"));
       return;
     }
 
-    emit(AuthLoading());
-
-    try {
-      await authRepository.login(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-
-      final currentUser = await userRepository.getCurrentUser();
-      if (currentUser == null) {
-        emit(AuthError("Failed to fetch user data"));
-        return;
-      }
-
-      emit(AuthLoggedIn(currentUser));
-    } catch (e) {
-      emit(AuthError(e.toString()));
-      debugPrint(e.toString());
-    }
+    emit(AuthLoggedIn(currentUser));
+  } catch (e) {
+    emit(AuthError(e.toString()));
   }
+}
 
   Future<void> logout() async {
     emit(AuthLoading());
@@ -116,6 +121,8 @@ class AuthCubit extends Cubit<AppAuthState> {
     emailController.dispose();
     passwordController.dispose();
     phoneController.dispose();
+    addressController.dispose();
+    aboutController.dispose();
     return super.close();
   }
 }
