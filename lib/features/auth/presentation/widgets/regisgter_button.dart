@@ -39,7 +39,20 @@ class RegisterLoginButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
           ),
         ),
-        onPressed: () => register ? authCubit.register() : authCubit.login(email: authCubit.emailController.text.trim(), password: authCubit.passwordController.text.trim(),),
+        onPressed: () => register ? authCubit.register(
+          email: authCubit.emailController.text.trim(),
+          password: authCubit.passwordController.text.trim(),
+          firstName: authCubit.firstNameController.text.trim(),
+          lastName: authCubit.lastNameController.text.trim(),
+          latitude: authCubit.latitude,
+          longitude: authCubit.longitude,
+          phone: authCubit.phoneController.text.trim(),
+          address: authCubit.addressController.text.trim(),
+          about: authCubit.aboutController.text.trim(),
+        ) : authCubit.login(
+          email: authCubit.emailController.text.trim(),
+          password: authCubit.passwordController.text.trim()
+        ),
         child: Text(
           text,
           style: AppStyles.font16WhiteSemiBold.copyWith(letterSpacing: 1.1),

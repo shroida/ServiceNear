@@ -60,9 +60,7 @@ void main() {
       act: (c) {
         c.emailController.text = 'user@test.com';
         c.passwordController.text = 'password123';
-        // Bypass form validation by calling loginWithoutValidation or
-        // we rely on the fact that formKey is null in test context.
-        // Use a workaround: call the underlying repo directly via the cubit.
+
         return c.login(email: c.emailController.text.trim(), password: c.passwordController.text.trim());
       },
       expect: () => [isA<AuthLoading>(), isA<AuthLoggedIn>()],
@@ -194,7 +192,14 @@ void main() {
         c.passwordController.text = 'pass123';
         c.firstNameController.text = 'Ali';
         c.lastNameController.text = 'Hassan';
-        return c.register();
+        return c.register(
+          email: c.emailController.text.trim(),
+          password: c.passwordController.text.trim(),
+          firstName: c.firstNameController.text.trim(),
+          lastName: c.lastNameController.text.trim(),
+          latitude: 30.0,
+          longitude: 31.0,
+        );
       },
       expect: () => [isA<AuthLoading>(), isA<AuthSuccess>()],
     );
@@ -222,7 +227,14 @@ void main() {
         c.passwordController.text = 'pass';
         c.firstNameController.text = 'A';
         c.lastNameController.text = 'B';
-        return c.register();
+        return c.register(
+          email: c.emailController.text.trim(),
+          password: c.passwordController.text.trim(),
+          firstName: c.firstNameController.text.trim(),
+          lastName: c.lastNameController.text.trim(),
+          latitude: 30.0,
+          longitude: 31.0,
+        );
       },
       expect: () => [isA<AuthLoading>(), isA<AuthError>()],
     );
