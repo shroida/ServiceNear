@@ -63,7 +63,7 @@ void main() {
         // Bypass form validation by calling loginWithoutValidation or
         // we rely on the fact that formKey is null in test context.
         // Use a workaround: call the underlying repo directly via the cubit.
-        return c.login();
+        return c.login(email: c.emailController.text.trim(), password: c.passwordController.text.trim());
       },
       expect: () => [isA<AuthLoading>(), isA<AuthLoggedIn>()],
     );
@@ -79,7 +79,7 @@ void main() {
       act: (c) {
         c.emailController.text = 'bad@test.com';
         c.passwordController.text = 'wrongpass';
-        return c.login();
+        return c.login(email: c.emailController.text.trim(), password: c.passwordController.text.trim());
       },
       expect: () => [isA<AuthLoading>(), isA<AuthError>()],
     );
@@ -96,7 +96,7 @@ void main() {
       act: (c) {
         c.emailController.text = 'user@test.com';
         c.passwordController.text = 'pass';
-        return c.login();
+        return c.login(email: c.emailController.text.trim(), password: c.passwordController.text.trim());
       },
       expect: () => [isA<AuthLoading>(), isA<AuthError>()],
     );
@@ -109,7 +109,7 @@ void main() {
 
       cubit.emailController.text = 'x@x.com';
       cubit.passwordController.text = 'p';
-      await cubit.login();
+      await cubit.login(email: cubit.emailController.text.trim(), password: cubit.passwordController.text.trim());
 
       final state = cubit.state;
       expect(state, isA<AuthError>());
@@ -125,7 +125,7 @@ void main() {
 
       cubit.emailController.text = 'user@test.com';
       cubit.passwordController.text = 'password123';
-      await cubit.login();
+      await cubit.login(email: cubit.emailController.text.trim(), password: cubit.passwordController.text.trim());
 
       final state = cubit.state;
       expect(state, isA<AuthLoggedIn>());

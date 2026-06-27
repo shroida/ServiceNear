@@ -68,32 +68,30 @@ class AuthCubit extends Cubit<AppAuthState> {
     }
   }
 
-  Future<void> login() async {
-    if (!formKey.currentState!.validate()) {
-      emit(AuthError('Please fill all required fields'));
+  Future<void> login({
+  required String email,
+  required String password,
+}) async {
+  emit(AuthLoading());
+
+  try {
+    await authRepository.login(
+      email: email,
+      password: password,
+    );
+
+    final currentUser = await userRepository.getCurrentUser();
+
+    if (currentUser == null) {
+      emit(AuthError("Failed to fetch user data"));
       return;
     }
 
-    emit(AuthLoading());
-
-    try {
-      await authRepository.login(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-
-      final currentUser = await userRepository.getCurrentUser();
-      if (currentUser == null) {
-        emit(AuthError("Failed to fetch user data"));
-        return;
-      }
-
-      emit(AuthLoggedIn(currentUser));
-    } catch (e) {
-      emit(AuthError(e.toString()));
-      debugPrint(e.toString());
-    }
+    emit(AuthLoggedIn(currentUser));
+  } catch (e) {
+    emit(AuthError(e.toString()));
   }
+}
 
   Future<void> logout() async {
     emit(AuthLoading());

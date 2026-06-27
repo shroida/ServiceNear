@@ -174,7 +174,7 @@ void main() {
       final states = <AppAuthState>[];
       final sub = cubit.stream.listen(states.add);
 
-      await cubit.login();
+      await cubit.login(email: email, password: password);
       await sub.cancel();
 
       expect(states, [isA<AuthLoading>(), isA<AuthLoggedIn>()]);
@@ -205,7 +205,7 @@ void main() {
 
       cubit.emailController.text = email;
       cubit.passwordController.text = password;
-      await cubit.login();
+      await cubit.login(email: email, password: password);
 
       expect(cubit.state, isA<AuthError>());
       expect((cubit.state as AuthError).message, isNotEmpty);
