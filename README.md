@@ -10,6 +10,8 @@ You can download:
 
 👉 [Download ServiceNear APK](https://www.mediafire.com/file/shkl0alnyxvszue/ServiceNear.apk/file)
 
+presentation:
+https://www.linkedin.com/posts/mohamed-walid-2a9061241_introducing-servicenear-my-latest-flutter-ugcPost-7440451901097246720-vmMB/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADv8fmEBsSYSkjkP850s7_y_wYhX9Hob__8
 
 ## 📋 Table of Contents
 1. [🚀 User Flow](#-user-flow)
